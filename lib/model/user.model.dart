@@ -8,15 +8,16 @@ class User {
   List<College>? colleges;
   String? photo;
 
-  User(
-      {required this.name,
-      required this.email,
-      required this.gradYear,
-      required this.state,
-      required this.school,
-      required this.interests,
-      required this.colleges,
-      required this.photo});
+  User({
+    required this.name,
+    required this.email,
+    required this.gradYear,
+    required this.state,
+    required this.school,
+    required this.interests,
+    required this.colleges,
+    required this.photo,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
     String name = json['name'] as String;
@@ -42,14 +43,15 @@ class User {
     String photo = json['photo'] as String;
 
     return User(
-        name: name,
-        email: email,
-        gradYear: gradYear,
-        state: state,
-        school: school,
-        interests: interests,
-        colleges: colleges,
-        photo: photo);
+      name: name,
+      email: email,
+      gradYear: gradYear,
+      state: state,
+      school: school,
+      interests: interests,
+      colleges: colleges,
+      photo: photo,
+    );
   }
 }
 
