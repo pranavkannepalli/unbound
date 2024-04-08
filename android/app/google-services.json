@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "442603200761",
+    "project_id": "unbound-fbla",
+    "storage_bucket": "unbound-fbla.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442603200761:android:a2c66e0b6da07def758228",
+        "android_client_info": {
+          "package_name": "com.example.unbound"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSEuq6k4gMb960lyqARNaLy2RyBnriRB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

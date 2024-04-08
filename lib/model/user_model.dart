@@ -18,28 +18,38 @@ class User {
       required this.colleges,
       required this.photo});
 
-  User.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    email = json['email'];
-    gradYear = json['grad'];
-    state = json['state'];
-    school = json['school'];
+  factory User.fromJson(Map<String, dynamic> json) {
+    String name = json['name'] as String;
+    String email = json['email'] as String;
+    int gradYear = json['grad'] as int;
+    String state = json['state'] as String;
+    String school = json['school'] as String;
 
-    interests = <Interest>[];
+    List<Interest> interests = <Interest>[];
     if (json['interests'] != null) {
       json['interests'].forEach((v) {
         interests!.add(Interest(name: v));
       });
     }
 
-    colleges = <College>[];
+    List<College> colleges = <College>[];
     if (json['colleges'] != null) {
       json['colleges'].forEach((v) {
         colleges!.add(College.fromJson(v));
       });
     }
 
-    photo = json['photo'];
+    String photo = json['photo'] as String;
+
+    return User(
+        name: name,
+        email: email,
+        gradYear: gradYear,
+        state: state,
+        school: school,
+        interests: interests,
+        colleges: colleges,
+        photo: photo);
   }
 }
 
@@ -54,8 +64,10 @@ class College {
 
   College({required this.name, required this.photo});
 
-  College.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    photo = json['photo'];
+  factory College.fromJson(Map<String, dynamic> json) {
+    String name = json['name'];
+    String photo = json['photo'];
+
+    return College(name: name, photo: photo);
   }
 }
