@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:unbound/firebase_options.dart';
 import 'package:unbound/common/theme.dart';
+import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/landing.view.dart';
 import 'package:unbound/views/splash.view.dart';
 
@@ -25,8 +26,15 @@ final _router = GoRouter(
       path: "/splash",
       builder: (context, state) => const Splash(),
     ),
+    GoRoute(
+      path: "/signUp",
+      builder: (context, state) => const InProgressScreen(),
+    ),
+    GoRoute(
+      path: "/login",
+      builder: (context, state) => const InProgressScreen(),
+    ),
   ],
-  debugLogDiagnostics: true,
 );
 
 class MyApp extends StatelessWidget {

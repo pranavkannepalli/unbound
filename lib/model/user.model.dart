@@ -1,4 +1,9 @@
-class User {
+class AuthUser {
+  String uid;
+  AuthUser({required this.uid});
+}
+
+class UserData {
   String? name;
   String? email;
   int? gradYear;
@@ -8,7 +13,7 @@ class User {
   List<College>? colleges;
   String? photo;
 
-  User({
+  UserData({
     required this.name,
     required this.email,
     required this.gradYear,
@@ -19,7 +24,7 @@ class User {
     required this.photo,
   });
 
-  factory User.fromJson(Map<String, dynamic> json) {
+  factory UserData.fromJson(Map<String, dynamic> json) {
     String name = json['name'] as String;
     String email = json['email'] as String;
     int gradYear = json['grad'] as int;
@@ -42,7 +47,7 @@ class User {
 
     String photo = json['photo'] as String;
 
-    return User(
+    return UserData(
       name: name,
       email: email,
       gradYear: gradYear,

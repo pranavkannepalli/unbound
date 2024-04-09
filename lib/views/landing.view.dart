@@ -26,7 +26,7 @@ class LandingScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               FilledButton(
-                onPressed: () => GoRouter.of(context).go('/signIn'),
+                onPressed: () => GoRouter.of(context).go('/signUp'),
                 style: lightExpand,
                 child: Text(
                   "Create Account",
