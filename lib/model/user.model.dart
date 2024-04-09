@@ -29,14 +29,14 @@ class User {
     List<Interest> interests = <Interest>[];
     if (json['interests'] != null) {
       json['interests'].forEach((v) {
-        interests!.add(Interest(name: v));
+        interests.add(Interest(name: v));
       });
     }
 
     List<College> colleges = <College>[];
     if (json['colleges'] != null) {
       json['colleges'].forEach((v) {
-        colleges!.add(College.fromJson(v));
+        colleges.add(College.fromJson(v));
       });
     }
 
