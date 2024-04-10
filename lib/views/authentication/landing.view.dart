@@ -20,7 +20,7 @@ class LandingScreen extends StatelessWidget {
           ),
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -37,7 +37,7 @@ class LandingScreen extends StatelessWidget {
               ),
               FilledButton(
                 style: darkExpand,
-                onPressed: () => GoRouter.of(context).go('/login'),
+                onPressed: () => GoRouter.of(context).go('/signIn'),
                 child: Text(
                   "Sign In",
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(

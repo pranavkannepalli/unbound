@@ -4,20 +4,19 @@ import "package:unbound/common/buttons.dart";
 import "package:unbound/common/textInput.dart";
 import "package:unbound/service/auth.dart";
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   final AuthService _auth = AuthService();
   final _formKey = GlobalKey<FormState>();
 
   String email = "";
   String pw = "";
-  String cpw = "";
   String error = "";
 
   @override
@@ -31,7 +30,7 @@ class _SignUpState extends State<SignUp> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Create an Account",
+                "Login",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Form(
@@ -54,14 +53,6 @@ class _SignUpState extends State<SignUp> {
                       onChanged: (val) => pw = val,
                       obscureText: true,
                     ),
-                    const SizedBox(height: 10.0),
-                    Text("Confirm Password", style: Theme.of(context).textTheme.bodyLarge),
-                    TextFormField(
-                      decoration: textInputDecoration.copyWith(hintText: "Confirm Password"),
-                      validator: (val) => val != null && val != pw ? 'Passwords do not match.' : null,
-                      onChanged: (val) => cpw = val,
-                      obscureText: true,
-                    ),
                     Text(error),
                   ],
                 ),
@@ -77,9 +68,9 @@ class _SignUpState extends State<SignUp> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextButton(
-              onPressed: () => GoRouter.of(context).go('/signIn'),
+              onPressed: () => GoRouter.of(context).go('/signUp'),
               child: Text(
-                "Have an Account? Sign In",
+                "Need an Account? Sign Up",
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: const Color(0xFF4C4C4C),
                     ),
@@ -89,7 +80,7 @@ class _SignUpState extends State<SignUp> {
               style: darkExpand,
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
-                  dynamic result = await _auth.registerWithEmailAndPw(email, pw);
+                  dynamic result = await _auth.signIn(email, pw);
                   if (result == null) {
                     setState(() {
                       error = 'Please check if you have entered a valid email';
@@ -105,7 +96,7 @@ class _SignUpState extends State<SignUp> {
                 }
               },
               child: Text(
-                "Sign Up",
+                "Sign In",
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: const Color(0xFFFFFFFF),
                     ),

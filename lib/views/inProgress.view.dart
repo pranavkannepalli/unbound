@@ -11,7 +11,7 @@ class InProgressScreen extends StatelessWidget {
         child: Center(
           child: TextButton(
             child: const Text("Go home!"),
-            onPressed: () => GoRouter.of(context).go('/splash'),
+            onPressed: () => GoRouter.of(context).go('/landing'),
           ),
         ),
       ),

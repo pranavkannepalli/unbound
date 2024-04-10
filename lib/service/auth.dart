@@ -17,7 +17,6 @@ class AuthService {
     try {
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: pw);
       User? user = result.user;
-      await _auth.setPersistence(Persistence.LOCAL);
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());
@@ -40,7 +39,6 @@ class AuthService {
         "colleges": [],
         "photo": "",
       });
-      await _auth.setPersistence(Persistence.LOCAL);
 
       return _userFromFirebaseUser(user);
     } catch (e) {
