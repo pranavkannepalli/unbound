@@ -38,7 +38,12 @@ class LandingScreen extends StatelessWidget {
               FilledButton(
                 style: darkExpand,
                 onPressed: () => GoRouter.of(context).go('/login'),
-                child: const Text("Sign In"),
+                child: Text(
+                  "Sign In",
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: const Color(0xFFFFFFFF),
+                      ),
+                ),
               ),
             ],
           ),

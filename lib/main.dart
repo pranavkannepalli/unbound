@@ -4,8 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:unbound/firebase_options.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/views/inProgress.view.dart';
-import 'package:unbound/views/landing.view.dart';
-import 'package:unbound/views/splash.view.dart';
+import 'package:unbound/views/authentication/landing.view.dart';
+import 'package:unbound/views/authentication/signup.view.dart';
+import 'package:unbound/views/authentication/splash.view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,10 +29,18 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/signUp",
-      builder: (context, state) => const InProgressScreen(),
+      builder: (context, state) => const SignUp(),
     ),
     GoRoute(
       path: "/login",
+      builder: (context, state) => const InProgressScreen(),
+    ),
+    GoRoute(
+      path: "/onboarding1",
+      builder: (context, state) => const InProgressScreen(),
+    ),
+    GoRoute(
+      path: "/onboarding2",
       builder: (context, state) => const InProgressScreen(),
     ),
   ],
