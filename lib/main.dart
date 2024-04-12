@@ -10,6 +10,7 @@ import 'package:unbound/views/authentication/signin.view.dart';
 import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
+import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/splash.view.dart';
 
 void main() async {
@@ -70,7 +71,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/onboarding1",
-      builder: (context, state) => const InProgressScreen(),
+      builder: (context, state) => const Onboarding1(),
     ),
     GoRoute(
       path: "/onboarding2",

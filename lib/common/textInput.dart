@@ -12,4 +12,5 @@ InputDecoration textInputDecoration = InputDecoration(
   ),
   floatingLabelStyle: unboundTheme.textTheme.bodyLarge!.copyWith(fontSize: 12.0),
   labelStyle: unboundTheme.textTheme.bodyLarge!.copyWith(fontSize: 12.0),
+  isDense: true,
 );
