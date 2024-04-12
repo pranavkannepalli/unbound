@@ -75,10 +75,19 @@ final _router = GoRouter(
       path: "/onboarding1",
       builder: (context, state) => const Onboarding1(),
       redirect: (context, state) {
-        if (loggedIn(context)) {
-          return null;
+        AuthUser? user = Provider.of<AuthUser?>(context, listen: false);
+        UserData? userData = Provider.of<UserData?>(context, listen: false);
+
+        print("redirect for onboarding1");
+        print(userData);
+
+        if (user?.uid == null) {
+          return '/splash';
         }
-        return "/splash";
+        if (userData?.name != null && userData?.name != "" && userData?.bday != null && userData?.bday != "") {
+          return '/onboarding2';
+        }
+        return null;
       },
     ),
     GoRoute(

@@ -27,15 +27,6 @@ class _Onboarding1State extends State<Onboarding1> {
     UserData? userData = Provider.of<UserData?>(context);
     final router = GoRouter.of(context);
 
-    if (user?.uid == null) {
-      router.go('/splash');
-    }
-    if (userData?.name != null && userData?.name != "" && userData?.bday != null && userData?.bday != "") {
-      router.go('/onboarding2');
-    }
-
-    print(userData?.name ?? "No Name");
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
