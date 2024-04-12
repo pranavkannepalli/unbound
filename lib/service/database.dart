@@ -11,12 +11,23 @@ class DatabaseService {
     return await usersCollection.doc(uid).set(json, SetOptions(merge: true));
   }
 
-  UserData _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
-    return UserData.fromJson(d);
+  UserData? _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+      UserData ret = UserData.fromJson(d);
+
+      return ret;
+    } catch (error) {
+      print('errored');
+      return null;
+    }
   }
 
-  Stream<UserData> get userData {
+  Stream<UserData?> get userData {
     return usersCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
+  }
+
+  Future<UserData?> getData() async {
+    return usersCollection.doc(uid).get().then((value) => _userDataFromSnapshot(value));
   }
 }

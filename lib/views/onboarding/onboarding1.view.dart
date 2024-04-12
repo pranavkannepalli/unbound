@@ -17,17 +17,24 @@ class Onboarding1 extends StatefulWidget {
 class _Onboarding1State extends State<Onboarding1> {
   String fname = "";
   String lname = "";
-  String bday = "";
+  String bday = DateTime(2007, 2, 26).toString();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AuthUser?>(context, listen: false);
+    AuthUser? user = Provider.of<AuthUser?>(context);
+    UserData? userData = Provider.of<UserData?>(context);
     final router = GoRouter.of(context);
+
     if (user?.uid == null) {
-      router.go('/signIn');
+      router.go('/splash');
     }
+    if (userData?.name != null && userData?.name != "" && userData?.bday != null && userData?.bday != "") {
+      router.go('/onboarding2');
+    }
+
+    print(userData?.name ?? "No Name");
 
     return Scaffold(
       body: Padding(
@@ -57,7 +64,8 @@ class _Onboarding1State extends State<Onboarding1> {
                             children: [
                               Text("First Name", style: Theme.of(context).textTheme.bodyLarge),
                               TextFormField(
-                                decoration: textInputDecoration.copyWith(hintText: "John Doe"),
+                                initialValue: userData?.name ?? "",
+                                decoration: textInputDecoration.copyWith(hintText: "John"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => fname = val,
                               ),
@@ -71,7 +79,8 @@ class _Onboarding1State extends State<Onboarding1> {
                             children: [
                               Text("Last Name", style: Theme.of(context).textTheme.bodyLarge),
                               TextFormField(
-                                decoration: textInputDecoration.copyWith(hintText: "John Doe"),
+                                initialValue: userData?.name ?? "",
+                                decoration: textInputDecoration.copyWith(hintText: "Doe"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => lname = val,
                               ),

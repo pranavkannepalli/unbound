@@ -12,6 +12,7 @@ import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/splash.view.dart';
+import 'package:unbound/views/userDataProvider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,7 @@ void main() async {
 
 bool loggedIn(BuildContext context) {
   final user = Provider.of<AuthUser?>(context, listen: false);
+  print("logged in:${user != null}");
   return user != null;
 }
 
@@ -72,6 +74,12 @@ final _router = GoRouter(
     GoRoute(
       path: "/onboarding1",
       builder: (context, state) => const Onboarding1(),
+      redirect: (context, state) {
+        if (loggedIn(context)) {
+          return null;
+        }
+        return "/splash";
+      },
     ),
     GoRoute(
       path: "/onboarding2",
@@ -88,9 +96,11 @@ class Unbound extends StatelessWidget {
     return StreamProvider.value(
       value: AuthService().user,
       initialData: null,
-      child: MaterialApp.router(
-        routerConfig: _router,
-        theme: unboundTheme,
+      child: UserProvider(
+        child: MaterialApp.router(
+          routerConfig: _router,
+          theme: unboundTheme,
+        ),
       ),
     );
   }

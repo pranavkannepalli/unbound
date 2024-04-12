@@ -12,6 +12,7 @@ class UserData {
   List<Interest>? interests;
   List<College>? colleges;
   String? photo;
+  String? bday;
 
   UserData({
     required this.name,
@@ -22,30 +23,40 @@ class UserData {
     required this.interests,
     required this.colleges,
     required this.photo,
+    required this.bday,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
-    String name = json['name'] as String;
-    String email = json['email'] as String;
-    int gradYear = json['grad'] as int;
-    String state = json['state'] as String;
-    String school = json['school'] as String;
+    String name = json['name'] ?? "";
+    String email = json['email'] ?? "";
+    int gradYear = json['grad'] ?? 2025;
+    String state = json['state'] ?? "";
+    String school = json['school'] ?? "";
+    String bday = json['bday'] ?? "";
 
     List<Interest> interests = <Interest>[];
-    if (json['interests'] != null) {
-      json['interests'].forEach((v) {
-        interests.add(Interest(name: v));
-      });
+    try {
+      if (json['interests'] != null) {
+        json['interests'].forEach((v) {
+          interests.add(Interest(name: v));
+        });
+      }
+    } catch (e) {
+      print(e);
     }
 
     List<College> colleges = <College>[];
-    if (json['colleges'] != null) {
-      json['colleges'].forEach((v) {
-        colleges.add(College.fromJson(v));
-      });
+    try {
+      if (json['colleges'] != null) {
+        json['colleges'].forEach((v) {
+          colleges.add(College.fromJson(v));
+        });
+      }
+    } catch (e) {
+      print(e);
     }
 
-    String photo = json['photo'] as String;
+    String photo = json['photo'] ?? "";
 
     return UserData(
       name: name,
@@ -56,8 +67,12 @@ class UserData {
       interests: interests,
       colleges: colleges,
       photo: photo,
+      bday: bday,
     );
   }
+
+  @override
+  String toString() => "$name $email";
 }
 
 class Interest {
