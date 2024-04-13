@@ -1,4 +1,3 @@
-import "package:date_time_picker/date_time_picker.dart";
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
 import "package:provider/provider.dart";
@@ -7,17 +6,17 @@ import "package:unbound/common/textInput.dart";
 import "package:unbound/model/user.model.dart";
 import "package:unbound/service/database.dart";
 
-class Onboarding1 extends StatefulWidget {
-  const Onboarding1({super.key});
+class Onboarding2 extends StatefulWidget {
+  const Onboarding2({super.key});
 
   @override
-  State<Onboarding1> createState() => _Onboarding1State();
+  State<Onboarding2> createState() => _Onboarding1State();
 }
 
-class _Onboarding1State extends State<Onboarding1> {
-  String fname = "";
-  String lname = "";
-  String bday = DateTime(2007, 2, 26).toString();
+class _Onboarding1State extends State<Onboarding2> {
+  String school = "";
+  String grad = "";
+  String state = "";
 
   final _formKey = GlobalKey<FormState>();
 
@@ -36,7 +35,7 @@ class _Onboarding1State extends State<Onboarding1> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Basic Info",
+                "School Info",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Form(
@@ -44,6 +43,14 @@ class _Onboarding1State extends State<Onboarding1> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 10.0),
+                    Text("High School", style: Theme.of(context).textTheme.bodyLarge),
+                    TextFormField(
+                      initialValue: userData?.school ?? "",
+                      decoration: textInputDecoration.copyWith(hintText: "Blank High School"),
+                      validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
+                      onChanged: (val) => school = val,
+                    ),
                     const SizedBox(height: 10.0),
                     Row(
                       mainAxisSize: MainAxisSize.min,
@@ -53,12 +60,13 @@ class _Onboarding1State extends State<Onboarding1> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("First Name", style: Theme.of(context).textTheme.bodyLarge),
+                              Text("Graduation Year", style: Theme.of(context).textTheme.bodyLarge),
                               TextFormField(
-                                initialValue: userData?.name?.split(" ").elementAtOrNull(0) ?? "",
-                                decoration: textInputDecoration.copyWith(hintText: "John"),
+                                keyboardType: TextInputType.number,
+                                initialValue: userData?.grad.toString() ?? "",
+                                decoration: textInputDecoration.copyWith(hintText: "2025"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
-                                onChanged: (val) => fname = val,
+                                onChanged: (val) => grad = val,
                               ),
                             ],
                           ),
@@ -68,29 +76,17 @@ class _Onboarding1State extends State<Onboarding1> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Last Name", style: Theme.of(context).textTheme.bodyLarge),
+                              Text("State", style: Theme.of(context).textTheme.bodyLarge),
                               TextFormField(
-                                initialValue: userData?.name?.split(" ").elementAtOrNull(1) ?? "",
-                                decoration: textInputDecoration.copyWith(hintText: "Doe"),
+                                initialValue: userData?.state ?? "",
+                                decoration: textInputDecoration.copyWith(hintText: "WA"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
-                                onChanged: (val) => lname = val,
+                                onChanged: (val) => state = val,
                               ),
                             ],
                           ),
                         ),
                       ],
-                    ),
-                    const SizedBox(height: 10.0),
-                    Text("Birthday", style: Theme.of(context).textTheme.bodyLarge),
-                    DateTimePicker(
-                      decoration: textInputDecoration,
-                      type: DateTimePickerType.date,
-                      initialValue: DateTime(2007, 2, 26).toString(),
-                      firstDate: DateTime.now().subtract(const Duration(days: 365 * 100)),
-                      lastDate: DateTime.now().subtract(const Duration(days: 365 * 16)),
-                      initialDate: DateTime(2007, 2, 26),
-                      onChanged: (val) => bday = val,
-                      validator: (val) => val != null && val.isEmpty ? "Please fill this." : null,
                     ),
                   ],
                 ),
@@ -111,10 +107,11 @@ class _Onboarding1State extends State<Onboarding1> {
                 if (_formKey.currentState?.validate() ?? false) {
                   if (user?.uid != null) {
                     DatabaseService(uid: user!.uid).updateUserData({
-                      "name": fname.isNotEmpty && lname.isNotEmpty ? "$fname $lname" : userData?.name ?? "",
-                      "bday": bday.isNotEmpty ? bday : userData?.bday ?? "",
+                      "grad": grad.isNotEmpty ? int.parse(grad) : userData?.grad ?? 0,
+                      "school": school.isNotEmpty ? school : userData?.school ?? "",
+                      "state": state.isNotEmpty ? state : userData?.state ?? "",
                     });
-                    router.go('/onboarding2');
+                    router.go('/onboarding3');
                   }
                 }
               },

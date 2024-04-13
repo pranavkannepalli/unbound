@@ -7,11 +7,11 @@ import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/authentication/signin.view.dart';
-import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
-import 'package:unbound/views/loading.view.dart';
+import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
+import 'package:unbound/views/onboarding/onboarding2.view.dart';
 import 'package:unbound/views/splash.view.dart';
 import 'package:unbound/views/userDataProvider.dart';
 
@@ -29,42 +29,34 @@ bool loggedIn(BuildContext context) {
   return user != null;
 }
 
+String? loggedInRedirect(BuildContext context) {
+  if (loggedIn(context)) {
+    return "/onboarding1";
+  }
+  return null;
+}
+
 final _router = GoRouter(
   initialLocation: '/splash',
   routes: [
     GoRoute(
-      path: "/landing",
-      builder: (context, state) => const LandingScreen(),
-      redirect: (context, state) {
-        if (loggedIn(context)) {
-          return "/onboarding1";
-        }
-        return null;
-      },
+      path: "/splash",
+      builder: (context, state) => const Splash(),
     ),
     GoRoute(
-      path: "/splash",
-      builder: (context, state) => const InProgressScreen(),
+      path: "/landing",
+      builder: (context, state) => const LandingScreen(),
+      redirect: (context, state) => loggedInRedirect(context),
     ),
     GoRoute(
       path: "/signUp",
       builder: (context, state) => const SignUp(),
-      redirect: (context, state) {
-        if (loggedIn(context)) {
-          return "/onboarding1";
-        }
-        return null;
-      },
+      redirect: (context, state) => loggedInRedirect(context),
     ),
     GoRoute(
       path: "/signIn",
       builder: (context, state) => const SignIn(),
-      redirect: (context, state) {
-        if (loggedIn(context)) {
-          return "/onboarding1";
-        }
-        return null;
-      },
+      redirect: (context, state) => loggedInRedirect(context),
     ),
     GoRoute(
       path: "/onboarding1",
@@ -72,9 +64,6 @@ final _router = GoRouter(
       redirect: (context, state) {
         AuthUser? user = Provider.of<AuthUser?>(context, listen: false);
         UserData? userData = Provider.of<UserData?>(context, listen: false);
-
-        print("redirect for onboarding1");
-        print(userData);
 
         if (user?.uid == null) {
           return '/splash';
@@ -87,7 +76,27 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/onboarding2",
-      builder: (context, state) => const Loading(),
+      builder: (context, state) => const Onboarding2(),
+      redirect: (context, state) {
+        AuthUser? user = Provider.of<AuthUser?>(context, listen: false);
+        UserData? userData = Provider.of<UserData?>(context, listen: false);
+
+        if (user?.uid == null) {
+          return '/splash';
+        }
+        if (userData?.school != null &&
+            userData?.school != "" &&
+            userData?.state != null &&
+            userData?.state != "" &&
+            userData?.grad != 0) {
+          return '/onboarding2';
+        }
+        return null;
+      },
+    ),
+    GoRoute(
+      path: "/onboarding3",
+      builder: (context, state) => const InProgressScreen(),
     ),
   ],
 );

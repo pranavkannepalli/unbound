@@ -32,7 +32,7 @@ class AuthService {
       DatabaseService(uid: user!.uid).updateUserData({
         "name": "",
         "email": "",
-        "gradYear": -1,
+        "grad": -1,
         "state": "",
         "school": "",
         "interests": [],

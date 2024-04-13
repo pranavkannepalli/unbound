@@ -6,7 +6,7 @@ class AuthUser {
 class UserData {
   String? name;
   String? email;
-  int? gradYear;
+  int? grad;
   String? state;
   String? school;
   List<Interest>? interests;
@@ -17,7 +17,7 @@ class UserData {
   UserData({
     required this.name,
     required this.email,
-    required this.gradYear,
+    required this.grad,
     required this.state,
     required this.school,
     required this.interests,
@@ -29,7 +29,7 @@ class UserData {
   factory UserData.fromJson(Map<String, dynamic> json) {
     String name = json['name'] ?? "";
     String email = json['email'] ?? "";
-    int gradYear = json['grad'] ?? 2025;
+    int grad = json['grad'] ?? 0;
     String state = json['state'] ?? "";
     String school = json['school'] ?? "";
     String bday = json['bday'] ?? "";
@@ -61,7 +61,7 @@ class UserData {
     return UserData(
       name: name,
       email: email,
-      gradYear: gradYear,
+      grad: grad,
       state: state,
       school: school,
       interests: interests,
