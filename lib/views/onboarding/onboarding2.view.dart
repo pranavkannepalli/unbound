@@ -35,7 +35,7 @@ class _Onboarding1State extends State<Onboarding2> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "School Info",
+                "Academics",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               Form(

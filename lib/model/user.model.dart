@@ -9,7 +9,7 @@ class UserData {
   int? grad;
   String? state;
   String? school;
-  List<Interest>? interests;
+  List<String>? interests;
   List<College>? colleges;
   String? photo;
   String? bday;
@@ -34,17 +34,7 @@ class UserData {
     String school = json['school'] ?? "";
     String bday = json['bday'] ?? "";
 
-    List<Interest> interests = <Interest>[];
-    try {
-      if (json['interests'] != null) {
-        json['interests'].forEach((v) {
-          interests.add(Interest(name: v));
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
-
+    List<String> interests = json['interests'] ?? <String>[];
     List<College> colleges = <College>[];
     try {
       if (json['colleges'] != null) {
