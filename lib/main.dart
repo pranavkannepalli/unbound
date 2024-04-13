@@ -10,6 +10,7 @@ import 'package:unbound/views/authentication/signin.view.dart';
 import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
+import 'package:unbound/views/loading.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/splash.view.dart';
 import 'package:unbound/views/userDataProvider.dart';
@@ -43,13 +44,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/splash",
-      builder: (context, state) => const Splash(),
-      redirect: (context, state) {
-        if (loggedIn(context)) {
-          return "/onboarding1";
-        }
-        return null;
-      },
+      builder: (context, state) => const InProgressScreen(),
     ),
     GoRoute(
       path: "/signUp",
@@ -92,7 +87,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/onboarding2",
-      builder: (context, state) => const InProgressScreen(),
+      builder: (context, state) => const Loading(),
     ),
   ],
 );
