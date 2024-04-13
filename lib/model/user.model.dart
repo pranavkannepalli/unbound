@@ -34,7 +34,7 @@ class UserData {
     String school = json['school'] ?? "";
     String bday = json['bday'] ?? "";
 
-    List<String> interests = json['interests'] ?? <String>[];
+    List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<College> colleges = <College>[];
     try {
       if (json['colleges'] != null) {

@@ -84,12 +84,13 @@ final _router = GoRouter(
         if (user?.uid == null) {
           return '/splash';
         }
+
         if (userData?.school != null &&
             userData?.school != "" &&
             userData?.state != null &&
             userData?.state != "" &&
             userData?.grad != 0) {
-          return '/onboarding2';
+          return '/onboarding3';
         }
         return null;
       },
