@@ -16,6 +16,7 @@ class Onboarding3 extends StatefulWidget {
 class _Onboarding3State extends State<Onboarding3> {
   String bio = "";
   List<String> interests = <String>[""];
+  bool userDataTried = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -24,6 +25,16 @@ class _Onboarding3State extends State<Onboarding3> {
     AuthUser? user = Provider.of<AuthUser?>(context);
     UserData? userData = Provider.of<UserData?>(context);
     final router = GoRouter.of(context);
+
+    print(userData?.interests);
+
+    if (userData?.interests != null && !userDataTried) {
+      print("setting state");
+      setState(() {
+        interests = userData!.interests as List<String>;
+        userDataTried = true;
+      });
+    }
 
     print(interests);
 
@@ -60,7 +71,7 @@ class _Onboarding3State extends State<Onboarding3> {
                       shrinkWrap: true,
                       itemCount: interests.length,
                       itemBuilder: (BuildContext context, int index) => TextFormField(
-                        initialValue: userData?.bio ?? "",
+                        initialValue: interests[index],
                         decoration: textInputDecoration.copyWith(hintText: "Ex: Computer Science"),
                         validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                         onChanged: (val) => interests[index] = val,

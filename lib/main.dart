@@ -99,9 +99,26 @@ final _router = GoRouter(
     GoRoute(
       path: "/onboarding3",
       builder: (context, state) => const Onboarding3(),
+      redirect: (context, state) {
+        AuthUser? user = Provider.of<AuthUser?>(context, listen: false);
+        UserData? userData = Provider.of<UserData?>(context, listen: false);
+
+        if (user?.uid == null) {
+          return '/splash';
+        }
+
+        if (userData?.bio != null && userData?.bio != "" && userData?.interests != null && userData!.interests!.isNotEmpty) {
+          return '/feed';
+        }
+        return null;
+      },
     ),
     GoRoute(
       path: "/onboarding4",
+      builder: (context, state) => const InProgressScreen(),
+    ),
+    GoRoute(
+      path: "/feed",
       builder: (context, state) => const InProgressScreen(),
     ),
   ],
