@@ -13,6 +13,7 @@ class UserData {
   List<College>? colleges;
   String? photo;
   String? bday;
+  String? bio;
 
   UserData({
     required this.name,
@@ -24,6 +25,7 @@ class UserData {
     required this.colleges,
     required this.photo,
     required this.bday,
+    required this.bio,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class UserData {
     String state = json['state'] ?? "";
     String school = json['school'] ?? "";
     String bday = json['bday'] ?? "";
+    String bio = json['bio'] ?? "";
 
     List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<College> colleges = <College>[];
@@ -58,6 +61,7 @@ class UserData {
       colleges: colleges,
       photo: photo,
       bday: bday,
+      bio: bio,
     );
   }
 

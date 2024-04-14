@@ -10,10 +10,10 @@ class Onboarding2 extends StatefulWidget {
   const Onboarding2({super.key});
 
   @override
-  State<Onboarding2> createState() => _Onboarding1State();
+  State<Onboarding2> createState() => _Onboarding2State();
 }
 
-class _Onboarding1State extends State<Onboarding2> {
+class _Onboarding2State extends State<Onboarding2> {
   String school = "";
   String grad = "";
   String state = "";

@@ -38,6 +38,7 @@ class AuthService {
         "interests": [],
         "colleges": [],
         "photo": "",
+        "bio": "",
       });
 
       return _userFromFirebaseUser(user);
