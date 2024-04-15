@@ -57,6 +57,29 @@ class _SignInState extends State<SignIn> {
                   ],
                 ),
               ),
+              TextButton(
+                onPressed: () async {
+                  dynamic result = await AuthService().signInWithGoogle();
+                  if (result == null) {
+                    setState(() {
+                      error = 'Please check if you have entered a valid email';
+                    });
+                  } else if (result.runtimeType == String) {
+                    setState(() {
+                      error = result;
+                    });
+                  } else {
+                    GoRouter.of(context).go("/onboarding1");
+                    print(result.uid);
+                  }
+                },
+                child: Text(
+                  "Google",
+                  style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                        color: const Color(0xFF4C4C4C),
+                      ),
+                ),
+              ),
             ],
           ),
         ),

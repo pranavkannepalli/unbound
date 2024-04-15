@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/database.dart';
 
@@ -40,6 +41,40 @@ class AuthService {
         "photo": "",
         "bio": "",
       });
+
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+    }
+  }
+
+  Future signInWithGoogle() async {
+    try {
+      final gUser = await GoogleSignIn().signIn();
+      final gAuth = await gUser!.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: gAuth.accessToken,
+        idToken: gAuth.idToken,
+      );
+      final cred = await _auth.signInWithCredential(credential);
+      final user = cred.user;
+
+      final userData = await DatabaseService(uid: user!.uid).getData();
+
+      if (userData == null) {
+        DatabaseService(uid: user.uid).updateUserData({
+          "name": "",
+          "email": "",
+          "grad": -1,
+          "state": "",
+          "school": "",
+          "interests": [],
+          "colleges": [],
+          "photo": "",
+          "bio": "",
+        });
+      }
 
       return _userFromFirebaseUser(user);
     } catch (e) {
