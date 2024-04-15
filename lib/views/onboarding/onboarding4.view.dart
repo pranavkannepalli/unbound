@@ -8,7 +8,7 @@ class Onboarding4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GoRouter _router = GoRouter.of(context);
+    GoRouter router = GoRouter.of(context);
 
     return Scaffold(
       body: Padding(
@@ -36,7 +36,7 @@ class Onboarding4 extends StatelessWidget {
                     ),
               ),
               FilledButton(
-                onPressed: () => _router.go('/feed'),
+                onPressed: () => router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -57,7 +57,7 @@ class Onboarding4 extends StatelessWidget {
                 ),
               ),
               FilledButton(
-                onPressed: () => _router.go('/feed'),
+                onPressed: () => router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -78,7 +78,7 @@ class Onboarding4 extends StatelessWidget {
                 ),
               ),
               FilledButton(
-                onPressed: () => _router.go('/feed'),
+                onPressed: () => router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -99,7 +99,7 @@ class Onboarding4 extends StatelessWidget {
                 ),
               ),
               FilledButton(
-                onPressed: () => _router.go('/feed'),
+                onPressed: () => router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
