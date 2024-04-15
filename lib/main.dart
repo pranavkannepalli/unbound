@@ -13,6 +13,7 @@ import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/onboarding/onboarding2.view.dart';
 import 'package:unbound/views/onboarding/onboarding3.view.dart';
+import 'package:unbound/views/onboarding/onboarding4.view.dart';
 import 'package:unbound/views/splash.view.dart';
 import 'package:unbound/views/userDataProvider.dart';
 
@@ -38,6 +39,7 @@ String? loggedInRedirect(BuildContext context) {
 }
 
 final _router = GoRouter(
+  redirectLimit: 10,
   initialLocation: '/splash',
   routes: [
     GoRoute(
@@ -115,7 +117,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/onboarding4",
-      builder: (context, state) => const InProgressScreen(),
+      builder: (context, state) => const Onboarding4(),
     ),
     GoRoute(
       path: "/feed",

@@ -23,3 +23,13 @@ ButtonStyle darkExpand = ButtonStyle(
     ),
   ),
 );
+
+ButtonStyle greyExpand = ButtonStyle(
+  backgroundColor: const MaterialStatePropertyAll(Color(0xFFE9E9E9)),
+  fixedSize: const MaterialStatePropertyAll(Size.fromHeight(43.0)),
+  shape: MaterialStatePropertyAll(
+    RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8.0),
+    ),
+  ),
+);
