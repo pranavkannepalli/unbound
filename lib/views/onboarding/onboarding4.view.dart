@@ -36,7 +36,7 @@ class Onboarding4 extends StatelessWidget {
                     ),
               ),
               FilledButton(
-                onPressed: () => GoRouter.of(context).go('/feed'),
+                onPressed: () => _router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -57,7 +57,7 @@ class Onboarding4 extends StatelessWidget {
                 ),
               ),
               FilledButton(
-                onPressed: () => GoRouter.of(context).go('/feed'),
+                onPressed: () => _router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -78,7 +78,7 @@ class Onboarding4 extends StatelessWidget {
                 ),
               ),
               FilledButton(
-                onPressed: () => GoRouter.of(context).go('/feed'),
+                onPressed: () => _router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -99,7 +99,7 @@ class Onboarding4 extends StatelessWidget {
                 ),
               ),
               FilledButton(
-                onPressed: () => GoRouter.of(context).go('/feed'),
+                onPressed: () => _router.go('/feed'),
                 style: greyExpand,
                 child: Row(
                   children: [
