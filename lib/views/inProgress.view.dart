@@ -2,12 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-import 'package:unbound/common/buttons.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
 
-class InProgressScreen extends StatelessWidget {
+class InProgressScreen extends StatefulWidget {
   const InProgressScreen({super.key});
+
+  @override
+  State<InProgressScreen> createState() => _InProgressScreenState();
+}
+
+class _InProgressScreenState extends State<InProgressScreen> {
+  int index = 0;
+
+  Color getColor(int index) {
+    if (index == 0) return const Color(0xFF9881A6);
+    if (index == 1) return const Color(0xFF7194A6);
+    if (index == 2) return const Color(0xFF8BA394);
+    return const Color(0xFFAA6685);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,31 +44,41 @@ class InProgressScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              child: TextButton(
-                style: textExpand,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Ionicons.newspaper,
-                      size: 20.0,
-                      color: Color(0xFF727272),
-                    ),
-                    const SizedBox(height: 10.0),
-                    Text(
-                      "Feed",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: const Color(0xFF727272)),
-                    ),
-                  ],
-                ),
-                onPressed: () {},
+        bottomNavigationBar: BottomNavigationBar(
+          selectedFontSize: 12.0,
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          currentIndex: index,
+          onTap: (value) => setState(() => index = value),
+          selectedItemColor: getColor(index),
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(
+                Ionicons.newspaper,
+                size: 20.0,
               ),
+              label: "Feed",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Ionicons.sparkles,
+                size: 20.0,
+              ),
+              label: "Improve",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Ionicons.person,
+                size: 20.0,
+              ),
+              label: "Profile",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Ionicons.settings,
+                size: 20.0,
+              ),
+              label: "Settings",
             ),
           ],
         ),

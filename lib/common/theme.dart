@@ -4,6 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 ThemeData unboundTheme = ThemeData(
   useMaterial3: true,
   colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFFD0F4DE)),
+  scaffoldBackgroundColor: const Color(0xFFFAFAFA),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Colors.white,
+    unselectedItemColor: Color(0xFF727272),
+  ),
   textTheme: TextTheme(
     bodyLarge: GoogleFonts.getFont("Raleway").copyWith(fontSize: 16.0, fontWeight: FontWeight.w500),
     bodyMedium: GoogleFonts.getFont("Raleway").copyWith(fontSize: 12.0, fontWeight: FontWeight.bold),
