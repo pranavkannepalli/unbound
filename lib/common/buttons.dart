@@ -36,7 +36,7 @@ ButtonStyle greyExpand = ButtonStyle(
 );
 
 ButtonStyle textExpand = ButtonStyle(
-  textStyle: MaterialStatePropertyAll(unboundTheme.textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black)),
+  textStyle: MaterialStatePropertyAll(unboundTheme.textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: const Color(0xFF727272))),
   iconColor: const MaterialStatePropertyAll(Colors.black),
   shape: MaterialStatePropertyAll(
     RoundedRectangleBorder(

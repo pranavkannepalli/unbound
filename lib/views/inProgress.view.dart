@@ -39,75 +39,18 @@ class InProgressScreen extends StatelessWidget {
                 style: textExpand,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Icon(
                       Ionicons.newspaper,
                       size: 20.0,
+                      color: Color(0xFF727272),
                     ),
+                    const SizedBox(height: 10.0),
                     Text(
                       "Feed",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
-                    ),
-                  ],
-                ),
-                onPressed: () {},
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                style: textExpand,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.newspaper,
-                      size: 20.0,
-                    ),
-                    Text(
-                      "Feed",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
-                    ),
-                  ],
-                ),
-                onPressed: () {},
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                style: textExpand,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.newspaper,
-                      size: 20.0,
-                    ),
-                    Text(
-                      "Feed",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
-                    ),
-                  ],
-                ),
-                onPressed: () {},
-              ),
-            ),
-            Expanded(
-              child: TextButton(
-                style: textExpand,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.newspaper,
-                      size: 20.0,
-                    ),
-                    Text(
-                      "Feed",
-                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: const Color(0xFF727272)),
                     ),
                   ],
                 ),
