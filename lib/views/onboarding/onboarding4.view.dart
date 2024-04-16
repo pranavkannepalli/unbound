@@ -1,6 +1,6 @@
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
+import "package:ionicons/ionicons.dart";
 import "package:unbound/common/buttons.dart";
 
 class Onboarding4 extends StatelessWidget {
@@ -40,7 +40,7 @@ class Onboarding4 extends StatelessWidget {
                 style: greyExpand,
                 child: Row(
                   children: [
-                    const Icon(Icons.person, color: Color(0xFFAA6685)),
+                    const Icon(Ionicons.person, color: Color(0xFFAA6685)),
                     const SizedBox(
                       width: 8.0,
                     ),
@@ -52,7 +52,7 @@ class Onboarding4 extends StatelessWidget {
                             ),
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: Color(0xFF727272)),
+                    const Icon(Ionicons.chevron_forward, color: Color(0xFF727272)),
                   ],
                 ),
               ),
@@ -61,7 +61,7 @@ class Onboarding4 extends StatelessWidget {
                 style: greyExpand,
                 child: Row(
                   children: [
-                    const Icon(Icons.school, color: Color(0xFF9881A6)),
+                    const Icon(Ionicons.school, color: Color(0xFF9881A6)),
                     const SizedBox(
                       width: 8.0,
                     ),
@@ -73,7 +73,7 @@ class Onboarding4 extends StatelessWidget {
                             ),
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: Color(0xFF727272)),
+                    const Icon(Ionicons.chevron_forward, color: Color(0xFF727272)),
                   ],
                 ),
               ),
@@ -82,7 +82,7 @@ class Onboarding4 extends StatelessWidget {
                 style: greyExpand,
                 child: Row(
                   children: [
-                    const Icon(Icons.people, color: Color(0xFF8BA394)),
+                    const Icon(Ionicons.people, color: Color(0xFF8BA394)),
                     const SizedBox(
                       width: 8.0,
                     ),
@@ -94,7 +94,7 @@ class Onboarding4 extends StatelessWidget {
                             ),
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: Color(0xFF727272)),
+                    const Icon(Ionicons.chevron_forward, color: Color(0xFF727272)),
                   ],
                 ),
               ),
@@ -103,7 +103,7 @@ class Onboarding4 extends StatelessWidget {
                 style: greyExpand,
                 child: Row(
                   children: [
-                    const Icon(CupertinoIcons.briefcase_fill, color: Color(0xFF7194A6)),
+                    const Icon(Ionicons.briefcase, color: Color(0xFF7194A6)),
                     const SizedBox(
                       width: 8.0,
                     ),
@@ -115,7 +115,7 @@ class Onboarding4 extends StatelessWidget {
                             ),
                       ),
                     ),
-                    const Icon(Icons.chevron_right, color: Color(0xFF727272)),
+                    const Icon(Ionicons.chevron_forward, color: Color(0xFF727272)),
                   ],
                 ),
               ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
+import 'package:unbound/common/buttons.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
 
@@ -28,6 +30,91 @@ class InProgressScreen extends StatelessWidget {
               ),
             ],
           ),
+        ),
+        bottomNavigationBar: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: TextButton(
+                style: textExpand,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Ionicons.newspaper,
+                      size: 20.0,
+                    ),
+                    Text(
+                      "Feed",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
+                    ),
+                  ],
+                ),
+                onPressed: () {},
+              ),
+            ),
+            Expanded(
+              child: TextButton(
+                style: textExpand,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.newspaper,
+                      size: 20.0,
+                    ),
+                    Text(
+                      "Feed",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
+                    ),
+                  ],
+                ),
+                onPressed: () {},
+              ),
+            ),
+            Expanded(
+              child: TextButton(
+                style: textExpand,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.newspaper,
+                      size: 20.0,
+                    ),
+                    Text(
+                      "Feed",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
+                    ),
+                  ],
+                ),
+                onPressed: () {},
+              ),
+            ),
+            Expanded(
+              child: TextButton(
+                style: textExpand,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.newspaper,
+                      size: 20.0,
+                    ),
+                    Text(
+                      "Feed",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 12.0, color: Colors.black),
+                    ),
+                  ],
+                ),
+                onPressed: () {},
+              ),
+            ),
+          ],
         ),
       );
     }

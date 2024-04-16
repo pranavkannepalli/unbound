@@ -72,8 +72,17 @@ class _Onboarding3State extends State<Onboarding3> {
                       itemCount: interests.length,
                       itemBuilder: (BuildContext context, int index) => TextFormField(
                         initialValue: interests[index],
-                        decoration: textInputDecoration.copyWith(hintText: "Ex: Computer Science"),
-                        validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
+                        decoration: textInputDecoration.copyWith(
+                          hintText: "Ex: Computer Science",
+                          /*suffixIcon: TextButton(
+                            child: const Icon(Icons.close),
+                            onPressed: () {
+                              interests.removeAt(index);
+                              setState(() => interests=interests);
+                            },
+                          ),*/
+                        ),
+                        validator: (val) => val != null && val.isEmpty ? 'No empty interests!.' : null,
                         onChanged: (val) => interests[index] = val,
                       ),
                     ),

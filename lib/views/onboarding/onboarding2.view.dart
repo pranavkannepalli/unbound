@@ -63,7 +63,7 @@ class _Onboarding2State extends State<Onboarding2> {
                               Text("Graduation Year", style: Theme.of(context).textTheme.bodyLarge),
                               TextFormField(
                                 keyboardType: TextInputType.number,
-                                initialValue: userData?.grad.toString() ?? "",
+                                initialValue: userData?.grad != -1 ? userData?.grad.toString() ?? "" : "",
                                 decoration: textInputDecoration.copyWith(hintText: "2025"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => grad = val,
