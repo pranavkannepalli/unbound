@@ -13,8 +13,9 @@ class LandingScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset("assets/LandingGraphic.png"),
-              Text("Welcome to Unbound", style: Theme.of(context).textTheme.titleLarge),
+              Image.asset("assets/LandingGraphic.png", width: 250),
+              const SizedBox(height: 24),
+              Text("Welcome to Unbound", style: Theme.of(context).textTheme.displayMedium),
               Text("Opportunity, growth, and connections await", style: Theme.of(context).textTheme.bodyLarge),
             ],
           ),
@@ -27,7 +28,7 @@ class LandingScreen extends StatelessWidget {
             children: [
               FilledButton(
                 onPressed: () => GoRouter.of(context).go('/signUp'),
-                style: lightExpand,
+                style: greyExpand,
                 child: Text(
                   "Create Account",
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
@@ -35,6 +36,7 @@ class LandingScreen extends StatelessWidget {
                       ),
                 ),
               ),
+              const SizedBox(height: 12),
               FilledButton(
                 style: darkExpand,
                 onPressed: () => GoRouter.of(context).go('/signIn'),

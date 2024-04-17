@@ -148,6 +148,7 @@ class Unbound extends StatelessWidget {
       initialData: null,
       child: UserProvider(
         child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           routerConfig: _router,
           theme: unboundTheme,
         ),

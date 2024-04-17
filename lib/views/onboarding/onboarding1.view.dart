@@ -3,7 +3,8 @@ import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
 import "package:provider/provider.dart";
 import "package:unbound/common/buttons.dart";
-import "package:unbound/common/textInput.dart";
+import "package:unbound/common/text_input.dart";
+import "package:unbound/common/theme.dart";
 import "package:unbound/model/user.model.dart";
 import "package:unbound/service/database.dart";
 
@@ -37,14 +38,14 @@ class _Onboarding1State extends State<Onboarding1> {
             children: [
               Text(
                 "Basic Info",
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.displayMedium,
               ),
               Form(
                 key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 10.0),
+                    const SizedBox(height: 12.0),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -53,35 +54,41 @@ class _Onboarding1State extends State<Onboarding1> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("First Name", style: Theme.of(context).textTheme.bodyLarge),
+                              Text("First Name", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                              const SizedBox(height: 6),
                               TextFormField(
                                 initialValue: userData?.name?.split(" ").elementAtOrNull(0) ?? "",
                                 decoration: textInputDecoration.copyWith(hintText: "John"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => fname = val,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
                         ),
+                        const SizedBox(width: 12.0),
                         Expanded(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("Last Name", style: Theme.of(context).textTheme.bodyLarge),
+                              Text("Last Name", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                              const SizedBox(height: 6),
                               TextFormField(
                                 initialValue: userData?.name?.split(" ").elementAtOrNull(1) ?? "",
                                 decoration: textInputDecoration.copyWith(hintText: "Doe"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => lname = val,
+                                style: Theme.of(context).textTheme.bodyLarge
                               ),
                             ],
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10.0),
-                    Text("Birthday", style: Theme.of(context).textTheme.bodyLarge),
+                    const SizedBox(height: 12.0),
+                    Text("Date of Birth", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                    const SizedBox(height: 6),
                     DateTimePicker(
                       decoration: textInputDecoration,
                       type: DateTimePickerType.date,
