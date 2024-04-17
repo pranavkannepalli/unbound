@@ -15,34 +15,6 @@ class DatabaseService {
     return await usersCollection.doc(uid).set(json, SetOptions(merge: true));
   }
 
-  UserData? _userDataFromSnapshot(DocumentSnapshot snapshot) {
-    try {
-      Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
-      UserData ret = UserData.fromJson(d);
-
-      print('User Data received: $ret');
-
-      return ret;
-    } catch (error) {
-      print('errored');
-      return null;
-    }
-  }
-
-  Post _postFromSnapshot(QueryDocumentSnapshot snapshot) {
-    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
-    Post ret = Post.fromJSON(d);
-    return ret;
-  }
-
-  Account _accountFromSnapshot(QueryDocumentSnapshot snapshot) {
-    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
-    d['uid'] = snapshot.id;
-    Account ret = Account.fromJSON(d);
-
-    return ret;
-  }
-
   Stream<UserData?> get userData {
     return usersCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
@@ -78,5 +50,33 @@ class DatabaseService {
       print(e.toString());
       return null;
     }
+  }
+
+  UserData? _userDataFromSnapshot(DocumentSnapshot snapshot) {
+    try {
+      Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+      UserData ret = UserData.fromJson(d);
+
+      print('User Data received: $ret');
+
+      return ret;
+    } catch (error) {
+      print('errored');
+      return null;
+    }
+  }
+
+  Post _postFromSnapshot(QueryDocumentSnapshot snapshot) {
+    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+    Post ret = Post.fromJSON(d);
+    return ret;
+  }
+
+  Account _accountFromSnapshot(QueryDocumentSnapshot snapshot) {
+    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+    d['uid'] = snapshot.id;
+    Account ret = Account.fromJSON(d);
+
+    return ret;
   }
 }
