@@ -1,4 +1,3 @@
-import 'package:unbound/model/feed.model.dart';
 
 class AuthUser {
   String uid;
