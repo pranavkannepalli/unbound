@@ -1,3 +1,5 @@
+import 'package:unbound/model/feed.model.dart';
+
 class AuthUser {
   String uid;
   AuthUser({required this.uid});
@@ -25,7 +27,7 @@ class UserData {
     required this.colleges,
     required this.photo,
     required this.bday,
-    required this.bio,
+    required this.bio
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -36,7 +38,6 @@ class UserData {
     String school = json['school'] ?? "";
     String bday = json['bday'] ?? "";
     String bio = json['bio'] ?? "";
-
     List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<College> colleges = <College>[];
     try {
