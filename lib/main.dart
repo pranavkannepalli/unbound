@@ -9,6 +9,7 @@ import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/authentication/signin.view.dart';
 import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
+import 'package:unbound/views/feed/feedInProgress.dart';
 import 'package:unbound/views/inProgress.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/onboarding/onboarding2.view.dart';
@@ -121,7 +122,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/feed",
-      builder: (context, state) => const InProgressScreen(),
+      builder: (context, state) => const FeedInProgress(),
     ),
   ],
 );
