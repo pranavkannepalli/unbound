@@ -123,18 +123,6 @@ final _router = GoRouter(
       path: "/feed",
       builder: (context, state) => const InProgressScreen(),
     ),
-    GoRoute(
-      path: "/improve",
-      builder: (context, state) => const InProgressScreen(),
-    ),
-    GoRoute(
-      path: "/profile",
-      builder: (context, state) => const InProgressScreen(),
-    ),
-    GoRoute(
-      path: "/settings",
-      builder: (context, state) => const InProgressScreen(),
-    ),
   ],
 );
 
