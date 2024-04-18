@@ -49,7 +49,9 @@ class _MainScreenState extends State<MainScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 30, left: 10),
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        GoRouter.of(context).push("/createPost");
+                      },
                       icon: const Icon(Ionicons.add_circle_outline))),
               Padding(
                   padding: const EdgeInsets.only(top: 30),
