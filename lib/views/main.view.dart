@@ -31,9 +31,9 @@ class _MainScreenState extends State<MainScreen> {
       Center(child: Text("Improve")),
       Center(child: Text("Profile")),
       Center(child: Text("Settings")),
-
     ];
 
+    final router = GoRouter.of(context);
 
     if (userData != null) {
       return Scaffold(

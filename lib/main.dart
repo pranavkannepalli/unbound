@@ -120,9 +120,14 @@ final _router = GoRouter(
       builder: (context, state) => const Onboarding4(),
     ),
     GoRoute(
-      path: "/main",
-      builder: (context, state) => const MainScreen(),
-    ),
+        path: "/main",
+        builder: (context, state) => const MainScreen(),
+        redirect: (context, state) {
+          if (!loggedIn(context)) {
+            return "/landing";
+          }
+          return null;
+        }),
     GoRoute(
       path: "/createPost",
       builder: (context, state) => const CreatePost(),
