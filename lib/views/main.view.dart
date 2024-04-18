@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
+import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/feed/feed.view.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,11 +27,24 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     UserData? userData = Provider.of<UserData?>(context);
-    const List<Widget> widgetOptions = <Widget>[
-      FeedPage(),
-      Center(child: Text("Improve")),
-      Center(child: Text("Profile")),
-      Center(child: Text("Settings")),
+    List<Widget> widgetOptions = <Widget>[
+      const FeedPage(),
+      const Center(child: Text("Improve")),
+      const Center(child: Text("Profile")),
+      Center(
+          child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text("Settings"),
+          TextButton(
+              onPressed: (() {
+                AuthService auth = AuthService();
+                auth.signOut();
+                GoRouter.of(context).go('/');
+              }),
+              child: const Text("Sign Out")),
+        ],
+      )),
     ];
 
     if (userData != null) {
