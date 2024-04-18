@@ -31,9 +31,9 @@ class _MainScreenState extends State<MainScreen> {
       Center(child: Text("Improve")),
       Center(child: Text("Profile")),
       Center(child: Text("Settings")),
-
     ];
 
+    final router = GoRouter.of(context);
 
     if (userData != null) {
       return Scaffold(
@@ -49,17 +49,16 @@ class _MainScreenState extends State<MainScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 30, left: 10),
                   child: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        router.go('/createPost');
+                      },
                       icon: const Icon(Ionicons.add_circle_outline))),
               Padding(
                   padding: const EdgeInsets.only(top: 30),
-                  child: Text("Your Feed",
-                      style: Theme.of(context).textTheme.displaySmall)),
+                  child: Text("Your Feed", style: Theme.of(context).textTheme.displaySmall)),
               Padding(
                 padding: const EdgeInsets.only(top: 30, right: 10),
-                child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Ionicons.notifications_outline)),
+                child: IconButton(onPressed: () {}, icon: const Icon(Ionicons.notifications_outline)),
               )
             ],
           ),

@@ -159,7 +159,7 @@ class _CreatePostState extends State<CreatePost> {
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
                     if (user?.uid != null) {
-                      router.go('/feed');
+                      router.go('/main');
                     }
                   }
                 },
@@ -188,7 +188,7 @@ class _CreatePostState extends State<CreatePost> {
                   if (_formKey.currentState?.validate() ?? false) {
                     if (user?.uid != null) {
                       await DatabaseService(uid: user!.uid).uploadPost(userData!, user.uid, text, links, image);
-                      router.go('/feed');
+                      router.go('/main');
                     }
                   }
                 },
