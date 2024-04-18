@@ -64,25 +64,20 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                 Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: white.shade50, 
-                    boxShadow: scrollPos > 0 ?  [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25), blurRadius: 16)] : []
-                  ),
+                      color: white.shade50,
+                      boxShadow: scrollPos > 0 ? [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25), blurRadius: 16)] : []),
                   child: Column(
                     children: [
                       TextField(
                         decoration: textInputDecoration.copyWith(
-                            hintText: "Search",
-                            prefixIcon: Icon(Ionicons.search,
-                                size: 16, color: white.shade700)),
+                            hintText: "Search", prefixIcon: Icon(Ionicons.search, size: 16, color: white.shade700)),
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                       const SizedBox(height: 12),
                       Container(
                           width: double.infinity,
                           padding: const EdgeInsets.all(2),
-                          decoration: BoxDecoration(
-                              color: white.shade400,
-                              borderRadius: BorderRadius.circular(10)),
+                          decoration: BoxDecoration(color: white.shade400, borderRadius: BorderRadius.circular(10)),
                           child: TabBar(
                               controller: controller,
                               indicatorSize: TabBarIndicatorSize.tab,
@@ -90,74 +85,34 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                               indicator: BoxDecoration(
                                   color: white.shade50,
                                   borderRadius: BorderRadius.circular(8),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                        color: Color.fromRGBO(0, 0, 0, 0.25),
-                                        blurRadius: 8)
-                                  ]),
+                                  boxShadow: const [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.25), blurRadius: 8)]),
                               tabs: [
                                 Tab(
                                   height: 30,
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                            currentIndex == 0
-                                                ? Ionicons.library
-                                                : Ionicons.library_outline,
-                                            size: 14,
-                                            color: currentIndex == 0
-                                                ? purple.shade400
-                                                : white.shade700),
-                                        const SizedBox(width: 8),
-                                        Text("Colleges",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall)
-                                      ]),
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                    Icon(currentIndex == 0 ? Ionicons.library : Ionicons.library_outline,
+                                        size: 14, color: currentIndex == 0 ? purple.shade400 : white.shade700),
+                                    const SizedBox(width: 8),
+                                    Text("Colleges", style: Theme.of(context).textTheme.bodySmall)
+                                  ]),
                                 ),
                                 Tab(
                                   height: 30,
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                            currentIndex == 1
-                                                ? Ionicons.people
-                                                : Ionicons.people_outline,
-                                            size: 14,
-                                            color: currentIndex == 1
-                                                ? green.shade400
-                                                : white.shade700),
-                                        const SizedBox(width: 8),
-                                        Text("People",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall)
-                                      ]),
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                    Icon(currentIndex == 1 ? Ionicons.people : Ionicons.people_outline,
+                                        size: 14, color: currentIndex == 1 ? green.shade400 : white.shade700),
+                                    const SizedBox(width: 8),
+                                    Text("People", style: Theme.of(context).textTheme.bodySmall)
+                                  ]),
                                 ),
                                 Tab(
                                   height: 30,
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                            currentIndex == 2
-                                                ? Ionicons.briefcase
-                                                : Ionicons.briefcase_outline,
-                                            size: 14,
-                                            color: currentIndex == 2
-                                                ? blue.shade600
-                                                : white.shade700),
-                                        const SizedBox(width: 8),
-                                        Text("Internships",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall)
-                                      ]),
+                                  child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                    Icon(currentIndex == 2 ? Ionicons.briefcase : Ionicons.briefcase_outline,
+                                        size: 14, color: currentIndex == 2 ? blue.shade600 : white.shade700),
+                                    const SizedBox(width: 8),
+                                    Text("Jobs", style: Theme.of(context).textTheme.bodySmall)
+                                  ]),
                                 ),
                               ])),
                     ],
@@ -186,8 +141,7 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                           controller: scrollController,
                           itemCount: internshipFeed.posts.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return PostWidget(
-                                post: internshipFeed.posts[index]);
+                            return PostWidget(post: internshipFeed.posts[index]);
                           }),
                   ],
                 ))

@@ -32,34 +32,27 @@ class PostWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(post.author,
-                            style: Theme.of(context).textTheme.titleSmall),
+                        Text(post.author, style: Theme.of(context).textTheme.titleSmall),
                         Text(timeToString(post.time),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: white.shade700))
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
                       ],
                     ),
                   ),
                   const SizedBox(width: 12),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Ionicons.person_add,
-                          size: 16, color: blue.shade600))
+                  IconButton(onPressed: () {}, icon: Icon(Ionicons.person_add, size: 16, color: blue.shade600))
                 ],
               ),
               const SizedBox(height: 12),
-              Text(post.text,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.left)
+              Text(post.text, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.left)
             ],
           ),
         ),
         if (post.photo.isNotEmpty)
-          AspectRatio(
-            aspectRatio: 16 / 9,
-            child: Image.network(post.photo, fit: BoxFit.fill),
+          ClipRect(
+            child: AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(post.photo, fit: BoxFit.cover),
+            ),
           ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
@@ -67,7 +60,8 @@ class PostWidget extends StatelessWidget {
           child: Row(children: [
             InkWell(
               onTap: () {},
-              child: Icon(post.likes.contains(uid) ? Ionicons.heart : Ionicons.heart_outline, size: 18, color: post.likes.contains(uid) ? pink.shade300: white.shade800),
+              child: Icon(post.likes.contains(uid) ? Ionicons.heart : Ionicons.heart_outline,
+                  size: 18, color: post.likes.contains(uid) ? pink.shade300 : white.shade800),
             ),
             const SizedBox(width: 6),
             Text(post.likes.length.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
@@ -77,8 +71,9 @@ class PostWidget extends StatelessWidget {
               child: Icon(Ionicons.chatbox_ellipses_outline, size: 18, color: white.shade800),
             ),
             const SizedBox(width: 6),
-            Expanded(child: Text(post.comments.length.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800))),
-            
+            Expanded(
+                child: Text(post.comments.length.toString(),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800))),
           ]),
         )
       ],
@@ -90,24 +85,23 @@ String timeToString(Timestamp t) {
   DateTime date = t.toDate();
   DateTime now = DateTime.now();
   Duration diff = now.difference(date);
-  if(diff.inDays >= 365) {
-    return "${(diff.inDays / 365).truncate()} year${(diff.inDays / 365).truncate() > 1 ? "s": ""} ago";
+  if (diff.inDays >= 365) {
+    return "${(diff.inDays / 365).truncate()} year${(diff.inDays / 365).truncate() > 1 ? "s" : ""} ago";
   }
-  if(diff.inDays >= 30) {
-    return "${(diff.inDays / 30).truncate()} month${(diff.inDays / 30).truncate() > 1 ? "s": ""} ago";
+  if (diff.inDays >= 30) {
+    return "${(diff.inDays / 30).truncate()} month${(diff.inDays / 30).truncate() > 1 ? "s" : ""} ago";
   }
-  if(diff.inDays >= 7) {
-    return "${(diff.inDays / 7).truncate()} week${(diff.inDays / 7).truncate() > 1 ? "s": ""} ago";
+  if (diff.inDays >= 7) {
+    return "${(diff.inDays / 7).truncate()} week${(diff.inDays / 7).truncate() > 1 ? "s" : ""} ago";
   }
-  if(diff.inDays > 0) {
-    return "${diff.inDays} day${diff.inDays > 1 ? "s": ""} ago";
+  if (diff.inDays > 0) {
+    return "${diff.inDays} day${diff.inDays > 1 ? "s" : ""} ago";
   }
-  if(diff.inHours > 0) {
-    return "${diff.inHours} hour${diff.inHours > 1 ? "s": ""} ago";
+  if (diff.inHours > 0) {
+    return "${diff.inHours} hour${diff.inHours > 1 ? "s" : ""} ago";
   }
-  if(diff.inMinutes > 0) {
-    return "${diff.inMinutes} minute${diff.inMinutes > 1 ? "s": ""} ago";
-    
+  if (diff.inMinutes > 0) {
+    return "${diff.inMinutes} minute${diff.inMinutes > 1 ? "s" : ""} ago";
   }
   return "Just now";
 }

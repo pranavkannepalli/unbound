@@ -33,7 +33,6 @@ class _MainScreenState extends State<MainScreen> {
       Center(child: Text("Settings")),
     ];
 
-
     if (userData != null) {
       return Scaffold(
         body: widgetOptions.elementAt(index),
@@ -54,13 +53,10 @@ class _MainScreenState extends State<MainScreen> {
                       icon: const Icon(Ionicons.add_circle_outline))),
               Padding(
                   padding: const EdgeInsets.only(top: 30),
-                  child: Text("Your Feed",
-                      style: Theme.of(context).textTheme.displaySmall)),
+                  child: Text("Your Feed", style: Theme.of(context).textTheme.displaySmall)),
               Padding(
                 padding: const EdgeInsets.only(top: 30, right: 10),
-                child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Ionicons.notifications_outline)),
+                child: IconButton(onPressed: () {}, icon: const Icon(Ionicons.notifications_outline)),
               )
             ],
           ),
