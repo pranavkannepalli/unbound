@@ -1,4 +1,3 @@
-
 class AuthUser {
   String uid;
   AuthUser({required this.uid});
@@ -12,6 +11,7 @@ class UserData {
   String? school;
   List<String>? interests;
   List<College>? colleges;
+  List<String>? posts;
   String? photo;
   String? bday;
   String? bio;
@@ -26,7 +26,8 @@ class UserData {
     required this.colleges,
     required this.photo,
     required this.bday,
-    required this.bio
+    required this.bio,
+    required this.posts,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -38,6 +39,7 @@ class UserData {
     String bday = json['bday'] ?? "";
     String bio = json['bio'] ?? "";
     List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
+    List<String> posts = (json['posts'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<College> colleges = <College>[];
     try {
       if (json['colleges'] != null) {
@@ -62,6 +64,7 @@ class UserData {
       photo: photo,
       bday: bday,
       bio: bio,
+      posts: posts,
     );
   }
 

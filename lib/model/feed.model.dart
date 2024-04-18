@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class FeedData {
   late Feed collegeFeed;
   late Feed studentFeed;
@@ -65,8 +67,8 @@ class Post {
   late String photo;
   late String pfp;
   late String text;
-  late String time;
-  late int likes;
+  late Timestamp time;
+  late List<String> likes;
   late List<Comment> comments;
   late bool isJob;
 
@@ -87,8 +89,8 @@ class Post {
     pfp = (data["pfp"] ?? "") as String;
     photo = (data["photo"] ?? "") as String;
     text = (data["text"] ?? "") as String;
-    time = (data["time"] ?? "") as String;
-    likes = (data["likes"] ?? 0) as int;
+    time = data["time"];
+    likes = (data['likes'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     Iterable<Comment> c = (data["comments"] as List<dynamic>).map((e) => Comment.fromJSON(e));
     comments = c.toList();
     isJob = (data.containsKey("isJob") ? data["isJob"] ?? false : false) as bool;
@@ -113,7 +115,7 @@ class Comment {
   late String author;
   late String text;
   late String time;
-  late int likes;
+  late List<String> likes;
   late String pfp;
   late String uid;
 
@@ -124,7 +126,7 @@ class Comment {
     author = (data["author"] ?? "") as String;
     text = (data["text"] ?? "") as String;
     time = (data["time"] ?? "") as String;
-    likes = (data["likes"] ?? 0) as int;
+    likes = (data['likes'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     pfp = (data["pfp"] ?? "") as String;
     uid = (data["uid"] ?? "") as String;
   }
