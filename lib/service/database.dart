@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:unbound/model/feed.model.dart';
 import 'package:unbound/model/user.model.dart';
 
@@ -49,6 +53,39 @@ class DatabaseService {
       print('errored');
       print(e.toString());
       return null;
+    }
+  }
+
+  Future uploadPost(UserData data, String uid, String text, List<String> links, XFile? file) async {
+    try {
+      if (file != null) {
+        print('uploading file');
+        final time = Timestamp.now();
+        final reference = FirebaseStorage.instance.ref().child('/images/$uid$time');
+        await reference.putFile(File(file.path));
+        String imageUrl = await reference.getDownloadURL();
+
+        print('uploading post data');
+        Map<String, dynamic> json = {
+          "author": data.name,
+          "uid": uid,
+          "pfp": data.photo,
+          "text": text,
+          "time": time,
+          "likes": [],
+          "comments": [],
+          "photo": imageUrl,
+        };
+
+        final doc = await userPostCollection.add(json);
+
+        print('updating user data');
+        List<String>? posts = data.posts ?? [];
+        posts.add(doc.id);
+        DatabaseService(uid: uid).updateUserData({"posts": posts});
+      }
+    } catch (e) {
+      print(e);
     }
   }
 
