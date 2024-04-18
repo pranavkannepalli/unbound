@@ -20,11 +20,9 @@ class DatabaseService {
       Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
       UserData ret = UserData.fromJson(d);
 
-      print('User Data received: $ret');
 
       return ret;
     } catch (error) {
-      print('errored');
       return null;
     }
   }
@@ -74,8 +72,6 @@ class DatabaseService {
 
       return [collegeFeed, userFeed, internshipFeed];
     } catch (e) {
-      print('errored');
-      print(e.toString());
       return null;
     }
   }

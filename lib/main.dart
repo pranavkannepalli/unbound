@@ -9,8 +9,7 @@ import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/authentication/signin.view.dart';
 import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
-import 'package:unbound/views/feed/feedInProgress.dart';
-import 'package:unbound/views/inProgress.view.dart';
+import 'package:unbound/views/main.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/onboarding/onboarding2.view.dart';
 import 'package:unbound/views/onboarding/onboarding3.view.dart';
@@ -28,7 +27,6 @@ void main() async {
 
 bool loggedIn(BuildContext context) {
   final user = Provider.of<AuthUser?>(context, listen: false);
-  print("logged in:${user != null}");
   return user != null;
 }
 
@@ -111,7 +109,7 @@ final _router = GoRouter(
         }
 
         if (userData?.bio != null && userData?.bio != "" && userData?.interests != null && userData!.interests!.isNotEmpty) {
-          return '/feed';
+          return '/main';
         }
         return null;
       },
@@ -121,8 +119,8 @@ final _router = GoRouter(
       builder: (context, state) => const Onboarding4(),
     ),
     GoRoute(
-      path: "/feed",
-      builder: (context, state) => const FeedInProgress(),
+      path: "/main",
+      builder: (context, state) => const MainScreen(),
     ),
   ],
 );
