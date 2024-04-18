@@ -54,7 +54,55 @@ class DatabaseService {
     }
   }
 
-  Future uploadPost(UserData data, String uid, String text, List<String> links, XFile? file) async {
+  Future addLike(String postUid, String postType) async {
+    try {
+      switch (postType) {
+        case ("College"):
+          await collegePostCollection.doc(postUid).update({
+            "likes": FieldValue.arrayUnion([uid])
+          });
+          break;
+        case ("User"):
+          await userPostCollection.doc(postUid).update({
+            "likes": FieldValue.arrayUnion([uid])
+          });
+          break;
+        case ("Internship"):
+          await internshipPostCollection.doc(postUid).update({
+            "likes": FieldValue.arrayUnion([uid])
+          });
+          break;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future removeLike(String postUid, String postType) async {
+    try {
+      switch (postType) {
+        case ("College"):
+          await collegePostCollection.doc(postUid).update({
+            "likes": FieldValue.arrayRemove([uid])
+          });
+          break;
+        case ("User"):
+          await userPostCollection.doc(postUid).update({
+            "likes": FieldValue.arrayRemove([uid])
+          });
+          break;
+        case ("Internship"):
+          await internshipPostCollection.doc(postUid).update({
+            "likes": FieldValue.arrayRemove([uid])
+          });
+          break;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future uploadPost(UserData data, String text, List<String> links, XFile? file) async {
     try {
       if (file != null) {
         print('uploading file');

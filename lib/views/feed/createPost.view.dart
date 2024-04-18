@@ -157,9 +157,9 @@ class _CreatePostState extends State<CreatePost> {
               child: FilledButton(
                 style: lightExpand,
                 onPressed: () async {
-                    if (user?.uid != null) {
-                      router.go('/main');
-                    }
+                  if (user?.uid != null) {
+                    router.go('/main');
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -185,7 +185,7 @@ class _CreatePostState extends State<CreatePost> {
                 onPressed: () async {
                   if (_formKey.currentState?.validate() ?? false) {
                     if (user?.uid != null) {
-                      await DatabaseService(uid: user!.uid).uploadPost(userData!, user.uid, text, links, image);
+                      await DatabaseService(uid: user!.uid).uploadPost(userData!, text, links, image);
                       router.go('/main');
                     }
                   }
