@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/feed.model.dart';
+import 'package:unbound/model/user.model.dart';
 
 class PostWidget extends StatelessWidget {
   final Post post;
@@ -9,6 +12,7 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String uid = Provider.of<AuthUser?>(context)?.uid ?? "";
     return Column(
       children: [
         Container(
@@ -30,7 +34,7 @@ class PostWidget extends StatelessWidget {
                       children: [
                         Text(post.author,
                             style: Theme.of(context).textTheme.titleSmall),
-                        Text(post.time.toString(),
+                        Text(timeToString(post.time),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
@@ -63,10 +67,10 @@ class PostWidget extends StatelessWidget {
           child: Row(children: [
             InkWell(
               onTap: () {},
-              child: Icon(Ionicons.heart_outline, size: 18, color: white.shade800),
+              child: Icon(post.likes.contains(uid) ? Ionicons.heart : Ionicons.heart_outline, size: 18, color: post.likes.contains(uid) ? pink.shade300: white.shade800),
             ),
             const SizedBox(width: 6),
-            Text(post.likes.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
+            Text(post.likes.length.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
             const SizedBox(width: 12),
             InkWell(
               onTap: () {},
@@ -74,13 +78,36 @@ class PostWidget extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Expanded(child: Text(post.comments.length.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800))),
-            InkWell(
-              onTap: () {},
-              child: Icon(Ionicons.bookmark_outline, size: 18, color: white.shade800),
-            )
+            
           ]),
         )
       ],
     );
   }
+}
+
+String timeToString(Timestamp t) {
+  DateTime date = t.toDate();
+  DateTime now = DateTime.now();
+  Duration diff = now.difference(date);
+  if(diff.inDays >= 365) {
+    return "${(diff.inDays / 365).truncate()} year${(diff.inDays / 365).truncate() > 1 ? "s": ""} ago";
+  }
+  if(diff.inDays >= 30) {
+    return "${(diff.inDays / 30).truncate()} month${(diff.inDays / 30).truncate() > 1 ? "s": ""} ago";
+  }
+  if(diff.inDays >= 7) {
+    return "${(diff.inDays / 7).truncate()} week${(diff.inDays / 7).truncate() > 1 ? "s": ""} ago";
+  }
+  if(diff.inDays > 0) {
+    return "${diff.inDays} day${diff.inDays > 1 ? "s": ""} ago";
+  }
+  if(diff.inHours > 0) {
+    return "${diff.inHours} hour${diff.inHours > 1 ? "s": ""} ago";
+  }
+  if(diff.inMinutes > 0) {
+    return "${diff.inMinutes} minute${diff.inMinutes > 1 ? "s": ""} ago";
+    
+  }
+  return "Just now";
 }
