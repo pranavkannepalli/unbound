@@ -30,7 +30,7 @@ class PostWidget extends StatelessWidget {
                       children: [
                         Text(post.author,
                             style: Theme.of(context).textTheme.titleSmall),
-                        Text(post.time,
+                        Text(post.time.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall!
