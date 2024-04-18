@@ -46,6 +46,9 @@ dependencies:
     flutter_hooks: ^0.20.5
     google_sign_in: ^6.2.1
     ionicons: ^0.2.2
+    dotted_border: ^2.1.0
+    image_picker: ^1.1.0
+    firebase_storage: ^11.7.2
 
 dev_dependencies:
     flutter_test:
