@@ -63,7 +63,8 @@ class Account {
 
 class Post {
   late String author;
-  late String uid;
+  late String authorUid;
+  late String id;
   late String photo;
   late String pfp;
   late String text;
@@ -78,14 +79,15 @@ class Post {
       required this.text,
       required this.likes,
       required this.comments,
-      required this.uid,
+      required this.id,
       required this.photo,
       required this.time,
+      required this.authorUid,
       this.isJob = false});
 
   Post.fromJSON(Map<String, dynamic> data) {
     author = (data["author"] ?? "") as String;
-    uid = (data["id"] ?? "") as String;
+    id = (data["id"] ?? "") as String;
     pfp = (data["pfp"] ?? "") as String;
     photo = (data["photo"] ?? "") as String;
     text = (data["text"] ?? "") as String;
@@ -93,6 +95,7 @@ class Post {
     likes = (data['likes'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     Iterable<Comment> c = (data["comments"] as List<dynamic>).map((e) => Comment.fromJSON(e));
     comments = c.toList();
+    authorUid = (data["uid"] ?? "") as String;
     isJob = (data.containsKey("isJob") ? data["isJob"] ?? false : false) as bool;
   }
 
@@ -118,8 +121,7 @@ class Comment {
   late String pfp;
   late String uid;
 
-  Comment(
-      {required this.author, required this.text, required this.time,  required this.pfp, required this.uid});
+  Comment({required this.author, required this.text, required this.time, required this.pfp, required this.uid});
 
   Comment.fromJSON(Map<String, dynamic> data) {
     author = (data["author"] ?? "") as String;

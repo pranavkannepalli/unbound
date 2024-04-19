@@ -117,10 +117,31 @@ class DatabaseService {
           "uid": uid,
           "pfp": data.photo,
           "text": text,
-          "time": time,
           "likes": [],
           "comments": [],
+          "time": time,
           "photo": imageUrl,
+        };
+
+        final doc = await userPostCollection.add(json);
+
+        print('updating user data');
+        List<String>? posts = data.posts ?? [];
+        posts.add(doc.id);
+        DatabaseService(uid: uid).updateUserData({"posts": posts});
+      } else {
+        final time = Timestamp.now();
+
+        print('uploading post data');
+        Map<String, dynamic> json = {
+          "author": data.name,
+          "uid": uid,
+          "pfp": data.photo,
+          "text": text,
+          "likes": [],
+          "comments": [],
+          "time": time,
+          "photo": "",
         };
 
         final doc = await userPostCollection.add(json);

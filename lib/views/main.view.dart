@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
               onPressed: (() {
                 AuthService auth = AuthService();
                 auth.signOut();
-                GoRouter.of(context).go('/');
+                GoRouter.of(context).go('/landing');
               }),
               child: const Text("Sign Out")),
         ],

@@ -9,8 +9,7 @@ class PostWidget extends StatefulWidget {
   final Post post;
   final String uid;
   final String type;
-  const PostWidget(
-      {super.key, required this.post, required this.uid, required this.type});
+  const PostWidget({super.key, required this.post, required this.uid, required this.type});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -49,27 +48,18 @@ class _PostWidgetState extends State<PostWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.post.author,
-                            style: Theme.of(context).textTheme.titleSmall),
+                        Text(widget.post.author, style: Theme.of(context).textTheme.titleSmall),
                         Text(timeToString(widget.post.time),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: white.shade700))
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
                       ],
                     ),
                   ),
                   const SizedBox(width: 12),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Ionicons.person_add,
-                          size: 16, color: blue.shade600))
+                  IconButton(onPressed: () {}, icon: Icon(Ionicons.person_add, size: 16, color: blue.shade600))
                 ],
               ),
               const SizedBox(height: 12),
-              Text(widget.post.text,
-                  style: Theme.of(context).textTheme.bodyLarge,
-                  textAlign: TextAlign.left)
+              Text(widget.post.text, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.left)
             ],
           ),
         ),
@@ -87,30 +77,24 @@ class _PostWidgetState extends State<PostWidget> {
             InkWell(
               onTap: () async {
                 if (liked) {
-                  await DatabaseService(uid: widget.uid)
-                      .removeLike(widget.post.uid, widget.type);
+                  await DatabaseService(uid: widget.uid).removeLike(widget.post.id, widget.type);
                   setState(() {
                     liked = false;
                     likes--;
                   });
                 } else {
-                  await DatabaseService(uid: widget.uid)
-                      .addLike(widget.post.uid, widget.type);
+                  await DatabaseService(uid: widget.uid).addLike(widget.post.id, widget.type);
                   setState(() {
                     liked = true;
                     likes++;
                   });
                 }
               },
-              child: Icon(liked ? Ionicons.heart : Ionicons.heart_outline,
-                  size: 18, color: liked ? pink.shade300 : white.shade800),
+              child:
+                  Icon(liked ? Ionicons.heart : Ionicons.heart_outline, size: 18, color: liked ? pink.shade300 : white.shade800),
             ),
             const SizedBox(width: 6),
-            Text(likes.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: white.shade800)),
+            Text(likes.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
             const SizedBox(width: 12),
             InkWell(
               onTap: () {
@@ -121,13 +105,10 @@ class _PostWidgetState extends State<PostWidget> {
                         height: 400,
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(20),
-                              topRight: Radius.circular(20)),
+                          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                           color: white.shade50,
                         ),
                         child: ListView.separated(
-                          
                           separatorBuilder: (context, index) => const SizedBox(height: 12),
                           itemCount: widget.post.comments.length,
                           itemBuilder: (context, index) {
@@ -148,17 +129,10 @@ class _PostWidgetState extends State<PostWidget> {
                                       Row(
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: [
-                                          Text(comment.author,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleMedium),
+                                          Text(comment.author, style: Theme.of(context).textTheme.titleMedium),
                                           const SizedBox(width: 12),
                                           Text(timeToString(comment.time),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall!
-                                                  .copyWith(
-                                                      color: white.shade700))
+                                              style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
                                         ],
                                       ),
                                       Text(comment.text, style: Theme.of(context).textTheme.bodyMedium)
@@ -172,16 +146,12 @@ class _PostWidgetState extends State<PostWidget> {
                       );
                     });
               },
-              child: Icon(Ionicons.chatbox_ellipses_outline,
-                  size: 18, color: white.shade800),
+              child: Icon(Ionicons.chatbox_ellipses_outline, size: 18, color: white.shade800),
             ),
             const SizedBox(width: 6),
             Expanded(
                 child: Text(widget.post.comments.length.toString(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelLarge!
-                        .copyWith(color: white.shade800))),
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800))),
           ]),
         )
       ],
