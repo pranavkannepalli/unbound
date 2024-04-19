@@ -85,7 +85,7 @@ class Post {
 
   Post.fromJSON(Map<String, dynamic> data) {
     author = (data["author"] ?? "") as String;
-    uid = (data["uid"] ?? "") as String;
+    uid = (data["id"] ?? "") as String;
     pfp = (data["pfp"] ?? "") as String;
     photo = (data["photo"] ?? "") as String;
     text = (data["text"] ?? "") as String;
@@ -114,19 +114,17 @@ class Post {
 class Comment {
   late String author;
   late String text;
-  late String time;
-  late List<String> likes;
+  late Timestamp time;
   late String pfp;
   late String uid;
 
   Comment(
-      {required this.author, required this.text, required this.time, required this.likes, required this.pfp, required this.uid});
+      {required this.author, required this.text, required this.time,  required this.pfp, required this.uid});
 
   Comment.fromJSON(Map<String, dynamic> data) {
     author = (data["author"] ?? "") as String;
     text = (data["text"] ?? "") as String;
-    time = (data["time"] ?? "") as String;
-    likes = (data['likes'] as List?)?.map((item) => item as String).toList() ?? <String>[];
+    time = data["time"];
     pfp = (data["pfp"] ?? "") as String;
     uid = (data["uid"] ?? "") as String;
   }
@@ -136,7 +134,6 @@ class Comment {
     data["author"] = author;
     data["text"] = text;
     data["time"] = time;
-    data["likes"] = likes;
     data["pfp"] = pfp;
     return data;
   }
