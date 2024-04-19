@@ -151,6 +151,7 @@ class DatabaseService {
 
   Post _postFromSnapshot(QueryDocumentSnapshot snapshot) {
     Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+    d["id"] = snapshot.id;
     Post ret = Post.fromJSON(d);
     return ret;
   }
