@@ -70,7 +70,7 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                       color: white.shade50,
                       boxShadow: scrollPos > 0
                           ? [
-                              BoxShadow(
+                              const BoxShadow(
                                   color: Color.fromRGBO(0, 0, 0, 0.25),
                                   blurRadius: 16)
                             ]

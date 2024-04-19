@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/feed.model.dart';
-import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/database.dart';
 
 class PostWidget extends StatefulWidget {
