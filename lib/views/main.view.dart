@@ -6,6 +6,7 @@ import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/feed/feed.view.dart';
+import 'package:unbound/views/userProfile/profile.view.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,7 +16,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int index = 0;
+  int index = 2;
 
   Color getColor(int index) {
     if (index == 0) return const Color(0xFF9881A6);
@@ -30,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
     List<Widget> widgetOptions = <Widget>[
       const FeedPage(),
       const Center(child: Text("Improve")),
-      const Center(child: Text("Profile")),
+      const ProfileScreen(),
       Center(
           child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -50,31 +51,33 @@ class _MainScreenState extends State<MainScreen> {
     if (userData != null) {
       return Scaffold(
         body: widgetOptions.elementAt(index),
-        appBar: AppBar(
-          backgroundColor: white.shade50,
-          automaticallyImplyLeading: false,
-          toolbarHeight: 80,
-          titleSpacing: 0,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                  padding: const EdgeInsets.only(top: 30, left: 10),
-                  child: IconButton(
-                      onPressed: () {
-                        GoRouter.of(context).push("/createPost");
-                      },
-                      icon: const Icon(Ionicons.add_circle_outline))),
-              Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Text("Your Feed", style: Theme.of(context).textTheme.displaySmall)),
-              Padding(
-                padding: const EdgeInsets.only(top: 30, right: 10),
-                child: IconButton(onPressed: () {}, icon: const Icon(Ionicons.notifications_outline)),
+        appBar: index == 0
+            ? AppBar(
+                backgroundColor: white.shade50,
+                automaticallyImplyLeading: false,
+                toolbarHeight: 80,
+                titleSpacing: 0,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(top: 30, left: 10),
+                        child: IconButton(
+                            onPressed: () {
+                              GoRouter.of(context).push("/createPost");
+                            },
+                            icon: const Icon(Ionicons.add_circle_outline))),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 30),
+                        child: Text("Your Feed", style: Theme.of(context).textTheme.displaySmall)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30, right: 10),
+                      child: IconButton(onPressed: () {}, icon: const Icon(Ionicons.notifications_outline)),
+                    )
+                  ],
+                ),
               )
-            ],
-          ),
-        ),
+            : null,
         bottomNavigationBar: MediaQuery(
           data: const MediaQueryData(
             viewPadding: EdgeInsets.symmetric(vertical: 16),

@@ -12,6 +12,24 @@ class DatabaseService {
   final CollectionReference collegePostCollection = FirebaseFirestore.instance.collection("CollegePosts");
   final CollectionReference internshipPostCollection = FirebaseFirestore.instance.collection("InternshipPosts");
   final CollectionReference userPostCollection = FirebaseFirestore.instance.collection("UserPosts");
+  static final defaultUser = {
+    "name": "",
+    "email": "",
+    "grad": -1,
+    "state": "",
+    "school": "",
+    "interests": [],
+    "photo": "",
+    "bio": "",
+    "posts": [],
+    "tests": [],
+    "coursework": [],
+    "clubs": [],
+    "arts": [],
+    "sports": [],
+    "work": [],
+    "projects": [],
+  };
 
   DatabaseService({this.uid});
 
@@ -24,7 +42,25 @@ class DatabaseService {
   }
 
   Future<UserData?> getData() async {
-    return usersCollection.doc(uid).get().then((value) => _userDataFromSnapshot(value));
+    final snapshot = await usersCollection.doc(uid).get();
+    final userData = snapshot.data() as Map<String, dynamic>;
+
+    var pushData = <String, dynamic>{};
+    var needsPush = false;
+
+    for (var key in defaultUser.keys) {
+      if (!userData.containsKey(key)) {
+        pushData[key] = defaultUser[key];
+        userData[key] = defaultUser[key];
+        needsPush = true;
+      }
+    }
+
+    if (needsPush) {
+      await updateUserData(pushData);
+    }
+
+    return UserData.fromJson(userData);
   }
 
   Future<List<Feed>?> getFeeds() async {
