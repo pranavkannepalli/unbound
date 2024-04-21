@@ -11,18 +11,26 @@ ThemeData unboundTheme = ThemeData(
   ),
   canvasColor: const Color(0xFFFFFFFF),
   textTheme: TextTheme(
-    displayMedium: GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 36, fontWeight: FontWeight.w400, letterSpacing: 0),
-    displaySmall: GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 20, fontWeight: FontWeight.w400, letterSpacing: 0),
-    titleLarge: GoogleFonts.getFont("Poppins").copyWith(fontSize: 20, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
-    titleMedium: GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 16, height: 1.2, fontWeight: FontWeight.w400, letterSpacing: 0),
-    titleSmall: GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 14, height: 1.2, fontWeight: FontWeight.w400, letterSpacing: 0),
-    labelLarge: GoogleFonts.getFont("Poppins").copyWith(fontSize: 16, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
-    labelMedium: GoogleFonts.getFont("Poppins").copyWith(fontSize: 14, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
-    labelSmall: GoogleFonts.getFont("Poppins").copyWith(fontSize: 12, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
-    bodyLarge: GoogleFonts.getFont("Poppins").copyWith(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0),
-    bodyMedium: GoogleFonts.getFont("Poppins").copyWith(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0),
-    bodySmall: GoogleFonts.getFont("Poppins").copyWith(fontSize: 12, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0)
-  ),
+      displayMedium: GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 36, fontWeight: FontWeight.w400, letterSpacing: 0),
+      displaySmall: GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 20, fontWeight: FontWeight.w400, letterSpacing: 0),
+      titleLarge:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 20, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
+      titleMedium:
+          GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 16, height: 1.2, fontWeight: FontWeight.w400, letterSpacing: 0),
+      titleSmall:
+          GoogleFonts.getFont("DM Serif Text").copyWith(fontSize: 14, height: 1.2, fontWeight: FontWeight.w400, letterSpacing: 0),
+      labelLarge:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 16, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
+      labelMedium:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 14, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
+      labelSmall:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 12, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
+      bodyLarge:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0),
+      bodyMedium:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0),
+      bodySmall:
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 10, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0)),
 );
 
 const Map<int, Color> pinkSwatch = <int, Color>{
@@ -92,8 +100,8 @@ const Map<int, Color> whiteSwatch = <int, Color>{
 };
 
 const MaterialColor pink = MaterialColor(0xFFFF99CB, pinkSwatch);
-const MaterialColor yellow =  MaterialColor(0xFFFCF6BD, yellowSwatch);
-const MaterialColor green =  MaterialColor(0xFFD0F4DE, greenSwatch);
+const MaterialColor yellow = MaterialColor(0xFFFCF6BD, yellowSwatch);
+const MaterialColor green = MaterialColor(0xFFD0F4DE, greenSwatch);
 const MaterialColor blue = MaterialColor(0xFFA9DEF9, blueSwatch);
 const MaterialColor purple = MaterialColor(0xFFE4C1F9, purpleSwatch);
 const MaterialColor white = MaterialColor(0xFFE4E4E4, whiteSwatch);
