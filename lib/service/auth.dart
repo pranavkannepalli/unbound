@@ -51,7 +51,7 @@ class AuthService {
 
   Future signInWithGoogle() async {
     try {
-      final gUser = await GoogleSignIn().signIn();
+      final gUser = await GoogleSignIn(scopes: ["profile", "email"]).signIn();
       final gAuth = await gUser!.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: gAuth.accessToken,

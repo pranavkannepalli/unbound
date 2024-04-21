@@ -33,7 +33,7 @@ class DatabaseService {
       final collegePostQuery = await collegePostCollection.orderBy("time", descending: true).get();
       final collegePostData = collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
-      final collegeFeed = Feed(posts: collegePostData, recommended: []);
+      final collegeFeed = Feed(posts: collegePostData.take(5).toList(), recommended: []);
 
       final userPostQuery = await userPostCollection.orderBy("time", descending: true).get();
       final userPostData = userPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
@@ -41,12 +41,12 @@ class DatabaseService {
       final usersQuery = await usersCollection.get();
       final usersData = usersQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
 
-      final userFeed = Feed(posts: userPostData, recommended: usersData);
+      final userFeed = Feed(posts: userPostData.take(5).toList(), recommended: usersData.take(5).toList());
 
       final internshipPostQuery = await internshipPostCollection.orderBy("time", descending: true).get();
       final internshipPostData = internshipPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
-      final internshipFeed = Feed(posts: internshipPostData, recommended: []);
+      final internshipFeed = Feed(posts: internshipPostData.take(5).toList(), recommended: []);
 
       return [collegeFeed, userFeed, internshipFeed];
     } catch (e) {
