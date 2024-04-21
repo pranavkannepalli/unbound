@@ -4,17 +4,24 @@ class AuthUser {
 }
 
 class UserData {
-  String? name;
-  String? email;
-  int? grad;
-  String? state;
-  String? school;
-  List<String>? interests;
-  List<College>? colleges;
-  List<String>? posts;
-  String? photo;
-  String? bday;
-  String? bio;
+  String name;
+  String email;
+  int grad;
+  String state;
+  String school;
+  List<String> interests;
+  String photo;
+  String bday;
+  String bio;
+  List<String> posts;
+  List<TestScore> tests;
+  List<Course> courses;
+  List<Club> clubs;
+  List<Art> arts;
+  List<Sport> sports;
+  List<Work> works;
+  List<Project> projects;
+  List<String> colleges;
 
   UserData({
     required this.name,
@@ -28,6 +35,13 @@ class UserData {
     required this.bday,
     required this.bio,
     required this.posts,
+    required this.tests,
+    required this.courses,
+    required this.clubs,
+    required this.arts,
+    required this.sports,
+    required this.works,
+    required this.projects,
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -40,16 +54,14 @@ class UserData {
     String bio = json['bio'] ?? "";
     List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<String> posts = (json['posts'] as List?)?.map((item) => item as String).toList() ?? <String>[];
-    List<College> colleges = <College>[];
-    try {
-      if (json['colleges'] != null) {
-        json['colleges'].forEach((v) {
-          colleges.add(College.fromJson(v));
-        });
-      }
-    } catch (e) {
-      print(e);
-    }
+    List<String> colleges = (json['colleges'] as List?)?.map((item) => item as String).toList() ?? <String>[];
+    List<TestScore> tests = (json['tests'] as List?)?.map((item) => TestScore.fromJson(item)).toList() ?? <TestScore>[];
+    List<Course> courses = (json['coursework'] as List?)?.map((item) => Course.fromJson(item)).toList() ?? <Course>[];
+    List<Club> clubs = (json['clubs'] as List?)?.map((item) => Club.fromJson(item)).toList() ?? [];
+    List<Art> arts = (json['arts'] as List?)?.map((item) => Art.fromJson(item)).toList() ?? [];
+    List<Sport> sports = (json['sports'] as List?)?.map((item) => Sport.fromJson(item)).toList() ?? [];
+    List<Work> works = (json['sports'] as List?)?.map((item) => Work.fromJson(item)).toList() ?? [];
+    List<Project> projects = (json['projects'] as List?)?.map((item) => Project.fromJson(item)).toList() ?? [];
 
     String photo = json['photo'] ?? "";
 
@@ -65,6 +77,13 @@ class UserData {
       bday: bday,
       bio: bio,
       posts: posts,
+      tests: tests,
+      courses: courses,
+      clubs: clubs,
+      arts: arts,
+      sports: sports,
+      works: works,
+      projects: projects,
     );
   }
 
@@ -72,21 +91,181 @@ class UserData {
   String toString() => "$name $email";
 }
 
-class Interest {
-  final String name;
-  Interest({required this.name});
+class TestScore {
+  String name;
+  String score;
+  Map<String, dynamic> sectionScores;
+
+  TestScore({required this.name, required this.score, required this.sectionScores});
+
+  factory TestScore.fromJson(json) {
+    return TestScore(
+      name: json["name"] ?? "",
+      score: json["score"] ?? "",
+      sectionScores: json["sectionScores"] as Map<String, dynamic>,
+    );
+  }
 }
 
-class College {
-  String? name;
-  String? photo;
+class Course {
+  String name;
+  String years;
+  String score;
+  String description;
 
-  College({required this.name, required this.photo});
+  Course({required this.name, required this.score, required this.years, required this.description});
 
-  factory College.fromJson(Map<String, dynamic> json) {
-    String name = json['name'];
-    String photo = json['photo'];
+  factory Course.fromJson(json) {
+    return Course(
+      name: json["name"] ?? "",
+      score: json["score"] ?? "",
+      years: json["years"] ?? "",
+      description: json["description"] ?? "",
+    );
+  }
+}
 
-    return College(name: name, photo: photo);
+class Work {
+  String name;
+  String photo;
+  String score;
+  String description;
+
+  Work({required this.name, required this.score, required this.photo, required this.description});
+
+  factory Work.fromJson(json) {
+    return Work(
+      name: json["name"] ?? "",
+      score: json["score"] ?? "",
+      photo: json["photo"] ?? "",
+      description: json["description"] ?? "",
+    );
+  }
+}
+
+class Club {
+  String photo;
+  String name;
+  String years;
+  List<Role> roles;
+  List<Accomplishment> accomplishments;
+
+  Club({required this.photo, required this.name, required this.years, required this.roles, required this.accomplishments});
+
+  factory Club.fromJson(json) {
+    var photo = json["photo"] ?? "";
+    var name = json["name"] ?? "";
+    var years = json["years"] ?? "";
+    List<Role> roles = (json['roles'] as List?)?.map((item) => Role.fromJson(item)).toList() ?? <Role>[];
+    List<Accomplishment> accomplishments =
+        (json['accomplishments'] as List?)?.map((item) => Accomplishment.fromJson(item)).toList() ?? <Accomplishment>[];
+
+    return Club(photo: photo, name: name, years: years, roles: roles, accomplishments: accomplishments);
+  }
+}
+
+class Art {
+  List<String> photos;
+  String name;
+  String years;
+  List<Accomplishment> accomplishments;
+
+  Art({required this.photos, required this.name, required this.years, required this.accomplishments});
+
+  factory Art.fromJson(json) {
+    var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var name = json["name"] ?? "";
+    var years = json["years"] ?? "";
+    List<Accomplishment> accomplishments =
+        (json['accomplishments'] as List?)?.map((item) => Accomplishment.fromJson(item)).toList() ?? <Accomplishment>[];
+
+    return Art(photos: photos, name: name, years: years, accomplishments: accomplishments);
+  }
+}
+
+class Project {
+  List<String> photos;
+  String name;
+  String years;
+  List<String> skills;
+
+  Project({required this.photos, required this.name, required this.years, required this.skills});
+
+  factory Project.fromJson(json) {
+    var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var name = json["name"] ?? "";
+    var years = json["years"] ?? "";
+    var skills = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+
+    return Project(photos: photos, name: name, years: years, skills: skills);
+  }
+}
+
+class Sport {
+  List<String> photos;
+  String name;
+  String years;
+  List<Accomplishment> accomplishments;
+  Map<String, dynamic> stats;
+  String position;
+
+  Sport(
+      {required this.photos,
+      required this.name,
+      required this.years,
+      required this.position,
+      required this.accomplishments,
+      required this.stats});
+
+  factory Sport.fromJson(json) {
+    var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var name = json["name"] ?? "";
+    var years = json["years"] ?? "";
+    List<Accomplishment> accomplishments =
+        (json['accomplishments'] as List?)?.map((item) => Accomplishment.fromJson(item)).toList() ?? <Accomplishment>[];
+    var stats = json["stats"] as Map<String, dynamic>;
+    var position = json["position"] ?? "";
+
+    return Sport(photos: photos, name: name, years: years, position: position, accomplishments: accomplishments, stats: stats);
+  }
+}
+
+class Role {
+  String name;
+  String years;
+  String description;
+
+  Role({required this.name, required this.description, required this.years});
+
+  factory Role.fromJson(json) {
+    var name = json["name"] ?? "";
+    var years = json["years"] ?? "";
+    var description = json["description"] ?? "";
+
+    return Role(
+      name: name,
+      years: years,
+      description: description,
+    );
+  }
+}
+
+class Accomplishment {
+  String place;
+  String name;
+  String location;
+  String year;
+  String link;
+
+  Accomplishment({required this.place, required this.name, required this.location, required this.year, required this.link});
+
+  factory Accomplishment.fromJson(json) {
+    var name = json["name"] ?? "";
+    var place = json["place"] ?? "";
+    var location = json["location"] ?? "";
+    var year = json["year"] ?? "";
+    var link = json["link"] ?? "";
+
+    return Accomplishment(place: place, name: name, location: location, year: year, link: link);
   }
 }

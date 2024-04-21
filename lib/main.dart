@@ -109,7 +109,7 @@ final _router = GoRouter(
           return '/splash';
         }
 
-        if (userData?.bio != null && userData?.bio != "" && userData?.interests != null && userData!.interests!.isNotEmpty) {
+        if (userData?.bio != null && userData?.bio != "" && userData?.interests != null && userData!.interests.isNotEmpty) {
           return '/main';
         }
         return null;

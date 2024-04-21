@@ -21,6 +21,7 @@ class DatabaseService {
     "interests": [],
     "photo": "",
     "bio": "",
+    "bday": "",
     "posts": [],
     "tests": [],
     "coursework": [],
@@ -29,6 +30,7 @@ class DatabaseService {
     "sports": [],
     "work": [],
     "projects": [],
+    "colleges": [],
   };
 
   DatabaseService({this.uid});
@@ -162,9 +164,9 @@ class DatabaseService {
         final doc = await userPostCollection.add(json);
 
         print('updating user data');
-        List<String>? posts = data.posts ?? [];
+        List<String>? posts = data.posts;
         posts.add(doc.id);
-        DatabaseService(uid: uid).updateUserData({"posts": posts});
+        updateUserData({"posts": posts});
       } else {
         final time = Timestamp.now();
 
@@ -183,9 +185,9 @@ class DatabaseService {
         final doc = await userPostCollection.add(json);
 
         print('updating user data');
-        List<String>? posts = data.posts ?? [];
+        List<String>? posts = data.posts;
         posts.add(doc.id);
-        DatabaseService(uid: uid).updateUserData({"posts": posts});
+        updateUserData({"posts": posts});
       }
     } catch (e) {
       print(e);

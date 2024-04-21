@@ -57,7 +57,7 @@ class _Onboarding1State extends State<Onboarding1> {
                               Text("First Name", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                               const SizedBox(height: 6),
                               TextFormField(
-                                initialValue: userData?.name?.split(" ").elementAtOrNull(0) ?? "",
+                                initialValue: userData?.name.split(" ").elementAtOrNull(0) ?? "",
                                 decoration: textInputDecoration.copyWith(hintText: "John"),
                                 validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => fname = val,
@@ -75,12 +75,11 @@ class _Onboarding1State extends State<Onboarding1> {
                               Text("Last Name", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                               const SizedBox(height: 6),
                               TextFormField(
-                                initialValue: userData?.name?.split(" ").elementAtOrNull(1) ?? "",
-                                decoration: textInputDecoration.copyWith(hintText: "Doe"),
-                                validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
-                                onChanged: (val) => lname = val,
-                                style: Theme.of(context).textTheme.bodyLarge
-                              ),
+                                  initialValue: userData?.name.split(" ").elementAtOrNull(1) ?? "",
+                                  decoration: textInputDecoration.copyWith(hintText: "Doe"),
+                                  validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
+                                  onChanged: (val) => lname = val,
+                                  style: Theme.of(context).textTheme.bodyLarge),
                             ],
                           ),
                         ),

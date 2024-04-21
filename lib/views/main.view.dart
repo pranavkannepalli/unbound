@@ -6,7 +6,7 @@ import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/feed/feed.view.dart';
-import 'package:unbound/views/userProfile/profile.view.dart';
+import 'package:unbound/views/userProfile/userProfile.view.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
