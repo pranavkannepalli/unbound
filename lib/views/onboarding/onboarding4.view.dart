@@ -30,10 +30,7 @@ class Onboarding4 extends StatelessWidget {
               const SizedBox(
                 height: 40.0,
               ),
-              Text(
-                "Next Steps:",
-                style: Theme.of(context).textTheme.displaySmall
-              ),
+              Text("Next Steps:", style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(height: 32),
               FilledButton(
                 onPressed: () => router.go('/main'),
@@ -112,7 +109,7 @@ class Onboarding4 extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "Find Internships For You",
+                        "Find Companys For You",
                         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                               color: white.shade800,
                             ),

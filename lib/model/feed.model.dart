@@ -58,7 +58,7 @@ class Account {
   }
 
   @override
-  String toString() => "$name $uid";
+  String toString() => "$name $uid $pfp";
 }
 
 class Post {
