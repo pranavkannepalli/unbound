@@ -134,7 +134,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: currentData
-                                .where((element) => element.name.contains(query))
+                                .where((element) => element.name.toLowerCase().contains(query.toLowerCase()))
                                 .map((account) => Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [

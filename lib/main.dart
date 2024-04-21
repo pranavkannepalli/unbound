@@ -142,6 +142,22 @@ final _router = GoRouter(
       path: "/user",
       builder: (context, state) => UserProfile(uid: state.extra! as String),
     ),
+    GoRoute(
+      path: "/company",
+      builder: (context, state) => Scaffold(
+        body: Center(
+          child: Text(state.extra! as String),
+        ),
+      ),
+    ),
+    GoRoute(
+      path: "/college",
+      builder: (context, state) => Scaffold(
+        body: Center(
+          child: Text(state.extra! as String),
+        ),
+      ),
+    )
   ],
 );
 
