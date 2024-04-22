@@ -20,7 +20,6 @@ class AuthService {
       User? user = result.user;
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
       return e.toString();
     }
   }
@@ -34,7 +33,6 @@ class AuthService {
 
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
       return e.toString();
     }
   }
@@ -68,7 +66,6 @@ class AuthService {
 
       return _userFromFirebaseUser(user);
     } catch (e) {
-      print(e.toString());
       return e.toString();
     }
   }
@@ -76,9 +73,7 @@ class AuthService {
   Future signOut() async {
     try {
       await _auth.signOut();
-      print("signed out");
     } catch (e) {
-      print(e.toString());
       return null;
     }
   }
