@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:unbound/model/company.model.dart';
 import 'package:unbound/model/feed.model.dart';
 import 'package:unbound/model/user.model.dart';
 
@@ -50,6 +51,12 @@ class DatabaseService {
         await companiesCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
 
     return [[], users, companies];
+  }
+
+  Future<Company> getCompanyData(String id) async {
+    final snapshot = await companiesCollection.doc(id).get();
+    final companyData = snapshot.data() as Map<String, dynamic>;
+    return Company.fromJSON(companyData);
   }
 
   Future<UserData?> getData() async {
@@ -126,7 +133,6 @@ class DatabaseService {
         section: newData,
       });
     } catch (e) {
-      print(e.toString());
     }
   }
 
@@ -150,7 +156,6 @@ class DatabaseService {
           break;
       }
     } catch (e) {
-      print(e.toString());
     }
   }
 
@@ -181,13 +186,11 @@ class DatabaseService {
   Future uploadPost(UserData data, String text, List<String> links, XFile? file) async {
     try {
       if (file != null) {
-        print('uploading file');
         final time = Timestamp.now();
         final reference = FirebaseStorage.instance.ref().child('/images/$uid$time');
         await reference.putFile(File(file.path));
         String imageUrl = await reference.getDownloadURL();
 
-        print('uploading post data');
         Map<String, dynamic> json = {
           "author": data.name,
           "uid": uid,
@@ -201,14 +204,12 @@ class DatabaseService {
 
         final doc = await userPostCollection.add(json);
 
-        print('updating user data');
         List<String>? posts = data.posts;
         posts.add(doc.id);
         updateUserData({"posts": posts});
       } else {
         final time = Timestamp.now();
 
-        print('uploading post data');
         Map<String, dynamic> json = {
           "author": data.name,
           "uid": uid,
@@ -222,7 +223,6 @@ class DatabaseService {
 
         final doc = await userPostCollection.add(json);
 
-        print('updating user data');
         List<String>? posts = data.posts;
         posts.add(doc.id);
         updateUserData({"posts": posts});
@@ -237,11 +237,9 @@ class DatabaseService {
       Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
       UserData ret = UserData.fromJson(d);
 
-      print('User Data received: $ret');
 
       return ret;
     } catch (error) {
-      print('errored');
       return null;
     }
   }
