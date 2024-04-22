@@ -171,7 +171,6 @@ class SearchAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(account);
 
     return TextButton(
       child: Row(
