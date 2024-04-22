@@ -9,6 +9,7 @@ import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/authentication/signin.view.dart';
 import 'package:unbound/views/authentication/landing.view.dart';
 import 'package:unbound/views/authentication/signup.view.dart';
+import 'package:unbound/views/company/profile.view.dart';
 import 'package:unbound/views/feed/createPost.view.dart';
 import 'package:unbound/views/main.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
@@ -148,11 +149,7 @@ final _router = GoRouter(
     ),
     GoRoute(
       path: "/company",
-      builder: (context, state) => Scaffold(
-        body: Center(
-          child: Text(state.extra! as String),
-        ),
-      ),
+      builder: (context, state) => CompanyProfile(uid: state.extra! as String)
     ),
     GoRoute(
       path: "/college",
