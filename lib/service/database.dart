@@ -9,8 +9,9 @@ import 'package:unbound/model/user.model.dart';
 class DatabaseService {
   final String? uid;
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection("Users");
+  final CollectionReference companiesCollection = FirebaseFirestore.instance.collection("Companies");
   final CollectionReference collegePostCollection = FirebaseFirestore.instance.collection("CollegePosts");
-  final CollectionReference internshipPostCollection = FirebaseFirestore.instance.collection("InternshipPosts");
+  final CollectionReference companyPostCollection = FirebaseFirestore.instance.collection("CompanyPosts");
   final CollectionReference userPostCollection = FirebaseFirestore.instance.collection("UserPosts");
   static final defaultUser = {
     "name": "",
@@ -43,6 +44,14 @@ class DatabaseService {
     return usersCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
+  Future<List<List<Account>>> getUsers() async {
+    final users = await usersCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
+    final companies =
+        await companiesCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
+
+    return [[], users, companies];
+  }
+
   Future<UserData?> getData() async {
     final snapshot = await usersCollection.doc(uid).get();
     final userData = snapshot.data() as Map<String, dynamic>;
@@ -65,8 +74,10 @@ class DatabaseService {
     return UserData.fromJson(userData);
   }
 
+  // TODO: build fetching for companies and colleges
+
   Future<List<Feed>?> getFeeds() async {
-    // Return three feeds: college, people, internships
+    // Return three feeds: college, people, companies
     try {
       final collegePostQuery = await collegePostCollection.orderBy("time", descending: true).get();
       final collegePostData = collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
@@ -81,12 +92,15 @@ class DatabaseService {
 
       final userFeed = Feed(posts: userPostData.take(5).toList(), recommended: usersData.take(5).toList());
 
-      final internshipPostQuery = await internshipPostCollection.orderBy("time", descending: true).get();
-      final internshipPostData = internshipPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
+      final companyPostQuery = await companyPostCollection.orderBy("time", descending: true).get();
+      final companyPostData = companyPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
-      final internshipFeed = Feed(posts: internshipPostData.take(5).toList(), recommended: []);
+      final companiesQuery = await companiesCollection.get();
+      final companiesData = companiesQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
 
-      return [collegeFeed, userFeed, internshipFeed];
+      final companyFeed = Feed(posts: companyPostData.take(5).toList(), recommended: companiesData.take(5).toList());
+
+      return [collegeFeed, userFeed, companyFeed];
     } catch (e) {
       return null;
     }
@@ -105,8 +119,8 @@ class DatabaseService {
             "likes": FieldValue.arrayUnion([uid])
           });
           break;
-        case ("Internship"):
-          await internshipPostCollection.doc(postUid).update({
+        case ("Company"):
+          await companyPostCollection.doc(postUid).update({
             "likes": FieldValue.arrayUnion([uid])
           });
           break;
@@ -129,8 +143,8 @@ class DatabaseService {
             "likes": FieldValue.arrayRemove([uid])
           });
           break;
-        case ("Internship"):
-          await internshipPostCollection.doc(postUid).update({
+        case ("Company"):
+          await companyPostCollection.doc(postUid).update({
             "likes": FieldValue.arrayRemove([uid])
           });
           break;

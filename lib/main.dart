@@ -15,7 +15,9 @@ import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/onboarding/onboarding2.view.dart';
 import 'package:unbound/views/onboarding/onboarding3.view.dart';
 import 'package:unbound/views/onboarding/onboarding4.view.dart';
+import 'package:unbound/views/search/search.view.dart';
 import 'package:unbound/views/splash.view.dart';
+import 'package:unbound/views/user/profile.view.dart';
 import 'package:unbound/views/userDataProvider.dart';
 
 void main() async {
@@ -132,8 +134,34 @@ final _router = GoRouter(
       path: "/createPost",
       builder: (context, state) => const CreatePost(),
     ),
+    GoRoute(
+      path: "/search",
+      builder: (context, state) => Search(initialQuery: state.extra! as String),
+    ),
+    GoRoute(
+      path: "/user",
+      builder: (context, state) => UserProfile(uid: state.extra! as String),
+    ),
+    GoRoute(
+      path: "/company",
+      builder: (context, state) => Scaffold(
+        body: Center(
+          child: Text(state.extra! as String),
+        ),
+      ),
+    ),
+    GoRoute(
+      path: "/college",
+      builder: (context, state) => Scaffold(
+        body: Center(
+          child: Text(state.extra! as String),
+        ),
+      ),
+    )
   ],
 );
+
+// TODO: build pages for companies and colleges
 
 class Unbound extends StatelessWidget {
   const Unbound({super.key});
