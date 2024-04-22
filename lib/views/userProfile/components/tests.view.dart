@@ -11,7 +11,7 @@ class Tests extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         border: Border.symmetric(
           horizontal: BorderSide(width: 1.0, color: white.shade300),
