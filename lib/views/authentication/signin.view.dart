@@ -94,7 +94,6 @@ class _SignInState extends State<SignIn> {
                       });
                     } else {
                       GoRouter.of(context).go("/onboarding1");
-                      print(result.uid);
                     }
                   },
                   style: lightExpand,
@@ -141,7 +140,6 @@ class _SignInState extends State<SignIn> {
                     });
                   } else {
                     GoRouter.of(context).go("/onboarding1");
-                    print(result.uid);
                   }
                 }
               },

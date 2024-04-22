@@ -226,7 +226,6 @@ class _SignUpState extends State<SignUp> {
                     });
                   } else {
                     GoRouter.of(context).go("/onboarding1");
-                    print(result.uid);
                   }
                 }
               },
