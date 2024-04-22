@@ -19,6 +19,10 @@ import 'package:unbound/views/search/search.view.dart';
 import 'package:unbound/views/splash.view.dart';
 import 'package:unbound/views/user/profile.view.dart';
 import 'package:unbound/views/userDataProvider.dart';
+import 'package:unbound/views/userProfile/add/add_course.view.dart';
+import 'package:unbound/views/userProfile/add/add_test.view.dart';
+import 'package:unbound/views/userProfile/edit/edit_course.view.dart';
+import 'package:unbound/views/userProfile/edit/edit_test.view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -157,7 +161,23 @@ final _router = GoRouter(
           child: Text(state.extra! as String),
         ),
       ),
-    )
+    ),
+    GoRoute(
+      path: "/addTest",
+      builder: (context, state) => const AddTest(),
+    ),
+    GoRoute(
+      path: "/editTest",
+      builder: (context, state) => EditTest(old: state.extra! as TestScore),
+    ),
+    GoRoute(
+      path: "/addCourse",
+      builder: (context, state) => const AddCourse(),
+    ),
+    GoRoute(
+      path: "/editCourse",
+      builder: (context, state) => EditCourse(old: state.extra! as Course),
+    ),
   ],
 );
 
