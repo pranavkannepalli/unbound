@@ -176,10 +176,21 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                 ),
                 SingleChildScrollView(
-                  child: Clubs(clubs: userData.clubs),
+                  child: Column(
+                    children: [
+                      Clubs(clubs: userData.clubs),
+                      Arts(arts: userData.arts),
+                      Sports(sports: userData.sports)
+                    ],
+                  ),
                 ),
                 SingleChildScrollView(
-                  child: Text("Experiences"),
+                  child: Column(
+                    children: [
+                      Works(works: userData.works),
+                      Projects(projects: userData.projects)
+                    ]
+                  )
                 )
               ],
             ),
