@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
-import 'package:unbound/service/database.dart';
 
-class Coursework extends StatelessWidget {
-  final List<Course> courses;
+class Projects extends StatelessWidget {
+  final List<Project> projects;
 
-  const Coursework({super.key, required this.courses});
+  const Projects({super.key, required this.projects});
 
   @override
   Widget build(BuildContext context) {
-    AuthUser? user = Provider.of<AuthUser?>(context);
+    createKVPair(title, data) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("$title:", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+            Text(data.toString()),
+            const SizedBox(height: 6.0),
+          ],
+        );
+
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
@@ -28,28 +33,28 @@ class Coursework extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text("Coursework", style: Theme.of(context).textTheme.displaySmall),
+                child: Text("Projects", style: Theme.of(context).textTheme.displaySmall),
               ),
               IconButton(
                 icon: Icon(
                   Ionicons.add_circle,
                   color: blue.shade600,
                 ),
-                onPressed: () {
-                  GoRouter.of(context).push('/addCourse');
-                },
+                onPressed: () {},
               ),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: courses
+            children: projects
                 .map(
                   (e) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(height: 12.0),
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Expanded(
                             child:
@@ -60,18 +65,14 @@ class Coursework extends StatelessWidget {
                               Ionicons.pencil,
                               color: blue.shade600,
                             ),
-                            onPressed: () {
-                              GoRouter.of(context).push("/editCourse", extra: e);
-                            },
+                            onPressed: () {},
                           ),
                           IconButton(
                             icon: Icon(
                               Ionicons.trash,
                               color: white.shade700,
                             ),
-                            onPressed: () async {
-                              await DatabaseService(uid: user!.uid).deleteObject("coursework", e.toJson());
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       ),
@@ -82,8 +83,24 @@ class Coursework extends StatelessWidget {
                       Text("Description", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                       Text(e.description),
                       const SizedBox(height: 6.0),
-                      Text("Score", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                      Text(e.score),
+                      Text("Skills", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                      Text(e.skills.toString().substring(1, e.skills.toString().length - 1)),
+                      const SizedBox(height: 6.0),
+                      if (e.photos.isNotEmpty)
+                        Text(
+                          "Photos",
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      Row(
+                        children: e.photos
+                            .map(
+                              (url) => Image(
+                                image: NetworkImage(url),
+                                height: 40.0,
+                              ),
+                            )
+                            .toList(),
+                      ),
                     ],
                   ),
                 )

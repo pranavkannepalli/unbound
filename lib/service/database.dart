@@ -106,6 +106,30 @@ class DatabaseService {
     }
   }
 
+  Future addObject(String section, Map<String, dynamic> json) async {
+    await usersCollection.doc(uid).update({
+      section: FieldValue.arrayUnion([json])
+    });
+  }
+
+  Future deleteObject(String section, Map<String, dynamic> json) async {
+    await usersCollection.doc(uid).update({
+      section: FieldValue.arrayRemove([json])
+    });
+  }
+
+  Future editObject(String section, Map<String, dynamic> userData, Map<String, dynamic> newJson, int index) async {
+    try {
+      var newData = userData[section] as List<Map<String, dynamic>>;
+      newData[index] = newJson;
+      await usersCollection.doc(uid).update({
+        section: newData,
+      });
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future addLike(String postUid, String postType) async {
     try {
       switch (postType) {

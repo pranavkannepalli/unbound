@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
+import 'package:unbound/service/database.dart';
 
 class Tests extends StatelessWidget {
   final List<TestScore> tests;
@@ -10,6 +13,8 @@ class Tests extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthUser? user = Provider.of<AuthUser?>(context);
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -31,7 +36,9 @@ class Tests extends StatelessWidget {
                   Ionicons.add_circle,
                   color: blue.shade600,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context).push('/addTest');
+                },
               ),
             ],
           ),
@@ -54,14 +61,18 @@ class Tests extends StatelessWidget {
                               Ionicons.pencil,
                               color: blue.shade600,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              GoRouter.of(context).push('/editTest', extra: e);
+                            },
                           ),
                           IconButton(
                             icon: Icon(
                               Ionicons.trash,
                               color: white.shade700,
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await DatabaseService(uid: user!.uid).deleteObject("tests", e.toJson());
+                            },
                           ),
                         ],
                       ),

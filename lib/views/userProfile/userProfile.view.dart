@@ -4,9 +4,13 @@ import "package:ionicons/ionicons.dart";
 import "package:provider/provider.dart";
 import "package:unbound/common/theme.dart";
 import "package:unbound/model/user.model.dart";
+import "package:unbound/views/userProfile/components/arts.view.dart";
 import "package:unbound/views/userProfile/components/clubs.view.dart";
 import "package:unbound/views/userProfile/components/coursework.view.dart";
+import "package:unbound/views/userProfile/components/projects.view.dart";
+import "package:unbound/views/userProfile/components/sports.view.dart";
 import "package:unbound/views/userProfile/components/tests.view.dart";
+import "package:unbound/views/userProfile/components/work.view.dart";
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -179,7 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

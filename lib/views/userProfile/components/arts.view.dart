@@ -3,10 +3,10 @@ import 'package:ionicons/ionicons.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
 
-class Clubs extends StatelessWidget {
-  final List<Club> clubs;
+class Arts extends StatelessWidget {
+  final List<Art> arts;
 
-  const Clubs({super.key, required this.clubs});
+  const Arts({super.key, required this.arts});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class Clubs extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text("Clubs", style: Theme.of(context).textTheme.displaySmall),
+                child: Text("Arts", style: Theme.of(context).textTheme.displaySmall),
               ),
               IconButton(
                 icon: Icon(
@@ -46,7 +46,7 @@ class Clubs extends StatelessWidget {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: clubs
+            children: arts
                 .map(
                   (e) => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,28 +80,21 @@ class Clubs extends StatelessWidget {
                       Text("Time Period", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                       Text(e.years),
                       const SizedBox(height: 12.0),
-                      Text(
-                        "Roles",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: e.roles
-                              .map((e) => Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 6.0),
-                                      Text(
-                                        e.name,
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                                      ),
-                                      createKVPair("Description", e.description),
-                                      createKVPair("Time Period", e.years),
-                                    ],
-                                  ))
+                      if (e.photos.isNotEmpty)
+                        Text(
+                          "Photos",
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      Row(
+                          children: e.photos
+                              .map(
+                                (url) => Image(
+                                  image: NetworkImage(url),
+                                  height: 40.0,
+                                ),
+                              )
                               .toList()),
+                      const SizedBox(height: 12.0),
                       Text(
                         "Accomplishments",
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),

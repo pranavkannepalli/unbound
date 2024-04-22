@@ -60,7 +60,7 @@ class UserData {
     List<Club> clubs = (json['clubs'] as List?)?.map((item) => Club.fromJson(item)).toList() ?? [];
     List<Art> arts = (json['arts'] as List?)?.map((item) => Art.fromJson(item)).toList() ?? [];
     List<Sport> sports = (json['sports'] as List?)?.map((item) => Sport.fromJson(item)).toList() ?? [];
-    List<Work> works = (json['sports'] as List?)?.map((item) => Work.fromJson(item)).toList() ?? [];
+    List<Work> works = (json['work'] as List?)?.map((item) => Work.fromJson(item)).toList() ?? [];
     List<Project> projects = (json['projects'] as List?)?.map((item) => Project.fromJson(item)).toList() ?? [];
 
     String photo = json['photo'] ?? "";
@@ -89,6 +89,29 @@ class UserData {
 
   @override
   String toString() => "$name $email";
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "email": email,
+      "grad": grad,
+      "school": school,
+      "state": state,
+      "interests": interests,
+      "colleges": colleges,
+      "photo": photo,
+      "bday": bday,
+      "bio": bio,
+      "posts": posts,
+      "tests": tests.map((e) => e.toJson()).toList(),
+      "courses": courses.map((e) => e.toJson()).toList(),
+      "clubs": clubs.map((e) => e.toJson()).toList(),
+      "arts": arts.map((e) => e.toJson()).toList(),
+      "sports": sports.map((e) => e.toJson()).toList(),
+      "work": works.map((e) => e.toJson()).toList(),
+      "projects": projects.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class TestScore {
@@ -104,6 +127,14 @@ class TestScore {
       score: json["score"] ?? "",
       sectionScores: json["sectionScores"] as Map<String, dynamic>,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "score": score,
+      "sectionScores": sectionScores,
+    };
   }
 }
 
@@ -123,23 +154,41 @@ class Course {
       description: json["description"] ?? "",
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "score": score,
+      "years": years,
+      "description": description,
+    };
+  }
 }
 
 class Work {
   String name;
   String photo;
-  String score;
+  String years;
   String description;
 
-  Work({required this.name, required this.score, required this.photo, required this.description});
+  Work({required this.name, required this.years, required this.photo, required this.description});
 
   factory Work.fromJson(json) {
     return Work(
       name: json["name"] ?? "",
-      score: json["score"] ?? "",
+      years: json["years"] ?? "",
       photo: json["photo"] ?? "",
       description: json["description"] ?? "",
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "years": years,
+      "photo": photo,
+      "description": description,
+    };
   }
 }
 
@@ -162,6 +211,16 @@ class Club {
 
     return Club(photo: photo, name: name, years: years, roles: roles, accomplishments: accomplishments);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "photo": photo,
+      "name": name,
+      "years": years,
+      "roles": roles.map((e) => e.toJson()).toList(),
+      "accomplishments": accomplishments.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class Art {
@@ -181,6 +240,15 @@ class Art {
 
     return Art(photos: photos, name: name, years: years, accomplishments: accomplishments);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "photos": photos,
+      "name": name,
+      "years": years,
+      "accomplishments": accomplishments.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class Project {
@@ -188,16 +256,28 @@ class Project {
   String name;
   String years;
   List<String> skills;
+  String description;
 
-  Project({required this.photos, required this.name, required this.years, required this.skills});
+  Project({required this.photos, required this.name, required this.years, required this.skills, required this.description});
 
   factory Project.fromJson(json) {
     var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
     var name = json["name"] ?? "";
     var years = json["years"] ?? "";
-    var skills = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var description = json["description"] ?? "";
+    var skills = (json['skills'] as List?)?.map((item) => item as String).toList() ?? [];
 
-    return Project(photos: photos, name: name, years: years, skills: skills);
+    return Project(photos: photos, name: name, years: years, skills: skills, description: description);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "photos": photos,
+      "name": name,
+      "years": years,
+      "description": description,
+      "skills": skills,
+    };
   }
 }
 
@@ -228,6 +308,16 @@ class Sport {
 
     return Sport(photos: photos, name: name, years: years, position: position, accomplishments: accomplishments, stats: stats);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "photos": photos,
+      "name": name,
+      "years": years,
+      "accomplishments": accomplishments.map((e) => e.toJson()).toList(),
+      "position": "position",
+    };
+  }
 }
 
 class Role {
@@ -248,6 +338,14 @@ class Role {
       description: description,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "years": years,
+      "description": description,
+    };
+  }
 }
 
 class Accomplishment {
@@ -267,5 +365,9 @@ class Accomplishment {
     var link = json["link"] ?? "";
 
     return Accomplishment(place: place, name: name, location: location, year: year, link: link);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {"name": name, "place": place, "location": location, "year": year, "link": link};
   }
 }
