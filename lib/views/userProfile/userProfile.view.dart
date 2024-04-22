@@ -1,16 +1,13 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
 import "package:ionicons/ionicons.dart";
 import "package:provider/provider.dart";
 import "package:unbound/common/theme.dart";
 import "package:unbound/model/user.model.dart";
-import "package:unbound/views/userProfile/components/arts.view.dart";
 import "package:unbound/views/userProfile/components/clubs.view.dart";
 import "package:unbound/views/userProfile/components/coursework.view.dart";
-import "package:unbound/views/userProfile/components/projects.view.dart";
-import "package:unbound/views/userProfile/components/sports.view.dart";
 import "package:unbound/views/userProfile/components/tests.view.dart";
-import "package:unbound/views/userProfile/components/work.view.dart";
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -81,8 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       return ints;
     }
 
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
+    return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -135,9 +131,7 @@ class _ProfileScreenState extends State<ProfileScreen>
             ),
           ),
           TabBar(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
             controller: controller,
-            isScrollable: true,
             overlayColor: MaterialStateProperty.resolveWith((states) {
               if (states.contains(MaterialState.pressed)) {
                 return white.shade300;
@@ -147,7 +141,6 @@ class _ProfileScreenState extends State<ProfileScreen>
             indicator: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(color: white.shade900, width: 2))),
-            tabAlignment: TabAlignment.start,
             labelPadding: const EdgeInsets.symmetric(horizontal: 20),
             labelStyle: Theme.of(context).textTheme.bodyMedium,
             indicatorPadding: const EdgeInsets.symmetric(horizontal: -20),
@@ -156,14 +149,15 @@ class _ProfileScreenState extends State<ProfileScreen>
                 text: "Academics",
               ),
               Tab(
-                text: "Extracurriculars",
+                text: "Activities",
               ),
               Tab(
                 text: "Experiences",
               ),
             ],
           ),
-          Expanded(
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
             child: TabBarView(
               controller: controller,
               children: [
@@ -176,25 +170,14 @@ class _ProfileScreenState extends State<ProfileScreen>
                   ),
                 ),
                 SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Clubs(clubs: userData.clubs),
-                      Arts(arts: userData.arts),
-                      Sports(sports: userData.sports)
-                    ],
-                  ),
+                  child: Clubs(clubs: userData.clubs),
                 ),
                 SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Works(works: userData.works),
-                      Projects(projects: userData.projects)
-                    ]
-                  )
+                  child: Text("Experiences"),
                 )
               ],
             ),
-          ),
+          )
         ],
       ),
     );
