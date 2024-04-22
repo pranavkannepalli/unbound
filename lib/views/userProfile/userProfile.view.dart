@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter/widgets.dart";
 import "package:ionicons/ionicons.dart";
 import "package:provider/provider.dart";
 import "package:unbound/common/theme.dart";
@@ -18,7 +19,23 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController controller;
+
+  @override
+  initState() {
+    super.initState();
+    controller = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     UserData? userData = Provider.of<UserData?>(context);
@@ -27,7 +44,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     createKVPair(title, data) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("$title:", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+            Text("$title:",
+                style: Theme.of(context)
+                    .textTheme
+                    .labelSmall!
+                    .copyWith(color: white.shade700)),
             Text(data.toString()),
             gap
           ],
@@ -50,7 +71,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
               color: bgColor.elementAt(i % bgColor.length),
             ),
             child: Text(userData.interests.elementAt(i),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor.elementAt(i % textColor.length))),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: textColor.elementAt(i % textColor.length))),
           );
 
           ints.add(n);
@@ -59,7 +81,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return ints;
     }
 
-    return SingleChildScrollView(
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -86,7 +109,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Row(
                   children: [
                     Expanded(
-                      child: Text("Basic Info", style: Theme.of(context).textTheme.displaySmall),
+                      child: Text("Basic Info",
+                          style: Theme.of(context).textTheme.displaySmall),
                     ),
                     IconButton(
                       icon: Icon(
@@ -110,13 +134,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ],
             ),
           ),
-          Tests(tests: userData.tests),
-          Coursework(courses: userData.courses),
-          Clubs(clubs: userData.clubs),
-          Arts(arts: userData.arts),
-          Sports(sports: userData.sports),
-          Works(works: userData.works),
-          Projects(projects: userData.projects),
+          TabBar(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            controller: controller,
+            isScrollable: true,
+            overlayColor: MaterialStateProperty.resolveWith((states) {
+              if (states.contains(MaterialState.pressed)) {
+                return white.shade300;
+              }
+              return Colors.transparent;
+            }),
+            indicator: BoxDecoration(
+                border: Border(
+                    bottom: BorderSide(color: white.shade900, width: 2))),
+            tabAlignment: TabAlignment.start,
+            labelPadding: const EdgeInsets.symmetric(horizontal: 20),
+            labelStyle: Theme.of(context).textTheme.bodyMedium,
+            indicatorPadding: const EdgeInsets.symmetric(horizontal: -20),
+            tabs: const [
+              Tab(
+                text: "Academics",
+              ),
+              Tab(
+                text: "Extracurriculars",
+              ),
+              Tab(
+                text: "Experiences",
+              ),
+            ],
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: controller,
+              children: [
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Tests(tests: userData.tests),
+                      Coursework(courses: userData.courses),
+                    ],
+                  ),
+                ),
+                SingleChildScrollView(
+                  child: Clubs(clubs: userData.clubs),
+                ),
+                SingleChildScrollView(
+                  child: Text("Experiences"),
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
