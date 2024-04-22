@@ -29,7 +29,6 @@ class _Onboarding3State extends State<Onboarding3> {
     final router = GoRouter.of(context);
 
     if (userData?.interests != null && !userDataTried) {
-      print("setting state");
       setState(() {
         interests = userData!.interests as List<String>;
         userDataTried = true;
