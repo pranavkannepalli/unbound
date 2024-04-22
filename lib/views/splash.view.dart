@@ -10,10 +10,12 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  late Timer t;
+
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 5), () {
+    t = Timer(const Duration(seconds: 5), () {
       GoRouter.of(context).go("/landing");
     });
   }
@@ -21,6 +23,7 @@ class _SplashState extends State<Splash> {
   @override
   void dispose() {
     super.dispose();
+    t.cancel();
   }
 
   @override
