@@ -24,7 +24,7 @@ ThemeData unboundTheme = ThemeData(
       labelMedium:
           GoogleFonts.getFont("Poppins").copyWith(fontSize: 14, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
       labelSmall:
-          GoogleFonts.getFont("Poppins").copyWith(fontSize: 12, fontWeight: FontWeight.w600, height: 1.2, letterSpacing: 0),
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 12, fontWeight: FontWeight.w700, height: 1.2, letterSpacing: 0),
       bodyLarge:
           GoogleFonts.getFont("Poppins").copyWith(fontSize: 16, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0),
       bodyMedium:
