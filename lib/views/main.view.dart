@@ -16,7 +16,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int index = 2;
+  int index = 0;
 
   Color getColor(int index) {
     if (index == 0) return const Color(0xFF9881A6);

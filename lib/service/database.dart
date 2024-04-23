@@ -12,7 +12,7 @@ class DatabaseService {
   final CollectionReference usersCollection = FirebaseFirestore.instance.collection("Users");
   final CollectionReference companiesCollection = FirebaseFirestore.instance.collection("Companies");
   final CollectionReference collegePostCollection = FirebaseFirestore.instance.collection("CollegePosts");
-  final CollectionReference companyPostCollection = FirebaseFirestore.instance.collection("CompanyPosts");
+  final CollectionReference companyPostCollection = FirebaseFirestore.instance.collection("InternshipPosts");
   final CollectionReference userPostCollection = FirebaseFirestore.instance.collection("UserPosts");
   static final defaultUser = {
     "name": "",
@@ -104,7 +104,6 @@ class DatabaseService {
 
       final companiesQuery = await companiesCollection.get();
       final companiesData = companiesQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
-
       final companyFeed = Feed(posts: companyPostData.take(5).toList(), recommended: companiesData.take(5).toList());
 
       return [collegeFeed, userFeed, companyFeed];
