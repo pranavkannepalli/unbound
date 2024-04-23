@@ -5,8 +5,8 @@ import 'package:unbound/model/user.model.dart';
 
 class Clubs extends StatelessWidget {
   final List<Club> clubs;
-
-  const Clubs({super.key, required this.clubs});
+  final GlobalKey headerKey;
+  const Clubs({super.key, required this.clubs, required this.headerKey});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,9 @@ class Clubs extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(width: 1.0, color: white.shade300),
+        border: Border(
+          top: BorderSide(width: 10.0, color: white.shade300),
+          bottom: BorderSide(width: 1.0, color: white.shade300),
         ),
       ),
       child: Column(
@@ -31,6 +32,7 @@ class Clubs extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            key: headerKey,
             children: [
               Expanded(
                 child: Text("Clubs", style: Theme.of(context).textTheme.displaySmall),

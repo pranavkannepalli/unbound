@@ -8,39 +8,45 @@ import 'package:unbound/service/database.dart';
 
 class Tests extends StatelessWidget {
   final List<TestScore> tests;
-
-  const Tests({super.key, required this.tests});
+  final GlobalKey headerKey;
+  const Tests({super.key, required this.tests, required this.headerKey});
 
   @override
   Widget build(BuildContext context) {
     AuthUser? user = Provider.of<AuthUser?>(context);
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
       decoration: BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(width: 1.0, color: white.shade300),
+        border: Border(
+          top: BorderSide(width: 10, color: white.shade300),
+          bottom: BorderSide(width: 1.0, color: white.shade300),
         ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text("Standardized Tests", style: Theme.of(context).textTheme.displaySmall),
-              ),
-              IconButton(
-                icon: Icon(
-                  Ionicons.add_circle,
-                  color: blue.shade600,
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            key: headerKey,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text("Standardized Tests",
+                      style: Theme.of(context).textTheme.displaySmall),
                 ),
-                onPressed: () {
-                  GoRouter.of(context).push('/addTest');
-                },
-              ),
-            ],
+                IconButton(
+                  icon: Icon(
+                    Ionicons.add_circle,
+                    color: blue.shade600,
+                  ),
+                  onPressed: () {
+                    GoRouter.of(context).push('/addTest');
+                  },
+                ),
+              ],
+            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +60,10 @@ class Tests extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text("${e.name} (${e.score})",
-                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(fontWeight: FontWeight.bold)),
                           ),
                           IconButton(
                             icon: Icon(
@@ -71,7 +80,8 @@ class Tests extends StatelessWidget {
                               color: white.shade700,
                             ),
                             onPressed: () async {
-                              await DatabaseService(uid: user!.uid).deleteObject("tests", e.toJson());
+                              await DatabaseService(uid: user!.uid)
+                                  .deleteObject("tests", e.toJson());
                             },
                           ),
                         ],
@@ -84,7 +94,11 @@ class Tests extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     const SizedBox(height: 6.0),
-                                    Text(key, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                                    Text(key,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelSmall!
+                                            .copyWith(color: white.shade700)),
                                     Text(e.sectionScores[key].toString()),
                                   ],
                                 ),

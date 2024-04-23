@@ -5,8 +5,8 @@ import 'package:unbound/model/user.model.dart';
 
 class Works extends StatelessWidget {
   final List<Work> works;
-
-  const Works({super.key, required this.works});
+  final GlobalKey headerKey;
+  const Works({super.key, required this.works, required this.headerKey});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,9 @@ class Works extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(
-        border: Border.symmetric(
-          horizontal: BorderSide(width: 1.0, color: white.shade300),
+        border: Border(
+          top: BorderSide(width: 10.0, color: white.shade300),
+          bottom: BorderSide(width: 1.0, color: white.shade300),
         ),
       ),
       child: Column(
@@ -31,6 +32,7 @@ class Works extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            key: headerKey,
             children: [
               Expanded(
                 child: Text("Work Experience", style: Theme.of(context).textTheme.displaySmall),
