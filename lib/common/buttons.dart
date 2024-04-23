@@ -37,7 +37,6 @@ ButtonStyle darkExpand = ButtonStyle(
     return 5.0;
   })
 );
-
 ButtonStyle greyExpand = ButtonStyle(
   backgroundColor: const MaterialStatePropertyAll(Color(0xFFE9E9E9)),
   padding: const MaterialStatePropertyAll(EdgeInsets.all(12)),
