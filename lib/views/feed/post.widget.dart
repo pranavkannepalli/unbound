@@ -19,8 +19,9 @@ class PostWidget extends StatefulWidget {
   final Post post;
   final String uid;
   final String type;
+  final String authUserId;
   const PostWidget(
-      {super.key, required this.post, required this.uid, required this.type});
+      {super.key, required this.post, required this.uid, required this.type, required this.authUserId});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -37,7 +38,7 @@ class _PostWidgetState extends State<PostWidget> {
   void initState() {
     super.initState();
     setState(() {
-      liked = widget.post.likes.contains(widget.uid);
+      liked = widget.post.likes.contains(widget.authUserId);
       likes = widget.post.likes.length;
       comments = widget.post.comments;
     });
@@ -45,9 +46,10 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    String? auth = Provider.of<AuthUser?>(listen: false, context)?.uid ?? "";
+    UserData? user = Provider.of<UserData?>(listen: false, context);
+
     void addComment() {
-      UserData? user = Provider.of<UserData?>(listen: false, context);
-      String? auth = Provider.of<AuthUser?>(listen: false, context)?.uid ?? "";
       setState(() {
         commentController.clear();
         commentText = "";
@@ -148,15 +150,16 @@ class _PostWidgetState extends State<PostWidget> {
                 children: [
                   InkWell(
                     onTap: () async {
+                      print("id ${widget.post.id}");
                       if (liked) {
-                        await DatabaseService(uid: widget.uid)
+                        await DatabaseService(uid: auth)
                             .removeLike(widget.post.id, widget.type);
                         setState(() {
                           liked = false;
                           likes--;
                         });
                       } else {
-                        await DatabaseService(uid: widget.uid)
+                        await DatabaseService(uid: auth)
                             .addLike(widget.post.id, widget.type);
                         setState(() {
                           liked = true;
