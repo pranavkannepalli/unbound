@@ -9,11 +9,18 @@ import 'package:unbound/model/user.model.dart';
 
 class DatabaseService {
   final String? uid;
-  final CollectionReference usersCollection = FirebaseFirestore.instance.collection("Users");
-  final CollectionReference companiesCollection = FirebaseFirestore.instance.collection("Companies");
-  final CollectionReference collegePostCollection = FirebaseFirestore.instance.collection("CollegePosts");
-  final CollectionReference companyPostCollection = FirebaseFirestore.instance.collection("InternshipPosts");
-  final CollectionReference userPostCollection = FirebaseFirestore.instance.collection("UserPosts");
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection("Users");
+  final CollectionReference companiesCollection =
+      FirebaseFirestore.instance.collection("Companies");
+  final CollectionReference collegePostCollection =
+      FirebaseFirestore.instance.collection("CollegePosts");
+  final CollectionReference companyPostCollection =
+      FirebaseFirestore.instance.collection("InternshipPosts");
+  final CollectionReference userPostCollection =
+      FirebaseFirestore.instance.collection("UserPosts");
+  final CollectionReference tweetsCollection =
+      FirebaseFirestore.instance.collection("Twitter");
   static final defaultUser = {
     "name": "",
     "email": "",
@@ -46,11 +53,31 @@ class DatabaseService {
   }
 
   Future<List<List<Account>>> getUsers() async {
-    final users = await usersCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
-    final companies =
-        await companiesCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
+    final users = await usersCollection.get().then(
+        (value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
+    final companies = await companiesCollection.get().then(
+        (value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
 
     return [[], users, companies];
+  }
+
+  Future<News> getCompanyNews(String companyId) async {
+    List<Future<QuerySnapshot>> futures = [];
+    final postsFuture =
+        companyPostCollection.where("uid", isEqualTo: companyId).get();
+    final tweetsFuture =
+        tweetsCollection.where("uid", isEqualTo: companyId).get();
+
+    futures.add(postsFuture);
+    futures.add(tweetsFuture);
+    List<QuerySnapshot> results = await Future.wait(futures);
+    List<Post> posts = results.elementAt(0).docs.map((e) {
+      return _postFromSnapshot(e);
+    }).toList();
+    List<Tweet> tweets =
+        results.elementAt(1).docs.map((e) => _tweetFromSnapshot(e)).toList();
+    print(tweets.length);
+    return News(tweets: tweets, posts: posts);
   }
 
   Future<Company> getCompanyData(String id) async {
@@ -86,25 +113,38 @@ class DatabaseService {
   Future<List<Feed>?> getFeeds() async {
     // Return three feeds: college, people, companies
     try {
-      final collegePostQuery = await collegePostCollection.orderBy("time", descending: true).get();
-      final collegePostData = collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
+      final collegePostQuery =
+          await collegePostCollection.orderBy("time", descending: true).get();
+      final collegePostData =
+          collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
-      final collegeFeed = Feed(posts: collegePostData.take(5).toList(), recommended: []);
+      final collegeFeed =
+          Feed(posts: collegePostData.take(5).toList(), recommended: []);
 
-      final userPostQuery = await userPostCollection.orderBy("time", descending: true).get();
-      final userPostData = userPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
+      final userPostQuery =
+          await userPostCollection.orderBy("time", descending: true).get();
+      final userPostData =
+          userPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
       final usersQuery = await usersCollection.get();
-      final usersData = usersQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
+      final usersData =
+          usersQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
 
-      final userFeed = Feed(posts: userPostData.take(5).toList(), recommended: usersData.take(5).toList());
+      final userFeed = Feed(
+          posts: userPostData.take(5).toList(),
+          recommended: usersData.take(5).toList());
 
-      final companyPostQuery = await companyPostCollection.orderBy("time", descending: true).get();
-      final companyPostData = companyPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
+      final companyPostQuery =
+          await companyPostCollection.orderBy("time", descending: true).get();
+      final companyPostData =
+          companyPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
       final companiesQuery = await companiesCollection.get();
-      final companiesData = companiesQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
-      final companyFeed = Feed(posts: companyPostData.take(5).toList(), recommended: companiesData.take(5).toList());
+      final companiesData =
+          companiesQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
+      final companyFeed = Feed(
+          posts: companyPostData.take(5).toList(),
+          recommended: companiesData.take(5).toList());
 
       return [collegeFeed, userFeed, companyFeed];
     } catch (e) {
@@ -124,15 +164,15 @@ class DatabaseService {
     });
   }
 
-  Future editObject(String section, Map<String, dynamic> userData, Map<String, dynamic> newJson, int index) async {
+  Future editObject(String section, Map<String, dynamic> userData,
+      Map<String, dynamic> newJson, int index) async {
     try {
       var newData = userData[section] as List<Map<String, dynamic>>;
       newData[index] = newJson;
       await usersCollection.doc(uid).update({
         section: newData,
       });
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   Future addLike(String postUid, String postType) async {
@@ -154,8 +194,7 @@ class DatabaseService {
           });
           break;
       }
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   Future removeLike(String postUid, String postType) async {
@@ -182,11 +221,13 @@ class DatabaseService {
     }
   }
 
-  Future uploadPost(UserData data, String text, List<String> links, XFile? file) async {
+  Future uploadPost(
+      UserData data, String text, List<String> links, XFile? file) async {
     try {
       if (file != null) {
         final time = Timestamp.now();
-        final reference = FirebaseStorage.instance.ref().child('/images/$uid$time');
+        final reference =
+            FirebaseStorage.instance.ref().child('/images/$uid$time');
         await reference.putFile(File(file.path));
         String imageUrl = await reference.getDownloadURL();
 
@@ -231,11 +272,15 @@ class DatabaseService {
     }
   }
 
+  Tweet _tweetFromSnapshot(QueryDocumentSnapshot snapshot) {
+    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+    return Tweet.fromJSON(d);
+  }
+
   UserData? _userDataFromSnapshot(DocumentSnapshot snapshot) {
     try {
       Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
       UserData ret = UserData.fromJson(d);
-
 
       return ret;
     } catch (error) {
