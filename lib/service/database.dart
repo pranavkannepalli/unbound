@@ -39,7 +39,7 @@ class DatabaseService {
     "sports": [],
     "work": [],
     "projects": [],
-    "colleges": [],
+    "following": []
   };
 
   DatabaseService({this.uid});
@@ -150,6 +150,18 @@ class DatabaseService {
     } catch (e) {
       return null;
     }
+  }
+
+  Future followAccount(String id) async {
+    await usersCollection.doc(uid).update({
+      "following": FieldValue.arrayUnion([id])
+    });
+  }
+
+  Future unfollowAccount(String id) async {
+    await usersCollection.doc(uid).update({
+      "following": FieldValue.arrayRemove([id])
+    });
   }
 
   Future addObject(String section, Map<String, dynamic> json) async {
