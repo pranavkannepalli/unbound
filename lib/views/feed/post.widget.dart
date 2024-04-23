@@ -9,7 +9,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/feed.model.dart';
 import 'package:unbound/service/database.dart';
-import 'package:http/http.dart' as http;
 
 class PostWidget extends StatefulWidget {
   final Post post;
