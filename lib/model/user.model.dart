@@ -21,7 +21,7 @@ class UserData {
   List<Sport> sports;
   List<Work> works;
   List<Project> projects;
-  List<String> colleges;
+  List<String> following;
 
   UserData({
     required this.name,
@@ -30,7 +30,6 @@ class UserData {
     required this.state,
     required this.school,
     required this.interests,
-    required this.colleges,
     required this.photo,
     required this.bday,
     required this.bio,
@@ -42,6 +41,7 @@ class UserData {
     required this.sports,
     required this.works,
     required this.projects,
+    required this.following
   });
 
   factory UserData.fromJson(Map<String, dynamic> json) {
@@ -62,7 +62,7 @@ class UserData {
     List<Sport> sports = (json['sports'] as List?)?.map((item) => Sport.fromJson(item)).toList() ?? [];
     List<Work> works = (json['work'] as List?)?.map((item) => Work.fromJson(item)).toList() ?? [];
     List<Project> projects = (json['projects'] as List?)?.map((item) => Project.fromJson(item)).toList() ?? [];
-
+    List<String> following = (json["following"] as List?)?.map((e) => e as String).toList() ?? [];
     String photo = json['photo'] ?? "";
 
     return UserData(
@@ -72,7 +72,6 @@ class UserData {
       state: state,
       school: school,
       interests: interests,
-      colleges: colleges,
       photo: photo,
       bday: bday,
       bio: bio,
@@ -84,6 +83,7 @@ class UserData {
       sports: sports,
       works: works,
       projects: projects,
+      following: following
     );
   }
 
@@ -98,7 +98,7 @@ class UserData {
       "school": school,
       "state": state,
       "interests": interests,
-      "colleges": colleges,
+      "following": following,
       "photo": photo,
       "bday": bday,
       "bio": bio,
