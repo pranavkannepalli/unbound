@@ -135,9 +135,9 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                           itemCount: collegeFeed.posts.length,
                           itemBuilder: (BuildContext context, int index) {
                             return index != collegeFeed.posts.length - 1
-                                ? PostWidget(post: collegeFeed.posts[index], uid: uid, type: "College")
+                                ? PostWidget(post: collegeFeed.posts[index], uid: uid, type: "College", authUserId: uid)
                                 : Column(children: [
-                                    PostWidget(post: collegeFeed.posts[index], uid: uid, type: "College"),
+                                    PostWidget(post: collegeFeed.posts[index], uid: uid, type: "College", authUserId: uid),
                                     Container(
                                       padding: const EdgeInsets.all(20),
                                       child: Column(
@@ -159,9 +159,9 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                           itemCount: studentFeed.posts.length,
                           itemBuilder: (BuildContext context, int index) {
                             return index != studentFeed.posts.length - 1
-                                ? PostWidget(post: studentFeed.posts[index], uid: uid, type: "User")
+                                ? PostWidget(post: studentFeed.posts[index], uid: uid, type: "User", authUserId: uid)
                                 : Column(children: [
-                                    PostWidget(post: studentFeed.posts[index], uid: uid, type: "User"),
+                                    PostWidget(post: studentFeed.posts[index], uid: uid, type: "User", authUserId: uid),
                                     Container(
                                       padding: const EdgeInsets.all(20),
                                       child: Column(
@@ -183,9 +183,9 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                           itemCount: companyFeed.posts.length,
                           itemBuilder: (BuildContext context, int index) {
                             return index != companyFeed.posts.length - 1
-                                ? PostWidget(post: companyFeed.posts[index], uid: uid, type: "Company")
+                                ? PostWidget(post: companyFeed.posts[index], uid: uid, type: "Company", authUserId: uid)
                                 : Column(children: [
-                                    PostWidget(post: companyFeed.posts[index], uid: uid, type: "Company"),
+                                    PostWidget(post: companyFeed.posts[index], uid: uid, type: "Company", authUserId: uid),
                                     Container(
                                       padding: const EdgeInsets.all(20),
                                       child: Column(
