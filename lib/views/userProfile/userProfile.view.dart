@@ -75,11 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     createKVPair(title, data) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("$title:",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(color: white.shade700)),
+            Text("$title:", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
             Text(data.toString()),
             gap
           ],
@@ -102,8 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               color: bgColor.elementAt(i % bgColor.length),
             ),
             child: Text(userData.interests.elementAt(i),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: textColor.elementAt(i % textColor.length))),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor.elementAt(i % textColor.length))),
           );
 
           ints.add(n);

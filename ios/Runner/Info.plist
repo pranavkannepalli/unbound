@@ -61,5 +61,17 @@
 		</dict>
 	</array>
 	<!-- End of the Google Sign-in Section -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>instagram-stories</string>
+		<string>facebook-stories</string>
+		<string>facebook</string>
+		<string>instagram</string>
+		<string>twitter</string>
+		<string>whatsapp</string>
+		<string>tg</string>
+	</array>
+	<key>FacebookAppID</key>
+	<string>339325462096341</string>
 </dict>
 </plist>
