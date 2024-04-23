@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:social_share/social_share.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/feed.model.dart';
 import 'package:unbound/service/database.dart';
@@ -57,7 +58,12 @@ class _PostWidgetState extends State<PostWidget> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    IconButton(onPressed: () {}, icon: Icon(Ionicons.person_add, size: 16, color: blue.shade600))
+                    IconButton(onPressed: () {}, icon: Icon(Ionicons.person_add, size: 16, color: blue.shade600)),
+                    IconButton(
+                        onPressed: () async {
+                          print(await SocialShare.checkInstalledAppsForShare());
+                        },
+                        icon: Icon(Ionicons.share, size: 16, color: blue.shade600)),
                   ],
                 ),
                 const SizedBox(height: 12),
