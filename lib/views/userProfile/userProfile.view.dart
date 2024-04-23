@@ -16,8 +16,7 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   late TabController controller;
 
   @override
@@ -28,7 +27,6 @@ class _ProfileScreenState extends State<ProfileScreen>
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     super.dispose();
   }
@@ -41,11 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen>
     createKVPair(title, data) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("$title:",
-                style: Theme.of(context)
-                    .textTheme
-                    .labelSmall!
-                    .copyWith(color: white.shade700)),
+            Text("$title:", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
             Text(data.toString()),
             gap
           ],
@@ -68,8 +62,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               color: bgColor.elementAt(i % bgColor.length),
             ),
             child: Text(userData.interests.elementAt(i),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                    color: textColor.elementAt(i % textColor.length))),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor.elementAt(i % textColor.length))),
           );
 
           ints.add(n);
@@ -105,8 +98,7 @@ class _ProfileScreenState extends State<ProfileScreen>
                 Row(
                   children: [
                     Expanded(
-                      child: Text("Basic Info",
-                          style: Theme.of(context).textTheme.displaySmall),
+                      child: Text("Basic Info", style: Theme.of(context).textTheme.displaySmall),
                     ),
                     IconButton(
                       icon: Icon(
@@ -138,9 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen>
               }
               return Colors.transparent;
             }),
-            indicator: BoxDecoration(
-                border: Border(
-                    bottom: BorderSide(color: white.shade900, width: 2))),
+            indicator: BoxDecoration(border: Border(bottom: BorderSide(color: white.shade900, width: 2))),
             labelPadding: const EdgeInsets.symmetric(horizontal: 20),
             labelStyle: Theme.of(context).textTheme.bodyMedium,
             indicatorPadding: const EdgeInsets.symmetric(horizontal: -20),
