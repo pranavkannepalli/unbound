@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
+import 'package:unbound/model/feed.model.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/database.dart';
+import 'package:unbound/views/feed/post.widget.dart';
 import 'package:unbound/views/user/arts.view.dart';
 import 'package:unbound/views/user/clubs.view.dart';
 import 'package:unbound/views/user/courses.view.dart';
+import 'package:unbound/views/user/projects.view.dart';
 import 'package:unbound/views/user/sports.view.dart';
 import 'package:unbound/views/user/tests.widget.dart';
 import 'package:unbound/views/user/workEx.view.dart';
@@ -66,16 +70,22 @@ class _UserProfileState extends State<UserProfile>
 
     return Scaffold(
       body: FutureBuilder(
-        future: DatabaseService(uid: widget.uid).getData(),
+        future: Future.wait([
+          DatabaseService(uid: widget.uid).getData(),
+          DatabaseService(uid: widget.uid).getUserPosts()
+        ]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            UserData? user = snapshot.data;
-            if (user == null) {
+            List<dynamic>? data = snapshot.data;
+            if (data == null) {
               return const Center(child: CircularProgressIndicator());
             }
+            UserData user = data[0];
+            List<Post> posts = data[1];
+            String uid = Provider.of<AuthUser?>(context)?.uid ?? "";
             return Scaffold(
                 body: NestedScrollView(
-                  clipBehavior: Clip.none,
+              clipBehavior: Clip.none,
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
@@ -154,7 +164,8 @@ class _UserProfileState extends State<UserProfile>
                                           color: white.shade900, width: 2))),
                               labelPadding:
                                   const EdgeInsets.symmetric(horizontal: 20),
-                              labelStyle: Theme.of(context).textTheme.bodyMedium,
+                              labelStyle:
+                                  Theme.of(context).textTheme.bodyMedium,
                               unselectedLabelStyle: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -171,33 +182,49 @@ class _UserProfileState extends State<UserProfile>
                       ]))
                 ];
               },
-              
               body: TabBarView(
                 controller: tabController,
                 children: [
                   Column(
                     children: [
-                      ViewTests(tests: user.tests),
-                      ViewCourses(courses: user.courses)
+                      if (user.tests.isNotEmpty) ViewTests(tests: user.tests),
+                      if (user.courses.isNotEmpty)
+                        ViewCourses(courses: user.courses),
+                      if (user.tests.isEmpty && user.courses.isEmpty)
+                        const Empty()
                     ],
                   ),
                   SingleChildScrollView(
                     child: Column(
                       children: [
-                        ViewClubs(clubs: user.clubs),
-                        ViewArts(arts: user.arts),
-                        ViewSports(sports: user.sports)
+                        if(user.clubs.isNotEmpty) ViewClubs(clubs: user.clubs),
+                        if(user.arts.isNotEmpty) ViewArts(arts: user.arts),
+                        if(user.sports.isNotEmpty) ViewSports(sports: user.sports),
+                        if(user.clubs.isEmpty && user.arts.isEmpty && user.sports.isEmpty) const Empty()
                       ],
                     ),
                   ),
                   SingleChildScrollView(
+                      child: Column(
+                    children: [
+                      if(user.works.isNotEmpty) ViewWorkExperience(works: user.works),
+                      if(user.projects.isNotEmpty) ViewProjects(projects: user.projects),
+                      if(user.works.isEmpty && user.projects.isEmpty) const Empty()
+                    ],
+                  )),
+                  SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        ViewWorkExperience(works: user.works)
+                        ...posts.map((e) => PostWidget(
+                            post: e,
+                            uid: e.authorUid,
+                            type: "User",
+                            authUserId: uid)),
+                        if (posts.isEmpty) const Empty()
                       ],
-                    )
-                  ),
-                  const Text("Hello"),
+                    ),
+                  )
                 ],
               ),
             ));
@@ -205,6 +232,38 @@ class _UserProfileState extends State<UserProfile>
             return const Center(child: CircularProgressIndicator());
           }
         },
+      ),
+    );
+  }
+}
+
+class Empty extends StatelessWidget {
+  const Empty({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Icon(Ionicons.construct, color: white.shade500, size: 36),
+          const SizedBox(height: 12),
+          Text("Nothing here, yet!",
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge!
+                  .copyWith(color: white.shade800)),
+          const SizedBox(height: 6),
+          Text(
+              "Like all things, this section of the profile is a work in progress. Come back soon to see awesome things.",
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(color: white.shade800))
+        ],
       ),
     );
   }
