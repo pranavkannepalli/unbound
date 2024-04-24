@@ -61,6 +61,11 @@ class DatabaseService {
     return [[], users, companies];
   }
 
+  Future<List<Post>> getUserPosts() async {
+    final postsData = await userPostCollection.where("uid", isEqualTo: uid).get();
+    return postsData.docs.map((e) => _postFromSnapshot(e)).toList();
+  }
+
   Future<News> getCompanyNews(String companyId) async {
     List<Future<QuerySnapshot>> futures = [];
     final postsFuture =
