@@ -30,7 +30,7 @@ ThemeData unboundTheme = ThemeData(
       bodyMedium:
           GoogleFonts.getFont("Poppins").copyWith(fontSize: 14, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0),
       bodySmall:
-          GoogleFonts.getFont("Poppins").copyWith(fontSize: 10, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0)),
+          GoogleFonts.getFont("Poppins").copyWith(fontSize: 12, fontWeight: FontWeight.w400, height: 1.2, letterSpacing: 0)),
 );
 
 const Map<int, Color> pinkSwatch = <int, Color>{
