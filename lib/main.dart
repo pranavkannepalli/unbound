@@ -24,6 +24,7 @@ import 'package:unbound/views/userProfile/add/add_course.view.dart';
 import 'package:unbound/views/userProfile/add/add_test.view.dart';
 import 'package:unbound/views/userProfile/edit/edit_course.view.dart';
 import 'package:unbound/views/userProfile/edit/edit_test.view.dart';
+import 'package:unbound/views/viewImages.view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -146,6 +147,15 @@ final _router = GoRouter(
     GoRoute(
       path: "/user",
       builder: (context, state) => UserProfile(uid: state.extra! as String),
+    ),
+    GoRoute(
+      path: "/gallery",
+      pageBuilder: (context, state) => CustomTransitionPage(
+        fullscreenDialog: true,
+        opaque: false,
+        child: ImageGallery(images: state.extra as List<String>), 
+        transitionsBuilder: (_, __, ___, child) => child
+      )
     ),
     GoRoute(
       path: "/company",
