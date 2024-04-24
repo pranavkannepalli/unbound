@@ -217,30 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.15.0"
-  firebase_database:
-    dependency: "direct main"
-    description:
-      name: firebase_database
-      sha256: e5f45b5e1b879ccd4c930c3abd78ee4caa203190eaccfd23deabb3399fa247ec
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.5.0"
-  firebase_database_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_database_platform_interface
-      sha256: "91e8c4568038c3a9904c7a5a90b1dcf8ecfa01879fd6ee33145797d42414c4cd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.5+28"
-  firebase_database_web:
-    dependency: transitive
-    description:
-      name: firebase_database_web
-      sha256: e76804470d7927dae8d589b404cd713aef6cb051288edc9c922a37c5e8a1d9b0
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.5"
   firebase_storage:
     dependency: "direct main"
     description:
@@ -464,14 +440,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1+1"
-  instagram_share_plus:
-    dependency: "direct main"
-    description:
-      name: instagram_share_plus
-      sha256: "5a45f8ddb63162376777b7981189c0bed9c4ca2e162f311b4b4293e7d5c252b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0"
   intl:
     dependency: transitive
     description:
@@ -693,14 +661,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  social_share:
-    dependency: "direct main"
-    description:
-      name: social_share
-      sha256: eb19a0f6f5a29c7bb71e5bb1991145eb52472184363b6e2da70695befd8be041
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.1"
   source_span:
     dependency: transitive
     description:

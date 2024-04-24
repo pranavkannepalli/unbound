@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
-import 'package:unbound/common/buttons.dart';
 import 'package:unbound/common/text_input.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/feed.model.dart';
@@ -111,7 +109,7 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
                     }
                   },
                   child: Container(
-                      padding: EdgeInsets.all(8),
+                      padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
                           color: colors[type],
                           borderRadius: BorderRadius.circular(4)),
@@ -172,7 +170,7 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
           Feed? companyFeed = (snapshot.data?[2]);
           print(user.following);
           return SafeArea(
-            child: Container(
+            child: SizedBox(
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: Column(children: [

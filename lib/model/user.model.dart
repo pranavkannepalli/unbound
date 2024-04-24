@@ -23,26 +23,25 @@ class UserData {
   List<Project> projects;
   List<String> following;
 
-  UserData({
-    required this.name,
-    required this.email,
-    required this.grad,
-    required this.state,
-    required this.school,
-    required this.interests,
-    required this.photo,
-    required this.bday,
-    required this.bio,
-    required this.posts,
-    required this.tests,
-    required this.courses,
-    required this.clubs,
-    required this.arts,
-    required this.sports,
-    required this.works,
-    required this.projects,
-    required this.following
-  });
+  UserData(
+      {required this.name,
+      required this.email,
+      required this.grad,
+      required this.state,
+      required this.school,
+      required this.interests,
+      required this.photo,
+      required this.bday,
+      required this.bio,
+      required this.posts,
+      required this.tests,
+      required this.courses,
+      required this.clubs,
+      required this.arts,
+      required this.sports,
+      required this.works,
+      required this.projects,
+      required this.following});
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     String name = json['name'] ?? "";
@@ -54,7 +53,7 @@ class UserData {
     String bio = json['bio'] ?? "";
     List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<String> posts = (json['posts'] as List?)?.map((item) => item as String).toList() ?? <String>[];
-    List<String> colleges = (json['colleges'] as List?)?.map((item) => item as String).toList() ?? <String>[];
+    //List<String> colleges = (json['colleges'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     List<TestScore> tests = (json['tests'] as List?)?.map((item) => TestScore.fromJson(item)).toList() ?? <TestScore>[];
     List<Course> courses = (json['coursework'] as List?)?.map((item) => Course.fromJson(item)).toList() ?? <Course>[];
     List<Club> clubs = (json['clubs'] as List?)?.map((item) => Club.fromJson(item)).toList() ?? [];
@@ -66,25 +65,24 @@ class UserData {
     String photo = json['photo'] ?? "";
 
     return UserData(
-      name: name,
-      email: email,
-      grad: grad,
-      state: state,
-      school: school,
-      interests: interests,
-      photo: photo,
-      bday: bday,
-      bio: bio,
-      posts: posts,
-      tests: tests,
-      courses: courses,
-      clubs: clubs,
-      arts: arts,
-      sports: sports,
-      works: works,
-      projects: projects,
-      following: following
-    );
+        name: name,
+        email: email,
+        grad: grad,
+        state: state,
+        school: school,
+        interests: interests,
+        photo: photo,
+        bday: bday,
+        bio: bio,
+        posts: posts,
+        tests: tests,
+        courses: courses,
+        clubs: clubs,
+        arts: arts,
+        sports: sports,
+        works: works,
+        projects: projects,
+        following: following);
   }
 
   @override
