@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
@@ -15,7 +13,7 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? uid = Provider.of<AuthUser?>(context)?.uid;
-    if(uid == null) return Center(child: CircularProgressIndicator());
+    if(uid == null) return const Center(child: CircularProgressIndicator());
     Widget buildTweet(Tweet t) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 6),
           padding: const EdgeInsets.all(16),
@@ -44,7 +42,7 @@ class NewsWidget extends StatelessWidget {
                                 style: Theme.of(context).textTheme.labelLarge),
                             const SizedBox(width: 6),
                             if (t.verified)
-                              Icon(Ionicons.checkmark_circle, size: 14)
+                              const Icon(Ionicons.checkmark_circle, size: 14)
                           ],
                         ),
                         Text(t.handle,
@@ -55,7 +53,7 @@ class NewsWidget extends StatelessWidget {
                       ]),
                 ),
                 const SizedBox(width: 12),
-                Icon(Ionicons.logo_twitter, size: 16)
+                const Icon(Ionicons.logo_twitter, size: 16)
               ]),
               const SizedBox(height: 12),
               Text(t.text,
