@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
@@ -84,9 +83,9 @@ class SportSection extends StatelessWidget {
             if (e.link.isNotEmpty)
               InkWell(
                 onTap: () async {
-                  final Uri _url = Uri.parse(e.link);
-                  if (await canLaunchUrl(_url)) {
-                    await launchUrl(_url);
+                  final Uri url = Uri.parse(e.link);
+                  if (await canLaunchUrl(url)) {
+                    await launchUrl(url);
                   }
                 },
                 child: Icon(Ionicons.link, size: 18, color: white.shade700),
