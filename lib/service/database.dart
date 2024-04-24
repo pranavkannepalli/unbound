@@ -6,9 +6,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:unbound/model/company.model.dart';
 import 'package:unbound/model/feed.model.dart';
 import 'package:unbound/model/user.model.dart';
+import "package:unbound/model/college.model.dart";
 
 class DatabaseService {
   final String? uid;
+  final CollectionReference collegesCollection =
+      FirebaseFirestore.instance.collection("Colleges");
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection("Users");
   final CollectionReference companiesCollection =
@@ -62,7 +65,8 @@ class DatabaseService {
   }
 
   Future<List<Post>> getUserPosts() async {
-    final postsData = await userPostCollection.where("uid", isEqualTo: uid).get();
+    final postsData =
+        await userPostCollection.where("uid", isEqualTo: uid).get();
     return postsData.docs.map((e) => _postFromSnapshot(e)).toList();
   }
 
@@ -83,6 +87,19 @@ class DatabaseService {
         results.elementAt(1).docs.map((e) => _tweetFromSnapshot(e)).toList();
     print(tweets.length);
     return News(tweets: tweets, posts: posts);
+  }
+
+  Future<College> getCollegeData(String id) async {
+    final snapshot = await collegesCollection.doc(id).get();
+    final collegeData = snapshot.data() as Map<String, dynamic>;
+    collegeData["id"] = snapshot.id;
+    return College.fromJSON(collegeData);
+  }
+
+  Future<List<Post>> getCollegePosts(String collegeId) async {
+    final snapshot =
+        await collegePostCollection.where("uid", isEqualTo: collegeId).get();
+    return snapshot.docs.map((e) => _postFromSnapshot(e)).toList();
   }
 
   Future<Company> getCompanyData(String id) async {
@@ -122,10 +139,12 @@ class DatabaseService {
           await collegePostCollection.orderBy("time", descending: true).get();
       final collegePostData =
           collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
-
-      final collegeFeed =
-          Feed(posts: collegePostData.take(5).toList(), recommended: []);
-
+      final colleges = await collegesCollection.get();
+      final collegesData =
+          colleges.docs.map((e) => _accountFromSnapshot(e)).toList();
+      final collegeFeed = Feed(
+          posts: collegePostData.take(5).toList(),
+          recommended: collegesData.take(5).toList());
       final userPostQuery =
           await userPostCollection.orderBy("time", descending: true).get();
       final userPostData =

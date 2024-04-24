@@ -168,7 +168,7 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
           Feed? collegeFeed = (snapshot.data?[0]);
           Feed? studentFeed = (snapshot.data?[1]);
           Feed? companyFeed = (snapshot.data?[2]);
-          print(user.following);
+          print(collegeFeed?.recommended.length);
           return SafeArea(
             child: SizedBox(
               height: MediaQuery.of(context).size.height,

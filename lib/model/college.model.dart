@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class College {
   late String bgImg;
   late String photo;
-  late String id;
+  late String uid;
   late String name;
   late String type;
   late String location;
@@ -17,12 +17,11 @@ class College {
   late List<Activity> activities;
   late List<Organization> organizations;
   late List<Review> reviews;
-  late List<String> postIds;
 
   College({
     required this.bgImg,
     required this.photo,
-    required this.id,
+    required this.uid,
     required this.name,
     required this.type,
     required this.location,
@@ -36,27 +35,26 @@ class College {
     required this.activities,
     required this.organizations,
     required this.reviews,
-    required this.postIds
   });
 
   College.fromJSON(Map<String, dynamic> data) {
     bgImg = (data["bgImg"] ?? "") as String;
     photo = (data["photo"] ?? "") as String;
-    id = (data["id"] ?? "") as String;
+    uid = (data["id"] ?? "") as String;
     name = (data["name"] ?? "") as String;
     type = (data["type"] ?? "") as String;
     location = (data["location"] ?? "") as String;
     bio = (data["bio"] ?? "") as String;
-    quickStats = ((data["quickStats"] ?? []) as List<Map<String, dynamic>>).map((e) => Stat.fromJSON(e)) as List<Stat>;
+    quickStats = (data["quickStats"] as List?)?.map((item) => Stat.fromJSON(item)).toList() ?? <Stat>[];
     applicationInfo = ApplicationInfo.fromJSON(data["applicationInfo"] ?? <String, dynamic>{});
-    highlights = ((data["highlights"] ?? []) as List<Map<String, dynamic>>).map((e) => Highlight.fromJSON(e)) as List<Highlight>;
-    majors = ((data["majors"] ?? []) as List<Map<String, dynamic>>).map((e) => Major.fromJSON(e)) as List<Major>;
-    livingStats = ((data["livingStats"] ?? []) as List<Map<String, dynamic>>).map((e) => Stat.fromJSON(e)) as List<Stat>;
+    highlights = (data["highlights"] as List?)?.map((item) => Highlight.fromJSON(item)).toList() ?? <Highlight>[];
+    majors = (data["majors"] as List?)?.map((data) => Major.fromJSON(data)).toList() ?? <Major>[];
+    livingStats = (data["livingStats"] as List?)?.map((data) => Stat.fromJSON(data)).toList() ?? <Stat>[];
     diversity = Diversity.fromJSON(data["diversity"] ?? <String, dynamic>{});
-    activities = ((data["activities"] ?? []) as List<Map<String, dynamic>>).map((e) => Activity.fromJSON(e)) as List<Activity>;
-    organizations = ((data["organizations"] ?? []) as List<Map<String, dynamic>>).map((e) => Organization.fromJSON(e)) as List<Organization>;
-    reviews = ((data["reviews"] ?? []) as List<Map<String, dynamic>>).map((e) => Review.fromJSON(e)) as List<Review>;
-    postIds = ((data["posts"] ?? []) as List<String>);
+    activities = (data["activities"] as List?)?.map((data) => Activity.fromJSON(data)).toList() ?? <Activity>[];
+    organizations = (data["organizations"] as List?)?.map((data) => Organization.fromJSON(data)).toList() ?? <Organization>[];
+    print(organizations);
+    reviews = (data["reviews"] as List?)?.map((data) => Review.fromJSON(data)).toList() ?? <Review>[];
   }
 
 
