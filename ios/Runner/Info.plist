@@ -73,5 +73,11 @@
 	</array>
 	<key>FacebookAppID</key>
 	<string>339325462096341</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+  		<string>sms</string>
+		<string>https</string>
+  		<string>tel</string>
+	</array>
 </dict>
 </plist>

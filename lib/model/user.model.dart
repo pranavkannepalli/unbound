@@ -51,17 +51,42 @@ class UserData {
     String school = json['school'] ?? "";
     String bday = json['bday'] ?? "";
     String bio = json['bio'] ?? "";
-    List<String> interests = (json['interests'] as List?)?.map((item) => item as String).toList() ?? <String>[];
-    List<String> posts = (json['posts'] as List?)?.map((item) => item as String).toList() ?? <String>[];
-    //List<String> colleges = (json['colleges'] as List?)?.map((item) => item as String).toList() ?? <String>[];
-    List<TestScore> tests = (json['tests'] as List?)?.map((item) => TestScore.fromJson(item)).toList() ?? <TestScore>[];
-    List<Course> courses = (json['coursework'] as List?)?.map((item) => Course.fromJson(item)).toList() ?? <Course>[];
-    List<Club> clubs = (json['clubs'] as List?)?.map((item) => Club.fromJson(item)).toList() ?? [];
-    List<Art> arts = (json['arts'] as List?)?.map((item) => Art.fromJson(item)).toList() ?? [];
-    List<Sport> sports = (json['sports'] as List?)?.map((item) => Sport.fromJson(item)).toList() ?? [];
-    List<Work> works = (json['work'] as List?)?.map((item) => Work.fromJson(item)).toList() ?? [];
-    List<Project> projects = (json['projects'] as List?)?.map((item) => Project.fromJson(item)).toList() ?? [];
-    List<String> following = (json["following"] as List?)?.map((e) => e as String).toList() ?? [];
+    List<String> interests =
+        (json['interests'] as List?)?.map((item) => item as String).toList() ??
+            <String>[];
+    List<String> posts =
+        (json['posts'] as List?)?.map((item) => item as String).toList() ??
+            <String>[];
+    List<String> colleges =
+        (json['colleges'] as List?)?.map((item) => item as String).toList() ??
+            <String>[];
+    List<TestScore> tests = (json['tests'] as List?)
+            ?.map((item) => TestScore.fromJson(item))
+            .toList() ??
+        <TestScore>[];
+    List<Course> courses = (json['coursework'] as List?)
+            ?.map((item) => Course.fromJson(item))
+            .toList() ??
+        <Course>[];
+    List<Club> clubs =
+        (json['clubs'] as List?)?.map((item) => Club.fromJson(item)).toList() ??
+            [];
+    List<Art> arts =
+        (json['arts'] as List?)?.map((item) => Art.fromJson(item)).toList() ??
+            [];
+    List<Sport> sports = (json['sports'] as List?)
+            ?.map((item) => Sport.fromJson(item))
+            .toList() ??
+        [];
+    List<Work> works =
+        (json['work'] as List?)?.map((item) => Work.fromJson(item)).toList() ??
+            [];
+    List<Project> projects = (json['projects'] as List?)
+            ?.map((item) => Project.fromJson(item))
+            .toList() ??
+        [];
+    List<String> following =
+        (json["following"] as List?)?.map((e) => e as String).toList() ?? [];
     String photo = json['photo'] ?? "";
 
     return UserData(
@@ -117,7 +142,8 @@ class TestScore {
   String score;
   Map<String, dynamic> sectionScores;
 
-  TestScore({required this.name, required this.score, required this.sectionScores});
+  TestScore(
+      {required this.name, required this.score, required this.sectionScores});
 
   factory TestScore.fromJson(json) {
     return TestScore(
@@ -142,7 +168,11 @@ class Course {
   String score;
   String description;
 
-  Course({required this.name, required this.score, required this.years, required this.description});
+  Course(
+      {required this.name,
+      required this.score,
+      required this.years,
+      required this.description});
 
   factory Course.fromJson(json) {
     return Course(
@@ -169,7 +199,11 @@ class Work {
   String years;
   String description;
 
-  Work({required this.name, required this.years, required this.photo, required this.description});
+  Work(
+      {required this.name,
+      required this.years,
+      required this.photo,
+      required this.description});
 
   factory Work.fromJson(json) {
     return Work(
@@ -197,17 +231,31 @@ class Club {
   List<Role> roles;
   List<Accomplishment> accomplishments;
 
-  Club({required this.photo, required this.name, required this.years, required this.roles, required this.accomplishments});
+  Club(
+      {required this.photo,
+      required this.name,
+      required this.years,
+      required this.roles,
+      required this.accomplishments});
 
   factory Club.fromJson(json) {
     var photo = json["photo"] ?? "";
     var name = json["name"] ?? "";
     var years = json["years"] ?? "";
-    List<Role> roles = (json['roles'] as List?)?.map((item) => Role.fromJson(item)).toList() ?? <Role>[];
-    List<Accomplishment> accomplishments =
-        (json['accomplishments'] as List?)?.map((item) => Accomplishment.fromJson(item)).toList() ?? <Accomplishment>[];
+    List<Role> roles =
+        (json['roles'] as List?)?.map((item) => Role.fromJson(item)).toList() ??
+            <Role>[];
+    List<Accomplishment> accomplishments = (json['accomplishments'] as List?)
+            ?.map((item) => Accomplishment.fromJson(item))
+            .toList() ??
+        <Accomplishment>[];
 
-    return Club(photo: photo, name: name, years: years, roles: roles, accomplishments: accomplishments);
+    return Club(
+        photo: photo,
+        name: name,
+        years: years,
+        roles: roles,
+        accomplishments: accomplishments);
   }
 
   Map<String, dynamic> toJson() {
@@ -225,18 +273,33 @@ class Art {
   List<String> photos;
   String name;
   String years;
+  String description;
   List<Accomplishment> accomplishments;
 
-  Art({required this.photos, required this.name, required this.years, required this.accomplishments});
+  Art(
+      {required this.photos,
+      required this.name,
+      required this.years,
+      required this.accomplishments,
+      required this.description});
 
   factory Art.fromJson(json) {
-    var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var photos =
+        (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
     var name = json["name"] ?? "";
     var years = json["years"] ?? "";
-    List<Accomplishment> accomplishments =
-        (json['accomplishments'] as List?)?.map((item) => Accomplishment.fromJson(item)).toList() ?? <Accomplishment>[];
+    var description = json["description"] ?? "";
+    List<Accomplishment> accomplishments = (json['accomplishments'] as List?)
+            ?.map((item) => Accomplishment.fromJson(item))
+            .toList() ??
+        <Accomplishment>[];
 
-    return Art(photos: photos, name: name, years: years, accomplishments: accomplishments);
+    return Art(
+        photos: photos,
+        name: name,
+        years: years,
+        accomplishments: accomplishments,
+        description: description);
   }
 
   Map<String, dynamic> toJson() {
@@ -256,16 +319,28 @@ class Project {
   List<String> skills;
   String description;
 
-  Project({required this.photos, required this.name, required this.years, required this.skills, required this.description});
+  Project(
+      {required this.photos,
+      required this.name,
+      required this.years,
+      required this.skills,
+      required this.description});
 
   factory Project.fromJson(json) {
-    var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var photos =
+        (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
     var name = json["name"] ?? "";
     var years = json["years"] ?? "";
     var description = json["description"] ?? "";
-    var skills = (json['skills'] as List?)?.map((item) => item as String).toList() ?? [];
+    var skills =
+        (json['skills'] as List?)?.map((item) => item as String).toList() ?? [];
 
-    return Project(photos: photos, name: name, years: years, skills: skills, description: description);
+    return Project(
+        photos: photos,
+        name: name,
+        years: years,
+        skills: skills,
+        description: description);
   }
 
   Map<String, dynamic> toJson() {
@@ -296,15 +371,24 @@ class Sport {
       required this.stats});
 
   factory Sport.fromJson(json) {
-    var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
+    var photos =
+        (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];
     var name = json["name"] ?? "";
     var years = json["years"] ?? "";
-    List<Accomplishment> accomplishments =
-        (json['accomplishments'] as List?)?.map((item) => Accomplishment.fromJson(item)).toList() ?? <Accomplishment>[];
+    List<Accomplishment> accomplishments = (json['accomplishments'] as List?)
+            ?.map((item) => Accomplishment.fromJson(item))
+            .toList() ??
+        <Accomplishment>[];
     var stats = json["stats"] as Map<String, dynamic>;
     var position = json["position"] ?? "";
 
-    return Sport(photos: photos, name: name, years: years, position: position, accomplishments: accomplishments, stats: stats);
+    return Sport(
+        photos: photos,
+        name: name,
+        years: years,
+        position: position,
+        accomplishments: accomplishments,
+        stats: stats);
   }
 
   Map<String, dynamic> toJson() {
@@ -348,12 +432,19 @@ class Role {
 
 class Accomplishment {
   String place;
+  String description;
   String name;
   String location;
   String year;
   String link;
 
-  Accomplishment({required this.place, required this.name, required this.location, required this.year, required this.link});
+  Accomplishment(
+      {required this.place,
+      required this.name,
+      required this.location,
+      required this.year,
+      required this.link,
+      required this.description});
 
   factory Accomplishment.fromJson(json) {
     var name = json["name"] ?? "";
@@ -361,11 +452,23 @@ class Accomplishment {
     var location = json["location"] ?? "";
     var year = json["year"] ?? "";
     var link = json["link"] ?? "";
-
-    return Accomplishment(place: place, name: name, location: location, year: year, link: link);
+    var description = json["description"] ?? "";
+    return Accomplishment(
+        place: place,
+        name: name,
+        location: location,
+        year: year,
+        link: link,
+        description: description);
   }
 
   Map<String, dynamic> toJson() {
-    return {"name": name, "place": place, "location": location, "year": year, "link": link};
+    return {
+      "name": name,
+      "place": place,
+      "location": location,
+      "year": year,
+      "link": link
+    };
   }
 }
