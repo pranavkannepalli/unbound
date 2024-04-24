@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -90,6 +89,7 @@ class ViewArts extends StatelessWidget {
                         e,
                         width: 40,
                         height: 40,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   )),
