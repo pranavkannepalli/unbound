@@ -70,8 +70,9 @@ class _ProfileScreenState extends State<ProfileScreen>
   Widget build(BuildContext context) {
     UserData? userData = Provider.of<UserData?>(context);
     const gap = SizedBox(height: 6.0);
-    if (userData == null)
+    if (userData == null) {
       return const Center(child: CircularProgressIndicator());
+    }
     createKVPair(title, data) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -83,28 +84,26 @@ class _ProfileScreenState extends State<ProfileScreen>
 
     createInterests() {
       List<Widget> ints = [];
-      if (userData?.interests != null) {
-        final textColor = [blue.shade800, green.shade500, pink.shade500];
-        final bgColor = [blue.shade400, green.shade300, pink.shade300];
+      final textColor = [blue.shade800, green.shade500, pink.shade500];
+      final bgColor = [blue.shade400, green.shade300, pink.shade300];
 
-        for (int i = 0; i < userData!.interests.length; i++) {
-          Widget n = Container(
-            padding: const EdgeInsets.symmetric(
-              vertical: 6.0,
-              horizontal: 12.0,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(Radius.circular(14.0)),
-              color: bgColor.elementAt(i % bgColor.length),
-            ),
-            child: Text(userData.interests.elementAt(i),
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor.elementAt(i % textColor.length))),
-          );
+      for (int i = 0; i < userData.interests.length; i++) {
+        Widget n = Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: 6.0,
+            horizontal: 12.0,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.all(Radius.circular(14.0)),
+            color: bgColor.elementAt(i % bgColor.length),
+          ),
+          child: Text(userData.interests.elementAt(i),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor.elementAt(i % textColor.length))),
+        );
 
-          ints.add(n);
-        }
+        ints.add(n);
       }
-      return ints;
+          return ints;
     }
 
     createBasicInfo(int index, UserData data) {

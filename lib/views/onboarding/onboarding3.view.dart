@@ -30,7 +30,7 @@ class _Onboarding3State extends State<Onboarding3> {
 
     if (userData?.interests != null && !userDataTried) {
       setState(() {
-        interests = userData!.interests as List<String>;
+        interests = userData!.interests;
         userDataTried = true;
       });
     }
