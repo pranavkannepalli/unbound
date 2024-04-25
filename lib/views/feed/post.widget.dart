@@ -47,11 +47,20 @@ class _PostWidgetState extends State<PostWidget> {
     UserData? user = Provider.of<UserData?>(listen: false, context);
 
     void addComment() {
+      var c = comments;
+      var nComment = Comment(
+        author: user?.name ?? "",
+        text: commentText,
+        time: Timestamp.now(),
+        pfp: user?.photo ?? "",
+        uid: auth,
+      );
+      c.add(nComment);
       setState(() {
         commentController.clear();
         commentText = "";
-        comments
-            .add(Comment(author: user?.name ?? "", text: commentText, time: Timestamp.now(), pfp: user?.photo ?? "", uid: auth));
+        comments = c;
+        DatabaseService().addComment(widget.post.id, widget.uid, widget.type, nComment);
       });
     }
 

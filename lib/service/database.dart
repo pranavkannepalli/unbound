@@ -170,6 +170,33 @@ class DatabaseService {
     });
   }
 
+  Future addComment(String postUid, String uid, String postType, Comment comment) async {
+    try {
+      switch (postType) {
+        case "Student":
+          await userPostCollection.doc(postUid).update({
+            "comments": FieldValue.arrayUnion(
+              [comment.toJSON()],
+            )
+          });
+        case "Company":
+          await companyPostCollection.doc(postUid).update({
+            "comments": FieldValue.arrayUnion(
+              [comment.toJSON()],
+            )
+          });
+        case "College":
+          await collegePostCollection.doc(postUid).update({
+            "comments": FieldValue.arrayUnion(
+              [comment.toJSON()],
+            )
+          });
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future deleteObject(String section, Map<String, dynamic> json) async {
     await usersCollection.doc(uid).update({
       section: FieldValue.arrayRemove([json])

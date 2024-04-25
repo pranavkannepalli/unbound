@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +144,7 @@ class _CollegeProfileState extends State<CollegeProfile>
                             children: [
                               Container(
                                 color: white.shade200,
-                                margin: EdgeInsets.only(bottom: 50),
+                                margin: const EdgeInsets.only(bottom: 50),
                                 child: Image.network(
                                   college.bgImg,
                                   width: double.infinity,

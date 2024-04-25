@@ -137,6 +137,7 @@ class Comment {
     data["text"] = text;
     data["time"] = time;
     data["pfp"] = pfp;
+    data["uid"] = uid;
     return data;
   }
 }
