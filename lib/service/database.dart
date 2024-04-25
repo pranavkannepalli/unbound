@@ -223,19 +223,23 @@ class DatabaseService {
     }
   }
 
-  Future<List<Feed>?> getFeeds(String name) async {
+  Future<List<Feed>?> getFeeds(String name, List<String> following) async {
     // Return three feeds: college, people, companies
     try {
       final collegePostQuery = await collegePostCollection.orderBy("time", descending: true).get();
       final collegePostData = collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
       final colleges = await collegesCollection.get();
       final collegesData = colleges.docs.map((e) => _accountFromSnapshot(e)).toList();
+      collegesData.shuffle();
+
       final collegeFeed = Feed(posts: collegePostData.take(5).toList(), recommended: collegesData.take(5).toList());
       final userPostQuery = await userPostCollection.orderBy("time", descending: true).get();
       final userPostData = userPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
       final usersQuery = await usersCollection.where('name', isNotEqualTo: name).get();
-      final usersData = usersQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
+      final usersData =
+          usersQuery.docs.where((doc) => !following.contains(doc.id)).map((doc) => _accountFromSnapshot(doc)).toList();
+      usersData.shuffle();
 
       final userFeed = Feed(posts: userPostData.take(5).toList(), recommended: usersData.take(5).toList());
 
@@ -244,6 +248,8 @@ class DatabaseService {
 
       final companiesQuery = await companiesCollection.get();
       final companiesData = companiesQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
+      companiesData.shuffle();
+
       final companyFeed = Feed(posts: companyPostData.take(5).toList(), recommended: companiesData.take(5).toList());
 
       return [collegeFeed, userFeed, companyFeed];
@@ -316,6 +322,8 @@ class DatabaseService {
   }
 
   Future addLike(String postUid, String postType) async {
+    print(postUid);
+    print(postType);
     try {
       switch (postType) {
         case ("College"):
@@ -323,7 +331,7 @@ class DatabaseService {
             "likes": FieldValue.arrayUnion([uid])
           });
           break;
-        case ("User"):
+        case ("Student"):
           await userPostCollection.doc(postUid).update({
             "likes": FieldValue.arrayUnion([uid])
           });
@@ -334,7 +342,9 @@ class DatabaseService {
           });
           break;
       }
-    } catch (e) {}
+    } catch (e) {
+      //Error
+    }
   }
 
   Future removeLike(String postUid, String postType) async {

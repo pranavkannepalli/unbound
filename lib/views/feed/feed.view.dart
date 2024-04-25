@@ -35,7 +35,7 @@ class _FeedState extends State<FeedPage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    future = DatabaseService().getFeeds(widget.initial!.name);
+    future = DatabaseService().getFeeds(widget.initial!.name, widget.initial!.following);
     controller = TabController(length: 3, vsync: this);
     controller.addListener(handleTabChange);
     scrollController = ScrollController();
