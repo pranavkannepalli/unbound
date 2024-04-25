@@ -10,15 +10,6 @@ class Works extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    createKVPair(title, data) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("$title:", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-            Text(data.toString()),
-            const SizedBox(height: 6.0),
-          ],
-        );
-
     return Container(
       padding: const EdgeInsets.all(20.0),
       decoration: BoxDecoration(

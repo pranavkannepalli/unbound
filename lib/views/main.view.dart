@@ -29,23 +29,24 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     UserData? userData = Provider.of<UserData?>(context);
     List<Widget> widgetOptions = <Widget>[
-      const FeedPage(),
+      FeedPage(initial: userData),
       const Center(child: Text("Improve")),
       const ProfileScreen(),
       Center(
-          child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Text("Settings"),
-          TextButton(
-              onPressed: (() {
-                AuthService auth = AuthService();
-                auth.signOut();
-                GoRouter.of(context).go('/landing');
-              }),
-              child: const Text("Sign Out")),
-        ],
-      )),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("Settings"),
+            TextButton(
+                onPressed: (() {
+                  AuthService auth = AuthService();
+                  auth.signOut();
+                  GoRouter.of(context).go('/landing');
+                }),
+                child: const Text("Sign Out")),
+          ],
+        ),
+      ),
     ];
 
     if (userData != null) {
@@ -141,9 +142,21 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: SizedBox.expand(
         child: Center(
-          child: TextButton(
-            child: const Text("Go home!"),
-            onPressed: () => GoRouter.of(context).go('/'),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextButton(
+                child: const Text("Go home!"),
+                onPressed: () => GoRouter.of(context).go('/'),
+              ),
+              TextButton(
+                child: const Text("Sign Out!"),
+                onPressed: () async {
+                  await AuthService().signOut();
+                  GoRouter.of(context).go('/');
+                },
+              ),
+            ],
           ),
         ),
       ),

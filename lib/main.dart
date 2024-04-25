@@ -151,12 +151,14 @@ final _router = GoRouter(
       builder: (context, state) => UserProfile(uid: state.extra! as String),
     ),
     GoRoute(
-        path: "/gallery",
-        pageBuilder: (context, state) => CustomTransitionPage(
-            fullscreenDialog: true,
-            opaque: false,
-            child: ImageGallery(images: state.extra as List<String>),
-            transitionsBuilder: (_, __, ___, child) => child)),
+      path: "/gallery",
+      pageBuilder: (context, state) => CustomTransitionPage(
+        fullscreenDialog: true,
+        opaque: false,
+        child: ImageGallery(images: state.extra as List<String>),
+        transitionsBuilder: (_, __, ___, child) => child,
+      ),
+    ),
     GoRoute(path: "/company", builder: (context, state) => CompanyProfile(uid: state.extra! as String)),
     GoRoute(path: "/college", builder: (context, state) => CollegeProfile(uid: state.extra! as String)),
     GoRoute(
@@ -181,8 +183,6 @@ final _router = GoRouter(
     ),
   ],
 );
-
-// TODO: build pages for companies and colleges
 
 class Unbound extends StatelessWidget {
   const Unbound({super.key});

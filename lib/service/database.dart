@@ -20,22 +20,119 @@ class DatabaseService {
   static final defaultUser = {
     "name": "",
     "email": "",
-    "grad": -1,
-    "state": "",
-    "school": "",
-    "interests": [],
+    "grad": 2025,
+    "state": "WA",
+    "school": "Tesla STEM High School",
+    "interests": ["Computer Science", "Flutter", "Firebase"],
     "photo": "",
-    "bio": "",
-    "bday": "",
+    "bio": "I love flutter, computer science, and mobile app development. :)",
+    "bday": "2007-02-26 00:00:00.000",
     "posts": [],
-    "tests": [],
-    "coursework": [],
-    "clubs": [],
-    "arts": [],
-    "sports": [],
-    "work": [],
-    "projects": [],
-    "following": []
+    "tests": [
+      TestScore(
+        name: "SAT",
+        score: "1580",
+        sectionScores: {"Math": "800", "English": "780"},
+      ).toJson(),
+    ],
+    "coursework": [
+      Course(
+        name: "AP Computer Science A",
+        description: "A CS Class that taught me a lot about computer science principles and Java.",
+        score: "5",
+        years: "2022 - 2023",
+      ).toJson()
+    ],
+    "clubs": [
+      Club(
+        accomplishments: [
+          Accomplishment(
+            name: "Webmaster",
+            place: "1",
+            location: "TSA Nationals",
+            year: "2023",
+            link: "",
+            description: "First in the nation in the Webmaster event at TSA Nationals.",
+          ),
+        ],
+        roles: [
+          Role(
+            name: "President",
+            description: "President of Tesla STEM TSA for one year",
+            years: "2023 - 2024",
+          ),
+        ],
+        photo: "",
+        name: "Technology Student Association",
+        years: "2023 - 2024",
+      ).toJson()
+    ],
+    "arts": [
+      Art(
+        name: "Tabla",
+        years: "2016 - 2024",
+        description: "Played this Indian Drum for many years, while passing the first and second accredited exams.",
+        photos: [
+          "https://images.unsplash.com/photo-1568219656418-15c329312bf1?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          "https://images.unsplash.com/photo-1633411988188-6e63354a9019?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGFibGF8ZW58MHx8MHx8fDA%3D",
+        ],
+        accomplishments: [
+          Accomplishment(
+            name: "Raag Sandhana",
+            place: "9",
+            location: "Online",
+            year: "2023",
+            link: "",
+            description: "Ninth among hundreds of competitors in the classical tabla section after a video submission.",
+          ),
+        ],
+      ).toJson(),
+    ],
+    "sports": [
+      Sport(
+        name: "Cricket",
+        years: "2016 - 2024",
+        position: "All-Rounder",
+        photos: [],
+        accomplishments: [
+          Accomplishment(
+            name: "MLC Jr Championships",
+            place: "9",
+            location: "Houston, TX",
+            year: "2023",
+            link: "",
+            description: "We were the best team in the nation at this competition and won a National Trophy.",
+          ),
+        ],
+        stats: {
+          "Matches": "150",
+          "Batting Average": "43",
+          "Runs": (43 * 150).toString(),
+          "Bowling Average": "14",
+          "Wickets": "100",
+        },
+      ).toJson(),
+    ],
+    "work": [
+      Work(
+        name: "ML Workflow Intern",
+        years: "2023",
+        photo:
+            "https://images.unsplash.com/photo-1633419461186-7d40a38105ec?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        description: "An internship with People Tech Group that involved ML Workflow maintenance.",
+      ).toJson(),
+    ],
+    "projects": [
+      Project(
+        name: "SpaceOasis",
+        photos: [],
+        years: "2023",
+        skills: ["NextJS", "ReactJS", "Firebase"],
+        description: "The website project that won first at TSA Nationals in Kentucky in 2023.",
+      ).toJson(),
+    ],
+    "following": [],
+    "colleges": [],
   };
 
   DatabaseService({this.uid});
@@ -48,14 +145,14 @@ class DatabaseService {
     return usersCollection.doc(uid).snapshots().map(_userDataFromSnapshot);
   }
 
-  Future<List<List<Account>>> getUsers() async {
-    final users = await usersCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
+  Future<List<List<Account>>> getUsers(String name) async {
+    final users = await usersCollection
+        .where('name', isNotEqualTo: name)
+        .get()
+        .then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
     final companies =
         await companiesCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
     final colleges = await collegesCollection.get().then((value) => value.docs.map((doc) => _accountFromSnapshot(doc)).toList());
-
-    print(colleges);
-    print("fetching");
 
     return [colleges, users, companies];
   }
@@ -100,30 +197,33 @@ class DatabaseService {
   }
 
   Future<UserData?> getData() async {
-    final snapshot = await usersCollection.doc(uid).get();
-    final userData = snapshot.data() as Map<String, dynamic>;
+    try {
+      final snapshot = await usersCollection.doc(uid).get();
+      final userData = snapshot.data() as Map<String, dynamic>;
 
-    var pushData = <String, dynamic>{};
-    var needsPush = false;
+      var pushData = <String, dynamic>{};
+      var needsPush = false;
 
-    for (var key in defaultUser.keys) {
-      if (!userData.containsKey(key)) {
-        pushData[key] = defaultUser[key];
-        userData[key] = defaultUser[key];
-        needsPush = true;
+      for (var key in defaultUser.keys) {
+        if (!userData.containsKey(key)) {
+          pushData[key] = defaultUser[key];
+          userData[key] = defaultUser[key];
+          needsPush = true;
+        }
       }
-    }
 
-    if (needsPush) {
-      await updateUserData(pushData);
-    }
+      if (needsPush) {
+        await updateUserData(pushData);
+      }
 
-    return UserData.fromJson(userData);
+      return UserData.fromJson(userData);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 
-  // TODO: build fetching for companies and colleges
-
-  Future<List<Feed>?> getFeeds() async {
+  Future<List<Feed>?> getFeeds(String name) async {
     // Return three feeds: college, people, companies
     try {
       final collegePostQuery = await collegePostCollection.orderBy("time", descending: true).get();
@@ -134,7 +234,7 @@ class DatabaseService {
       final userPostQuery = await userPostCollection.orderBy("time", descending: true).get();
       final userPostData = userPostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
 
-      final usersQuery = await usersCollection.get();
+      final usersQuery = await usersCollection.where('name', isNotEqualTo: name).get();
       final usersData = usersQuery.docs.map((doc) => _accountFromSnapshot(doc)).toList();
 
       final userFeed = Feed(posts: userPostData.take(5).toList(), recommended: usersData.take(5).toList());
@@ -210,7 +310,9 @@ class DatabaseService {
       await usersCollection.doc(uid).update({
         section: newData,
       });
-    } catch (e) {}
+    } catch (e) {
+      // do something here
+    }
   }
 
   Future addLike(String postUid, String postType) async {

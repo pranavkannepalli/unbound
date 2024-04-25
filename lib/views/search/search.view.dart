@@ -1,9 +1,11 @@
 import "package:flutter/material.dart";
 import "package:go_router/go_router.dart";
 import "package:ionicons/ionicons.dart";
+import "package:provider/provider.dart";
 import "package:unbound/common/text_input.dart";
 import "package:unbound/common/theme.dart";
 import "package:unbound/model/feed.model.dart";
+import "package:unbound/model/user.model.dart";
 import "package:unbound/service/database.dart";
 
 class Search extends StatefulWidget {
@@ -39,6 +41,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    UserData? userData = Provider.of<UserData?>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: white.shade50,
@@ -117,7 +120,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                         Icon(currentIndex == 2 ? Ionicons.briefcase : Ionicons.briefcase_outline,
                             size: 14, color: currentIndex == 2 ? blue.shade600 : white.shade700),
                         const SizedBox(width: 8),
-                        Text("Companies", style: Theme.of(context).textTheme.bodySmall)
+                        Text("Jobs", style: Theme.of(context).textTheme.bodySmall)
                       ]),
                     ),
                   ],
@@ -125,7 +128,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
               ),
               const SizedBox(height: 6.0),
               FutureBuilder(
-                future: DatabaseService().getUsers(),
+                future: DatabaseService().getUsers(userData!.name),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<List<Account>>? data = snapshot.data;
@@ -171,21 +174,20 @@ class SearchAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return TextButton(
       child: Row(
         children: [
           CircleAvatar(
             backgroundColor: white.shade300,
             backgroundImage: NetworkImage(account.pfp),
-            radius: 20.0,
+            radius: 15.0,
           ),
           const SizedBox(width: 12.0),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(account.name, style: Theme.of(context).textTheme.titleMedium),
+              Text(account.name, style: Theme.of(context).textTheme.labelMedium),
             ],
           )
         ],
