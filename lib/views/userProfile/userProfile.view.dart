@@ -1,8 +1,12 @@
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
+import "package:image_picker/image_picker.dart";
 import "package:ionicons/ionicons.dart";
 import "package:provider/provider.dart";
+import "package:unbound/common/buttons.dart";
 import "package:unbound/common/theme.dart";
 import "package:unbound/model/user.model.dart";
+import "package:unbound/service/database.dart";
 import "package:unbound/views/userProfile/components/arts.view.dart";
 import "package:unbound/views/userProfile/components/clubs.view.dart";
 import "package:unbound/views/userProfile/components/coursework.view.dart";
@@ -18,14 +22,8 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
-  final List<GlobalKey> editCategories = [
-    GlobalKey(),
-    GlobalKey(),
-    GlobalKey(),
-    GlobalKey()
-  ];
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
+  final List<GlobalKey> editCategories = [GlobalKey(), GlobalKey(), GlobalKey(), GlobalKey()];
 
   late TabController controller;
   late ScrollController scrollController;
@@ -58,17 +56,94 @@ class _ProfileScreenState extends State<ProfileScreen>
     }
   }
 
+  void showEditPfp(String uid) {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextButton(
+                    style: textExpand,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Ionicons.trash, size: 18, color: white.shade700),
+                        const SizedBox(width: 12.0),
+                        Text(
+                          "Delete Image",
+                          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: white.shade700),
+                        ),
+                      ],
+                    ),
+                    onPressed: () async {
+                      await DatabaseService(uid: uid).updateUserData({"photo": ""});
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    style: textExpand,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Ionicons.image, size: 18, color: white.shade700),
+                        const SizedBox(width: 10.0),
+                        Text(
+                          "Select from Gallery",
+                          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: white.shade700),
+                        ),
+                      ],
+                    ),
+                    onPressed: () async {
+                      XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
+                      if (file != null) {
+                        await DatabaseService(uid: uid).changePfp(file);
+                      }
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  TextButton(
+                    style: textExpand,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Ionicons.camera, size: 18, color: white.shade700),
+                        const SizedBox(width: 10.0),
+                        Text(
+                          "Take Picture",
+                          style: Theme.of(context).textTheme.labelLarge?.copyWith(color: white.shade700),
+                        ),
+                      ],
+                    ),
+                    onPressed: () async {
+                      XFile? file = await ImagePicker().pickImage(source: ImageSource.camera);
+                      if (file != null) {
+                        await DatabaseService(uid: uid).changePfp(file);
+                      }
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ));
+  }
+
   void scrollToIndex(int index) async {
     scrollController.removeListener(animateToTab);
     final categories = editCategories[index].currentContext!;
-    await Scrollable.ensureVisible(categories,
-        duration: const Duration(milliseconds: 600));
+    await Scrollable.ensureVisible(categories, duration: const Duration(milliseconds: 600));
     scrollController.addListener(animateToTab);
   }
 
   @override
   Widget build(BuildContext context) {
     UserData? userData = Provider.of<UserData?>(context);
+    AuthUser? user = Provider.of<AuthUser?>(context);
     const gap = SizedBox(height: 6.0);
     if (userData == null) {
       return const Center(child: CircularProgressIndicator());
@@ -103,7 +178,7 @@ class _ProfileScreenState extends State<ProfileScreen>
 
         ints.add(n);
       }
-          return ints;
+      return ints;
     }
 
     createBasicInfo(int index, UserData data) {
@@ -119,25 +194,38 @@ class _ProfileScreenState extends State<ProfileScreen>
           children: [
             SizedBox(height: 20, key: editCategories[index]),
             Center(
-              child: CircleAvatar(
-                backgroundColor: white.shade300,
-                backgroundImage: NetworkImage(userData.photo),
-                radius: 60,
+              child: TextButton(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: white.shade300,
+                      backgroundImage: NetworkImage(userData.photo),
+                      radius: 60,
+                    ),
+                    Icon(
+                      Ionicons.camera,
+                      color: white.shade700,
+                    ),
+                  ],
+                ),
+                onPressed: () => showEditPfp(user!.uid),
               ),
             ),
             const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
-                  child: Text("Basic Info",
-                      style: Theme.of(context).textTheme.displaySmall),
+                  child: Text("Basic Info", style: Theme.of(context).textTheme.displaySmall),
                 ),
                 IconButton(
                   icon: Icon(
                     Ionicons.pencil,
                     color: blue.shade600,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    GoRouter.of(context).push('/editBasicInfo', extra: userData);
+                  },
                 ),
               ],
             ),
@@ -160,8 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen>
       appBar: AppBar(
         backgroundColor: white.shade50,
         surfaceTintColor: white.shade100,
-        title: Text("Edit Profile",
-            style: Theme.of(context).textTheme.displaySmall),
+        title: Text("Edit Profile", style: Theme.of(context).textTheme.displaySmall),
         bottom: TabBar(
           controller: controller,
           isScrollable: true,
@@ -172,22 +259,12 @@ class _ProfileScreenState extends State<ProfileScreen>
             }
             return Colors.transparent;
           }),
-          indicator: BoxDecoration(
-              border:
-                  Border(bottom: BorderSide(color: white.shade900, width: 2))),
+          indicator: BoxDecoration(border: Border(bottom: BorderSide(color: white.shade900, width: 2))),
           labelPadding: const EdgeInsets.symmetric(horizontal: 20),
           labelStyle: Theme.of(context).textTheme.bodyMedium,
-          unselectedLabelStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium!
-              .copyWith(color: white.shade700),
+          unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade700),
           indicatorPadding: const EdgeInsets.symmetric(horizontal: -20),
-          tabs: const [
-            Tab(text: "Basic"),
-            Tab(text: "Academics"),
-            Tab(text: "Extracurriculars"),
-            Tab(text: "Experiences")
-          ],
+          tabs: const [Tab(text: "Basic"), Tab(text: "Academics"), Tab(text: "Extracurriculars"), Tab(text: "Experiences")],
           onTap: (int index) => scrollToIndex(index),
         ),
       ),

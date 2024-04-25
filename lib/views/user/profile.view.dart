@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:ionicons/ionicons.dart';
@@ -23,8 +24,7 @@ class UserProfile extends StatefulWidget {
   State<UserProfile> createState() => _UserProfileState();
 }
 
-class _UserProfileState extends State<UserProfile>
-    with SingleTickerProviderStateMixin {
+class _UserProfileState extends State<UserProfile> with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -57,10 +57,7 @@ class _UserProfileState extends State<UserProfile>
             color: bgColor.elementAt(i % bgColor.length),
           ),
           child: Text(userData.interests.elementAt(i),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: textColor.elementAt(i % textColor.length))),
+              style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: textColor.elementAt(i % textColor.length))),
         );
 
         ints.add(n);
@@ -70,10 +67,7 @@ class _UserProfileState extends State<UserProfile>
 
     return Scaffold(
       body: FutureBuilder(
-        future: Future.wait([
-          DatabaseService(uid: widget.uid).getData(),
-          DatabaseService(uid: widget.uid).getUserPosts()
-        ]),
+        future: Future.wait([DatabaseService(uid: widget.uid).getData(), DatabaseService(uid: widget.uid).getUserPosts()]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<dynamic>? data = snapshot.data;
@@ -89,10 +83,11 @@ class _UserProfileState extends State<UserProfile>
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
                   SliverAppBar(
-                      backgroundColor: white.shade50,
-                      expandedHeight: 525,
-                      collapsedHeight: 525,
-                      flexibleSpace: Column(children: [
+                    backgroundColor: white.shade50,
+                    expandedHeight: 525,
+                    collapsedHeight: 525,
+                    flexibleSpace: Column(
+                      children: [
                         Stack(
                           alignment: Alignment.centerLeft,
                           clipBehavior: Clip.none,
@@ -117,110 +112,86 @@ class _UserProfileState extends State<UserProfile>
                           ],
                         ),
                         Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 20),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Text(user.name,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .displaySmall),
-                                  Text("'${user.grad} @ ${user.school}",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .labelMedium!
-                                          .copyWith(color: white.shade700)),
-                                  const SizedBox(height: 6),
-                                  Text(user.bio,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(color: white.shade700)),
-                                  const SizedBox(height: 12),
-                                  Wrap(
-                                    spacing: 12.0,
-                                    runSpacing: 6.0,
-                                    children: createInterests(user),
-                                  )
-                                ])),
+                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+                              Text(user.name, style: Theme.of(context).textTheme.displaySmall),
+                              Text("'${user.grad} @ ${user.school}",
+                                  style: Theme.of(context).textTheme.labelMedium!.copyWith(color: white.shade700)),
+                              const SizedBox(height: 6),
+                              Text(user.bio, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: white.shade700)),
+                              const SizedBox(height: 12),
+                              Wrap(
+                                spacing: 12.0,
+                                runSpacing: 6.0,
+                                children: createInterests(user),
+                              )
+                            ])),
                         const Spacer(),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TabBar(
-                              controller: tabController,
-                              isScrollable: true,
-                              tabAlignment: TabAlignment.start,
-                              overlayColor:
-                                  MaterialStateProperty.resolveWith((states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return white.shade300;
-                                }
-                                return Colors.transparent;
-                              }),
-                              indicator: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: white.shade900, width: 2))),
-                              labelPadding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              labelStyle:
-                                  Theme.of(context).textTheme.bodyMedium,
-                              unselectedLabelStyle: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium!
-                                  .copyWith(color: white.shade700),
-                              indicatorPadding:
-                                  const EdgeInsets.symmetric(horizontal: -20),
-                              tabs: const [
-                                Tab(text: "Academics"),
-                                Tab(text: "Activities"),
-                                Tab(text: "Experience"),
-                                Tab(text: "Posts"),
-                              ]),
-                        )
-                      ]))
+                            controller: tabController,
+                            isScrollable: true,
+                            tabAlignment: TabAlignment.start,
+                            overlayColor: MaterialStateProperty.resolveWith((states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return white.shade300;
+                              }
+                              return Colors.transparent;
+                            }),
+                            indicator: BoxDecoration(border: Border(bottom: BorderSide(color: white.shade900, width: 2))),
+                            labelPadding: const EdgeInsets.symmetric(horizontal: 20),
+                            labelStyle: Theme.of(context).textTheme.bodyMedium,
+                            unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade700),
+                            indicatorPadding: const EdgeInsets.symmetric(horizontal: -20),
+                            tabs: const [
+                              Tab(text: "Academics"),
+                              Tab(text: "Activities"),
+                              Tab(text: "Experience"),
+                              Tab(text: "Posts"),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                 ];
               },
               body: TabBarView(
                 controller: tabController,
                 children: [
-                  Column(
-                    children: [
-                      if (user.tests.isNotEmpty) ViewTests(tests: user.tests),
-                      if (user.courses.isNotEmpty)
-                        ViewCourses(courses: user.courses),
-                      if (user.tests.isEmpty && user.courses.isEmpty)
-                        const Empty()
-                    ],
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        if (user.tests.isNotEmpty) ViewTests(tests: user.tests),
+                        if (user.courses.isNotEmpty) ViewCourses(courses: user.courses),
+                        if (user.tests.isEmpty && user.courses.isEmpty) const Empty()
+                      ],
+                    ),
                   ),
                   SingleChildScrollView(
                     child: Column(
                       children: [
-                        if(user.clubs.isNotEmpty) ViewClubs(clubs: user.clubs),
-                        if(user.arts.isNotEmpty) ViewArts(arts: user.arts),
-                        if(user.sports.isNotEmpty) ViewSports(sports: user.sports),
-                        if(user.clubs.isEmpty && user.arts.isEmpty && user.sports.isEmpty) const Empty()
+                        if (user.clubs.isNotEmpty) ViewClubs(clubs: user.clubs),
+                        if (user.arts.isNotEmpty) ViewArts(arts: user.arts),
+                        if (user.sports.isNotEmpty) ViewSports(sports: user.sports),
+                        if (user.clubs.isEmpty && user.arts.isEmpty && user.sports.isEmpty) const Empty()
                       ],
                     ),
                   ),
                   SingleChildScrollView(
                       child: Column(
                     children: [
-                      if(user.works.isNotEmpty) ViewWorkExperience(works: user.works),
-                      if(user.projects.isNotEmpty) ViewProjects(projects: user.projects),
-                      if(user.works.isEmpty && user.projects.isEmpty) const Empty()
+                      if (user.works.isNotEmpty) ViewWorkExperience(works: user.works),
+                      if (user.projects.isNotEmpty) ViewProjects(projects: user.projects),
+                      if (user.works.isEmpty && user.projects.isEmpty) const Empty()
                     ],
                   )),
                   SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        ...posts.map((e) => PostWidget(
-                            post: e,
-                            uid: e.authorUid,
-                            type: "User",
-                            authUserId: uid)),
+                        ...posts.map((e) => PostWidget(post: e, uid: e.authorUid, type: "User", authUserId: uid)),
                         if (posts.isEmpty) const Empty()
                       ],
                     ),
@@ -250,19 +221,10 @@ class Empty extends StatelessWidget {
           Icon(Ionicons.construct, color: white.shade500, size: 36),
           const SizedBox(height: 12),
           Text("Nothing here, yet!",
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: white.shade800)),
+              textAlign: TextAlign.center, style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
           const SizedBox(height: 6),
-          Text(
-              "Like all things, this section of the profile is a work in progress. Come back soon to see awesome things.",
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: white.shade800))
+          Text("Like all things, this section of the profile is a work in progress. Come back soon to see awesome things.",
+              textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade800))
         ],
       ),
     );

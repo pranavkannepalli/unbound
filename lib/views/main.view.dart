@@ -143,7 +143,7 @@ class _MainScreenState extends State<MainScreen> {
         child: Center(
           child: TextButton(
             child: const Text("Go home!"),
-            onPressed: () => GoRouter.of(context).go('/splash'),
+            onPressed: () => GoRouter.of(context).go('/'),
           ),
         ),
       ),

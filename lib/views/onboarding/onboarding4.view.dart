@@ -33,7 +33,7 @@ class Onboarding4 extends StatelessWidget {
               Text("Next Steps:", style: Theme.of(context).textTheme.displaySmall),
               const SizedBox(height: 32),
               FilledButton(
-                onPressed: () => router.go('/main'),
+                onPressed: () => router.go('/'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -55,7 +55,7 @@ class Onboarding4 extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               FilledButton(
-                onPressed: () => router.go('/main'),
+                onPressed: () => router.go('/'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -77,7 +77,7 @@ class Onboarding4 extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               FilledButton(
-                onPressed: () => router.go('/main'),
+                onPressed: () => router.go('/'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -99,7 +99,7 @@ class Onboarding4 extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               FilledButton(
-                onPressed: () => router.go('/main'),
+                onPressed: () => router.go('/'),
                 style: greyExpand,
                 child: Row(
                   children: [
@@ -130,7 +130,7 @@ class Onboarding4 extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextButton(
-              onPressed: () => GoRouter.of(context).go('/main'),
+              onPressed: () => GoRouter.of(context).go('/'),
               child: Text(
                 "Later",
                 style: Theme.of(context).textTheme.labelLarge?.copyWith(

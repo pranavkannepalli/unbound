@@ -23,6 +23,7 @@ import 'package:unbound/views/user/profile.view.dart';
 import 'package:unbound/views/userDataProvider.dart';
 import 'package:unbound/views/userProfile/add/add_course.view.dart';
 import 'package:unbound/views/userProfile/add/add_test.view.dart';
+import 'package:unbound/views/userProfile/edit/edit_basic_info.view.dart';
 import 'package:unbound/views/userProfile/edit/edit_course.view.dart';
 import 'package:unbound/views/userProfile/edit/edit_test.view.dart';
 import 'package:unbound/views/viewImages.view.dart';
@@ -119,7 +120,7 @@ final _router = GoRouter(
         }
 
         if (userData?.bio != null && userData?.bio != "" && userData?.interests != null && userData!.interests.isNotEmpty) {
-          return '/main';
+          return '/';
         }
         return null;
       },
@@ -129,7 +130,7 @@ final _router = GoRouter(
       builder: (context, state) => const Onboarding4(),
     ),
     GoRoute(
-        path: "/main",
+        path: "/",
         builder: (context, state) => const MainScreen(),
         redirect: (context, state) {
           if (!loggedIn(context)) {
@@ -150,22 +151,14 @@ final _router = GoRouter(
       builder: (context, state) => UserProfile(uid: state.extra! as String),
     ),
     GoRoute(
-      path: "/gallery",
-      pageBuilder: (context, state) => CustomTransitionPage(
-        fullscreenDialog: true,
-        opaque: false,
-        child: ImageGallery(images: state.extra as List<String>), 
-        transitionsBuilder: (_, __, ___, child) => child
-      )
-    ),
-    GoRoute(
-      path: "/company",
-      builder: (context, state) => CompanyProfile(uid: state.extra! as String)
-    ),
-    GoRoute(
-      path: "/college",
-      builder: (context, state) => CollegeProfile(uid: state.extra! as String)
-    ),
+        path: "/gallery",
+        pageBuilder: (context, state) => CustomTransitionPage(
+            fullscreenDialog: true,
+            opaque: false,
+            child: ImageGallery(images: state.extra as List<String>),
+            transitionsBuilder: (_, __, ___, child) => child)),
+    GoRoute(path: "/company", builder: (context, state) => CompanyProfile(uid: state.extra! as String)),
+    GoRoute(path: "/college", builder: (context, state) => CollegeProfile(uid: state.extra! as String)),
     GoRoute(
       path: "/addTest",
       builder: (context, state) => const AddTest(),
@@ -181,6 +174,10 @@ final _router = GoRouter(
     GoRoute(
       path: "/editCourse",
       builder: (context, state) => EditCourse(old: state.extra! as Course),
+    ),
+    GoRoute(
+      path: "/editBasicInfo",
+      builder: (context, state) => EditBasicInfo(old: state.extra! as UserData),
     ),
   ],
 );

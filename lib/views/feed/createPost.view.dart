@@ -158,7 +158,7 @@ class _CreatePostState extends State<CreatePost> {
                 style: lightExpand,
                 onPressed: () async {
                   if (user?.uid != null) {
-                    router.go('/main');
+                    router.go('/');
                   }
                 },
                 child: Row(
@@ -186,7 +186,7 @@ class _CreatePostState extends State<CreatePost> {
                   if (_formKey.currentState?.validate() ?? false) {
                     if (user?.uid != null) {
                       await DatabaseService(uid: user!.uid).uploadPost(userData!, text, links, image);
-                      router.go('/main');
+                      router.go('/');
                     }
                   }
                 },

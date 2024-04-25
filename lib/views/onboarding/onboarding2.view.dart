@@ -45,19 +45,12 @@ class _Onboarding2State extends State<Onboarding2> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 12.0),
-                    Text("High School",
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelSmall!
-                            .copyWith(color: white.shade700)),
+                    Text("School", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                     const SizedBox(height: 6.0),
                     TextFormField(
                       initialValue: userData?.school ?? "",
-                      decoration: textInputDecoration.copyWith(
-                          hintText: "Blank High School"),
-                      validator: (val) => val != null && val.isEmpty
-                          ? 'Please fill this out.'
-                          : null,
+                      decoration: textInputDecoration.copyWith(hintText: "Blank High School"),
+                      validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                       style: Theme.of(context).textTheme.bodyLarge,
                       onChanged: (val) => school = val,
                     ),
@@ -71,21 +64,13 @@ class _Onboarding2State extends State<Onboarding2> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Graduation Year",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall!
-                                      .copyWith(color: white.shade700)),
+                                  style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                               const SizedBox(height: 6),
                               TextFormField(
                                 keyboardType: TextInputType.number,
-                                initialValue: userData?.grad != -1
-                                    ? userData?.grad.toString() ?? ""
-                                    : "",
-                                decoration: textInputDecoration.copyWith(
-                                    hintText: "2025"),
-                                validator: (val) => val != null && val.isEmpty
-                                    ? 'Please fill this out.'
-                                    : null,
+                                initialValue: userData?.grad != -1 ? userData?.grad.toString() ?? "" : "",
+                                decoration: textInputDecoration.copyWith(hintText: "2025"),
+                                validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => grad = val,
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
@@ -98,21 +83,14 @@ class _Onboarding2State extends State<Onboarding2> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("State",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .labelSmall!
-                                      .copyWith(color: white.shade700)),
+                              Text("State", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
                               const SizedBox(height: 6.0),
                               TextFormField(
                                 initialValue: userData?.state ?? "",
-                                decoration: textInputDecoration.copyWith(
-                                    hintText: "WA"),
-                                validator: (val) => val != null && val.isEmpty
-                                    ? 'Please fill this out.'
-                                    : null,
+                                decoration: textInputDecoration.copyWith(hintText: "WA"),
+                                validator: (val) => val != null && val.isEmpty ? 'Please fill this out.' : null,
                                 onChanged: (val) => state = val,
-                                style: Theme.of(context).textTheme.bodyLarge
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                             ],
                           ),
@@ -138,11 +116,8 @@ class _Onboarding2State extends State<Onboarding2> {
                 if (_formKey.currentState?.validate() ?? false) {
                   if (user?.uid != null) {
                     DatabaseService(uid: user!.uid).updateUserData({
-                      "grad": grad.isNotEmpty
-                          ? int.parse(grad)
-                          : userData?.grad ?? 0,
-                      "school":
-                          school.isNotEmpty ? school : userData?.school ?? "",
+                      "grad": grad.isNotEmpty ? int.parse(grad) : userData?.grad ?? 0,
+                      "school": school.isNotEmpty ? school : userData?.school ?? "",
                       "state": state.isNotEmpty ? state : userData?.state ?? "",
                     });
                     router.go('/onboarding3');

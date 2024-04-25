@@ -18,8 +18,7 @@ class PostWidget extends StatefulWidget {
   final String uid;
   final String type;
   final String authUserId;
-  const PostWidget(
-      {super.key, required this.post, required this.uid, required this.type, required this.authUserId});
+  const PostWidget({super.key, required this.post, required this.uid, required this.type, required this.authUserId});
 
   @override
   State<PostWidget> createState() => _PostWidgetState();
@@ -51,13 +50,9 @@ class _PostWidgetState extends State<PostWidget> {
       setState(() {
         commentController.clear();
         commentText = "";
+        comments
+            .add(Comment(author: user?.name ?? "", text: commentText, time: Timestamp.now(), pfp: user?.photo ?? "", uid: auth));
       });
-        comments.add(Comment(
-            author: user?.name ?? "",
-            text: commentText,
-            time: Timestamp.now(),
-            pfp: user?.photo ?? "",
-            uid: auth));
     }
 
     return Screenshot(
@@ -84,33 +79,22 @@ class _PostWidgetState extends State<PostWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(widget.post.author,
-                                style: Theme.of(context).textTheme.titleSmall),
+                            Text(widget.post.author, style: Theme.of(context).textTheme.titleSmall),
                             Text(timeToString(widget.post.time),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(color: white.shade700))
+                                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
                           ],
                         ),
                       ),
                       const SizedBox(width: 12),
-                      IconButton(
-                          onPressed: () {},
-                          icon: Icon(Ionicons.person_add,
-                              size: 16, color: blue.shade600)),
+                      IconButton(onPressed: () {}, icon: Icon(Ionicons.person_add, size: 16, color: blue.shade600)),
                       IconButton(
                         onPressed: () async {
                           try {
-                            String tempPath =
-                                (await getTemporaryDirectory()).path;
-                            File photo =
-                                File('$tempPath/${widget.post.id}.png');
+                            String tempPath = (await getTemporaryDirectory()).path;
+                            File photo = File('$tempPath/${widget.post.id}.png');
 
                             // Screenshot
-                            await screenshotController
-                                .capture()
-                                .then((image) async {
+                            await screenshotController.capture().then((image) async {
                               if (image == null) throw Error();
                               await photo.writeAsBytes(image);
                             });
@@ -122,15 +106,12 @@ class _PostWidgetState extends State<PostWidget> {
                             print(e.toString());
                           }
                         },
-                        icon: Icon(Ionicons.share,
-                            size: 16, color: blue.shade600),
+                        icon: Icon(Ionicons.share, size: 16, color: blue.shade600),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
-                  Text(widget.post.text,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                      textAlign: TextAlign.left)
+                  Text(widget.post.text, style: Theme.of(context).textTheme.bodyLarge, textAlign: TextAlign.left)
                 ],
               ),
             ),
@@ -150,15 +131,13 @@ class _PostWidgetState extends State<PostWidget> {
                     onTap: () async {
                       print("id ${widget.post.id}");
                       if (liked) {
-                        await DatabaseService(uid: auth)
-                            .removeLike(widget.post.id, widget.type);
+                        await DatabaseService(uid: auth).removeLike(widget.post.id, widget.type);
                         setState(() {
                           liked = false;
                           likes--;
                         });
                       } else {
-                        await DatabaseService(uid: auth)
-                            .addLike(widget.post.id, widget.type);
+                        await DatabaseService(uid: auth).addLike(widget.post.id, widget.type);
                         setState(() {
                           liked = true;
                           likes++;
@@ -166,15 +145,10 @@ class _PostWidgetState extends State<PostWidget> {
                       }
                     },
                     child: Icon(liked ? Ionicons.heart : Ionicons.heart_outline,
-                        size: 18,
-                        color: liked ? pink.shade300 : white.shade800),
+                        size: 18, color: liked ? pink.shade300 : white.shade800),
                   ),
                   const SizedBox(width: 6),
-                  Text(likes.toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: white.shade800)),
+                  Text(likes.toString(), style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
                   const SizedBox(width: 12),
                   InkWell(
                     onTap: () {
@@ -184,9 +158,8 @@ class _PostWidgetState extends State<PostWidget> {
                             return Container(
                               height: 550,
                               decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(20),
-                                    topRight: Radius.circular(20)),
+                                borderRadius:
+                                    const BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
                                 color: white.shade50,
                               ),
                               child: Column(
@@ -203,37 +176,21 @@ class _PostWidgetState extends State<PostWidget> {
                                                 onChanged: (value) {
                                                   commentText = value;
                                                 },
-                                                decoration: textInputDecoration
-                                                    .copyWith(
-                                                        hintText:
-                                                            "Add your two cents"),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
+                                                decoration: textInputDecoration.copyWith(hintText: "Add your two cents"),
+                                                style: Theme.of(context).textTheme.bodyMedium,
                                                 controller: commentController)),
                                         const SizedBox(width: 12),
                                         IconButton(
                                             style: ButtonStyle(
-                                                padding:
-                                                    const MaterialStatePropertyAll(
-                                                        EdgeInsets.all(13)),
+                                                padding: const MaterialStatePropertyAll(EdgeInsets.all(13)),
                                                 shape: MaterialStatePropertyAll(
-                                                    RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8))),
-                                                backgroundColor: commentText
-                                                        .isNotEmpty
-                                                    ? MaterialStatePropertyAll(
-                                                        purple.shade400)
-                                                    : const MaterialStatePropertyAll(
-                                                        Colors.transparent)),
+                                                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+                                                backgroundColor: commentText.isNotEmpty
+                                                    ? MaterialStatePropertyAll(purple.shade400)
+                                                    : const MaterialStatePropertyAll(Colors.transparent)),
                                             onPressed: () => addComment(),
                                             icon: Icon(Ionicons.send,
-                                                size: 16,
-                                                color: commentText.isNotEmpty
-                                                    ? white.shade50
-                                                    : white.shade700))
+                                                size: 16, color: commentText.isNotEmpty ? white.shade50 : white.shade700))
                                       ],
                                     ),
                                   ),
@@ -241,53 +198,36 @@ class _PostWidgetState extends State<PostWidget> {
                                     child: ListView.separated(
                                       key: ValueKey(comments.length),
                                       padding: const EdgeInsets.all(20),
-                                      separatorBuilder: (context, index) =>
-                                          const SizedBox(height: 12),
+                                      separatorBuilder: (context, index) => const SizedBox(height: 12),
                                       itemCount: comments.length,
                                       itemBuilder: (context, index) {
                                         Comment comment = comments[index];
                                         return Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             CircleAvatar(
                                               backgroundColor: white.shade300,
-                                              backgroundImage:
-                                                  NetworkImage(comment.pfp),
+                                              backgroundImage: NetworkImage(comment.pfp),
                                               radius: 17.5,
                                             ),
                                             const SizedBox(width: 12),
                                             Expanded(
                                               child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.stretch,
+                                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                                 children: [
                                                   Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
                                                     children: [
-                                                      Text(comment.author,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleMedium),
+                                                      Text(comment.author, style: Theme.of(context).textTheme.titleMedium),
                                                       const SizedBox(width: 12),
-                                                      Text(
-                                                          timeToString(
-                                                              comment.time),
-                                                          style: Theme.of(
-                                                                  context)
+                                                      Text(timeToString(comment.time),
+                                                          style: Theme.of(context)
                                                               .textTheme
                                                               .bodySmall!
-                                                              .copyWith(
-                                                                  color: white
-                                                                      .shade700))
+                                                              .copyWith(color: white.shade700))
                                                     ],
                                                   ),
-                                                  Text(comment.text,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .bodyMedium)
+                                                  Text(comment.text, style: Theme.of(context).textTheme.bodyMedium)
                                                 ],
                                               ),
                                             )
@@ -301,16 +241,12 @@ class _PostWidgetState extends State<PostWidget> {
                             );
                           });
                     },
-                    child: Icon(Ionicons.chatbox_ellipses_outline,
-                        size: 18, color: white.shade800),
+                    child: Icon(Ionicons.chatbox_ellipses_outline, size: 18, color: white.shade800),
                   ),
                   const SizedBox(width: 6),
                   Expanded(
                       child: Text(widget.post.comments.length.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelLarge!
-                              .copyWith(color: white.shade800))),
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800))),
                 ],
               ),
             ),

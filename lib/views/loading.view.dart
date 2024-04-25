@@ -8,15 +8,7 @@ class Loading extends StatelessWidget {
     return const MaterialApp(
       home: Scaffold(
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Loading :)",
-                textDirection: TextDirection.ltr,
-              ),
-            ],
-          ),
+          child: CircularProgressIndicator(),
         ),
       ),
     );

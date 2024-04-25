@@ -139,7 +139,7 @@ class Sports extends StatelessWidget {
                                       createKVPair("Location", e.location),
                                       createKVPair("Year", e.year),
                                       e.link.isNotEmpty ? createKVPair("Link", e.link) : const SizedBox(height: 0.0),
-                                      createKVPair("Place", "#${e.place}"),
+                                      createKVPair("Place", e.place),
                                     ],
                                   ))
                               .toList()),
