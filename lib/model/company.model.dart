@@ -26,10 +26,8 @@ class Company {
     String founded = json["founded"] ?? "";
     String location = json["location"] ?? "";
     String description = json["description"] ?? "";
-    List<Internship> internships = (json['internships'] as List?)
-            ?.map((item) => Internship.fromJSON(item))
-            .toList() ??
-        <Internship>[];
+    List<Internship> internships =
+        (json['internships'] as List?)?.map((item) => Internship.fromJSON(item)).toList() ?? <Internship>[];
     return Company(
       bgImg: bgImg,
       photo: photo,
@@ -58,14 +56,15 @@ class Tweet {
   int likes;
   Timestamp time;
 
-  Tweet(
-      {required this.handle,
-      required this.name,
-      required this.photo,
-      required this.text,
-      required this.verified,
-      required this.likes,
-      required this.time});
+  Tweet({
+    required this.handle,
+    required this.name,
+    required this.photo,
+    required this.text,
+    required this.verified,
+    required this.likes,
+    required this.time,
+  });
 
   factory Tweet.fromJSON(Map<String, dynamic> data) {
     String name = data["name"] ?? "";
@@ -76,14 +75,7 @@ class Tweet {
     int likes = (data["likes"] ?? 0) as int;
     Timestamp time = (data["time"] ?? Timestamp.now());
 
-    return Tweet(
-        handle: handle,
-        name: name,
-        photo: photo,
-        text: text,
-        verified: verified,
-        likes: likes,
-        time: time);
+    return Tweet(handle: handle, name: name, photo: photo, text: text, verified: verified, likes: likes, time: time);
   }
 }
 
@@ -111,10 +103,7 @@ class Internship {
 
   Internship.fromJSON(Map<String, dynamic> data) {
     description = (data["description"] ?? []) as String;
-    benefits = (data['benefits'] as List?)
-            ?.map((item) => Benefit.fromJSON(item))
-            .toList() ??
-        <Benefit>[];
+    benefits = (data['benefits'] as List?)?.map((item) => Benefit.fromJSON(item)).toList() ?? <Benefit>[];
     level = (data["level"] ?? []) as String;
     link = (data["link"] ?? []) as String;
     location = (data["location"] ?? []) as String;

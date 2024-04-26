@@ -18,8 +18,7 @@ class Internships extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Open Internships",
-                  style: Theme.of(context).textTheme.displaySmall),
+              Text("Open Internships", style: Theme.of(context).textTheme.displaySmall),
               Icon(Ionicons.briefcase, size: 24, color: blue.shade600)
             ],
           ),
@@ -45,30 +44,18 @@ class Job extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: white.shade50,
-          border: Border.all(color: white.shade300, width: 1),
-          borderRadius: BorderRadius.circular(12)),
+          color: white.shade50, border: Border.all(color: white.shade300, width: 1), borderRadius: BorderRadius.circular(12)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(job.name, style: Theme.of(context).textTheme.labelLarge),
-          Text("${job.team} • ${job.location}",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(color: blue.shade600)),
+          Text("${job.team} • ${job.location}", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: blue.shade600)),
           const SizedBox(height: 6),
-          Text(job.description,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium!
-                  .copyWith(color: white.shade800)),
+          Text(job.description, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade800)),
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                for (Benefit b in job.benefits) BenefitPair(benefit: b)
-              ],
+              children: [for (Benefit b in job.benefits) BenefitPair(benefit: b)],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,11 +71,7 @@ class Job extends StatelessWidget {
                 children: [
                   Icon(Ionicons.enter, size: 18, color: white.shade50),
                   const SizedBox(width: 12),
-                  Text("Apply",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: white.shade50))
+                  Text("Apply", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade50))
                 ],
               ))
         ],
@@ -109,11 +92,7 @@ class BenefitPair extends StatelessWidget {
         children: [
           Icon(getIcon(benefit.icon), size: 14, color: white.shade700),
           const SizedBox(width: 6),
-          Text(benefit.name,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall!
-                  .copyWith(color: white.shade700))
+          Text(benefit.name, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700))
         ],
       ),
     );
@@ -134,6 +113,20 @@ IoniconsData getIcon(String name) {
       return Ionicons.time;
     case "ribbon":
       return Ionicons.ribbon;
+    case "gym":
+      return Ionicons.barbell;
+    case "transportation":
+      return Ionicons.bus;
+    case "health":
+      return Ionicons.medkit;
+    case "network":
+      return Ionicons.globe;
+    case "calendar":
+      return Ionicons.calendar;
+    case "stock":
+      return Ionicons.trending_up;
+    case "student":
+      return Ionicons.easel;
     default:
       return Ionicons.close;
   }

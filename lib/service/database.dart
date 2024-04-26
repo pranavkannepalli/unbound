@@ -228,6 +228,7 @@ class DatabaseService {
     try {
       final collegePostQuery = await collegePostCollection.orderBy("time", descending: true).get();
       final collegePostData = collegePostQuery.docs.map((doc) => _postFromSnapshot(doc)).toList();
+      collegePostData.shuffle();
       final colleges = await collegesCollection.get();
       final collegesData = colleges.docs.map((e) => _accountFromSnapshot(e)).toList();
       collegesData.shuffle();

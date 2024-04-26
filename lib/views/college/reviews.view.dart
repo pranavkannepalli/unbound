@@ -83,8 +83,11 @@ class ViewReviews extends StatelessWidget {
             )),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [const SizedBox(width: 20), ...reviews.map((e) => buildReview(e)), const SizedBox(width: 8)],
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [const SizedBox(width: 20), ...reviews.map((e) => buildReview(e)), const SizedBox(width: 8)],
+            ),
           ),
         ),
         const SizedBox(height: 20)

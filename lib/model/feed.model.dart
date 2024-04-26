@@ -73,17 +73,18 @@ class Post {
   late List<Comment> comments;
   late bool isJob;
 
-  Post(
-      {required this.author,
-      required this.pfp,
-      required this.text,
-      required this.likes,
-      required this.comments,
-      required this.id,
-      required this.photo,
-      required this.time,
-      required this.authorUid,
-      this.isJob = false});
+  Post({
+    required this.author,
+    required this.pfp,
+    required this.text,
+    required this.likes,
+    required this.comments,
+    required this.id,
+    required this.photo,
+    required this.time,
+    required this.authorUid,
+    this.isJob = false,
+  });
 
   Post.fromJSON(Map<String, dynamic> data) {
     author = (data["author"] ?? "") as String;

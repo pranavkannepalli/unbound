@@ -249,6 +249,17 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         backgroundColor: white.shade50,
         surfaceTintColor: white.shade100,
         title: Text("Edit Profile", style: Theme.of(context).textTheme.displaySmall),
+        actions: [
+          TextButton(
+              child: const Icon(
+                Ionicons.eye,
+                size: 24.0,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                GoRouter.of(context).push('/user', extra: user!.uid);
+              })
+        ],
         bottom: TabBar(
           controller: controller,
           isScrollable: true,

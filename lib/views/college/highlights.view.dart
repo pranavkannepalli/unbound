@@ -16,28 +16,20 @@ class ViewHighlights extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(h.number,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: yellow.shade500)),
+            Text(h.number, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: yellow.shade500)),
             const SizedBox(width: 6),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(h.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: white.shade900)),
+                  Text(h.name, style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade900)),
                   Text("${h.source} • ${h.date.toDate().year}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(color: white.shade800)),
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade800)),
                 ],
               ),
+            ),
+            const SizedBox(
+              width: 12,
             ),
             if (h.link.isNotEmpty)
               InkWell(
@@ -54,23 +46,15 @@ class ViewHighlights extends StatelessWidget {
     }
 
     return Container(
-        padding:
-            const EdgeInsets.only(top: 16, bottom: 20, left: 20, right: 20),
-        decoration: BoxDecoration(
-          color: white.shade50,
-          border: Border(bottom: BorderSide(color: white.shade300, width: 1))
-        ),
+        padding: const EdgeInsets.only(top: 16, bottom: 20, left: 20, right: 20),
+        decoration: BoxDecoration(color: white.shade50, border: Border(bottom: BorderSide(color: white.shade300, width: 1))),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Highlights",
-                    style: Theme.of(context)
-                        .textTheme
-                        .displaySmall!
-                        .copyWith(color: white.shade900)),
+                Text("Highlights", style: Theme.of(context).textTheme.displaySmall!.copyWith(color: white.shade900)),
                 Icon(Ionicons.podium, size: 24, color: yellow.shade500)
               ],
             ),

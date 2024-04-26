@@ -27,14 +27,14 @@ class CollegeProfile extends StatefulWidget {
   State<CollegeProfile> createState() => _CollegeProfileState();
 }
 
-class _CollegeProfileState extends State<CollegeProfile>
-    with SingleTickerProviderStateMixin {
+class _CollegeProfileState extends State<CollegeProfile> with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 3, vsync: this);
+    print(widget.uid);
   }
 
   @override
@@ -50,16 +50,8 @@ class _CollegeProfileState extends State<CollegeProfile>
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: white.shade800)),
-          Text("${t.month}/${t.day}",
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: purple.shade400))
+          Text(text, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: white.shade800)),
+          Text("${t.month}/${t.day}", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: purple.shade400))
         ],
       );
     }
@@ -71,17 +63,11 @@ class _CollegeProfileState extends State<CollegeProfile>
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text("Thinking of Applying?",
-              style: Theme.of(context)
-                  .textTheme
-                  .displaySmall!
-                  .copyWith(color: white.shade900)),
+          Text("Thinking of Applying?", style: Theme.of(context).textTheme.displaySmall!.copyWith(color: white.shade900)),
           const SizedBox(height: 12),
-          if (earlyDecision != null)
-            createDeadline("Early Decision", earlyDecision),
+          if (earlyDecision != null) createDeadline("Early Decision", earlyDecision),
           const SizedBox(height: 6),
-          if (regularDecision != null)
-            createDeadline("Regular Decision", regularDecision),
+          if (regularDecision != null) createDeadline("Regular Decision", regularDecision),
           const SizedBox(height: 6),
           if (transfer != null) createDeadline("Transfer", transfer),
           const SizedBox(height: 12),
@@ -94,15 +80,10 @@ class _CollegeProfileState extends State<CollegeProfile>
                     await launchUrl(url);
                   }
                 },
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Icon(Ionicons.enter, color: white.shade50, size: 18),
                   const SizedBox(width: 12),
-                  Text("Go To Applications",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: white.shade50))
+                  Text("Go To Applications", style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade50))
                 ]))
         ],
       );
@@ -132,10 +113,15 @@ class _CollegeProfileState extends State<CollegeProfile>
                       expandedHeight: 925,
                       collapsedHeight: 925,
                       automaticallyImplyLeading: false,
-                      leading: InkWell(onTap: () {
-                        GoRouter.of(context).pop();
-                      },
-                      child: Icon(Ionicons.arrow_back, size: 24, color: white.shade50,)),
+                      leading: InkWell(
+                          onTap: () {
+                            GoRouter.of(context).pop();
+                          },
+                          child: Icon(
+                            Ionicons.arrow_back,
+                            size: 24,
+                            color: white.shade50,
+                          )),
                       flexibleSpace: Column(
                         children: [
                           Stack(
@@ -164,42 +150,23 @@ class _CollegeProfileState extends State<CollegeProfile>
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 6, horizontal: 20),
+                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                Text(college.name,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall),
+                                Text(college.name, style: Theme.of(context).textTheme.displaySmall),
                                 Text("${college.type} @ ${college.location}",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelMedium!
-                                        .copyWith(color: white.shade700)),
+                                    style: Theme.of(context).textTheme.labelMedium!.copyWith(color: white.shade700)),
                                 const SizedBox(height: 6),
-                                Text(college.bio,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(color: white.shade700)),
+                                Text(college.bio, style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: white.shade700)),
                                 const SizedBox(height: 12),
-                                createStatsRow(
-                                    college.quickStats.take(2).toList()),
+                                createStatsRow(college.quickStats.take(2).toList()),
                                 const SizedBox(height: 12),
-                                createStatsRow(college.quickStats
-                                    .skip(2)
-                                    .take(2)
-                                    .toList()),
+                                createStatsRow(college.quickStats.skip(2).take(2).toList()),
                                 const SizedBox(height: 12),
-                                createStatsRow(college.quickStats
-                                    .skip(4)
-                                    .take(2)
-                                    .toList()),
+                                createStatsRow(college.quickStats.skip(4).take(2).toList()),
                                 const SizedBox(height: 12),
-                                createApplicationDetails(
-                                    college.applicationInfo)
+                                createApplicationDetails(college.applicationInfo)
                               ],
                             ),
                           ),
@@ -210,27 +177,17 @@ class _CollegeProfileState extends State<CollegeProfile>
                                 controller: tabController,
                                 isScrollable: true,
                                 tabAlignment: TabAlignment.start,
-                                overlayColor:
-                                    MaterialStateProperty.resolveWith((states) {
+                                overlayColor: MaterialStateProperty.resolveWith((states) {
                                   if (states.contains(MaterialState.pressed)) {
                                     return white.shade300;
                                   }
                                   return Colors.transparent;
                                 }),
-                                indicator: BoxDecoration(
-                                    border: Border(
-                                        bottom: BorderSide(
-                                            color: white.shade900, width: 2))),
-                                labelPadding:
-                                    const EdgeInsets.symmetric(horizontal: 20),
-                                labelStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                                unselectedLabelStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(color: white.shade700),
-                                indicatorPadding:
-                                    const EdgeInsets.symmetric(horizontal: -20),
+                                indicator: BoxDecoration(border: Border(bottom: BorderSide(color: white.shade900, width: 2))),
+                                labelPadding: const EdgeInsets.symmetric(horizontal: 20),
+                                labelStyle: Theme.of(context).textTheme.bodyMedium,
+                                unselectedLabelStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade700),
+                                indicatorPadding: const EdgeInsets.symmetric(horizontal: -20),
                                 tabs: const [
                                   Tab(text: "Academics"),
                                   Tab(text: "Campus Life"),
@@ -248,26 +205,18 @@ class _CollegeProfileState extends State<CollegeProfile>
                     SingleChildScrollView(
                       child: Column(
                         children: [
-                          if (college.highlights.isNotEmpty)
-                            ViewHighlights(highlights: college.highlights),
-                          if (college.majors.isNotEmpty)
-                            ViewMajors(majors: college.majors)
+                          if (college.highlights.isNotEmpty) ViewHighlights(highlights: college.highlights),
+                          if (college.majors.isNotEmpty) ViewMajors(majors: college.majors)
                         ],
                       ),
                     ),
                     SingleChildScrollView(
                       child: Column(
                         children: [
-                          QuickStats(
-                              diversity: college.diversity,
-                              livingStats: college.livingStats),
-                          if (college.activities.isNotEmpty)
-                            ViewActivities(activities: college.activities),
-                          if (college.organizations.isNotEmpty)
-                            ViewOrganizations(
-                                organizations: college.organizations),
-                          if (college.reviews.isNotEmpty)
-                            ViewReviews(reviews: college.reviews)
+                          QuickStats(diversity: college.diversity, livingStats: college.livingStats),
+                          if (college.activities.isNotEmpty) ViewActivities(activities: college.activities),
+                          if (college.organizations.isNotEmpty) ViewOrganizations(organizations: college.organizations),
+                          if (college.reviews.isNotEmpty) ViewReviews(reviews: college.reviews)
                         ],
                       ),
                     ),
@@ -275,29 +224,17 @@ class _CollegeProfileState extends State<CollegeProfile>
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          ...posts.map((e) => PostWidget(
-                              post: e,
-                              uid: e.authorUid,
-                              type: "College",
-                              authUserId: userId)),
+                          ...posts.map((e) => PostWidget(post: e, uid: e.authorUid, type: "College", authUserId: userId)),
                           Container(
                             padding: const EdgeInsets.all(20),
                             child: Column(
                               children: [
-                                Icon(Ionicons.book,
-                                    color: white.shade500, size: 36),
+                                Icon(Ionicons.book, color: white.shade500, size: 36),
                                 const SizedBox(height: 12),
                                 Text("That's Enough For Today",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge!
-                                        .copyWith(color: white.shade800)),
-                                Text(
-                                    "Time to hit the books, the bed, or the buddies",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(color: white.shade800))
+                                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade800)),
+                                Text("Time to hit the books, the bed, or the buddies",
+                                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade800))
                               ],
                             ),
                           )

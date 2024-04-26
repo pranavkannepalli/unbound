@@ -41,16 +41,8 @@ class SportSection extends StatelessWidget {
           .map((k) => Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text("$k: ",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall!
-                          .copyWith(color: white.shade800)),
-                  Text("${stats[k]}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(color: yellow.shade500))
+                  Text("$k: ", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade800)),
+                  Text("${stats[k]}", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: yellow.shade500))
                 ],
               ))
           .toList();
@@ -61,21 +53,14 @@ class SportSection extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 12),
         child: (Row(
           children: [
-            Text(e.place,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge!
-                    .copyWith(color: yellow.shade500)),
+            Text(e.place.contains("#") ? e.place : "#${e.place}",
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: yellow.shade500)),
             const SizedBox(width: 6),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(e.name, style: Theme.of(context).textTheme.labelLarge),
-                Text("${e.location} • ${e.year}",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(color: white.shade800))
+                Text("${e.location} • ${e.year}", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade800))
               ],
             ),
             const SizedBox(width: 12),
@@ -104,30 +89,16 @@ class SportSection extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(sport.years,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(color: yellow.shade500)),
-                  Text(sport.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: white.shade900))
+                  Text(sport.years, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: yellow.shade500)),
+                  Text(sport.name, style: Theme.of(context).textTheme.labelLarge!.copyWith(color: white.shade900))
                 ],
               ),
             ),
             const SizedBox(width: 12),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: yellow.shade400),
-              child: Text(sport.position,
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelSmall!
-                      .copyWith(color: yellow.shade600)),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(40), color: yellow.shade400),
+              child: Text(sport.position, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: yellow.shade600)),
             )
           ],
         ),
@@ -140,22 +111,14 @@ class SportSection extends StatelessWidget {
         Theme(
           data: Theme.of(context).copyWith(
               dividerColor: Colors.transparent,
-              listTileTheme: ListTileTheme.of(context).copyWith(
-                  dense: true,
-                  minVerticalPadding: 0,
-                  visualDensity: VisualDensity.compact)),
+              listTileTheme:
+                  ListTileTheme.of(context).copyWith(dense: true, minVerticalPadding: 0, visualDensity: VisualDensity.compact)),
           child: ExpansionTile(
               shape: InputBorder.none,
               iconColor: white.shade700,
               tilePadding: EdgeInsets.zero,
-              title: Text("Accomplishments",
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelSmall!
-                      .copyWith(color: white.shade700)),
-              children: sport.accomplishments
-                  .map((e) => createAccomplishment(e))
-                  .toList()),
+              title: Text("Accomplishments", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+              children: sport.accomplishments.map((e) => createAccomplishment(e)).toList()),
         ),
         const SizedBox(height: 20)
       ],

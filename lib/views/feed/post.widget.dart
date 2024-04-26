@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -64,6 +67,8 @@ class _PostWidgetState extends State<PostWidget> {
       });
     }
 
+    Map<String, dynamic> pageRoutes = {"Student": "user", "Company": "company", "College": "college"};
+
     return Screenshot(
       controller: screenshotController,
       child: Container(
@@ -78,24 +83,29 @@ class _PostWidgetState extends State<PostWidget> {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: white.shade300,
-                        backgroundImage: NetworkImage(widget.post.pfp),
-                        radius: 17.5,
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.post.author, style: Theme.of(context).textTheme.titleSmall),
-                            Text(timeToString(widget.post.time),
-                                style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
-                          ],
+                      GestureDetector(
+                        onTap: () => GoRouter.of(context).push('/${pageRoutes[widget.type]}', extra: widget.post.authorUid),
+                        child: CircleAvatar(
+                          backgroundColor: white.shade300,
+                          backgroundImage: NetworkImage(widget.post.pfp),
+                          radius: 17.5,
                         ),
                       ),
                       const SizedBox(width: 12),
-                      IconButton(onPressed: () {}, icon: Icon(Ionicons.person_add, size: 16, color: blue.shade600)),
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () => GoRouter.of(context).push('/${pageRoutes[widget.type]}', extra: widget.post.authorUid),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(widget.post.author, style: Theme.of(context).textTheme.titleSmall),
+                              Text(timeToString(widget.post.time),
+                                  style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
                       IconButton(
                         onPressed: () async {
                           try {

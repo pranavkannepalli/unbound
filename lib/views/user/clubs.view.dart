@@ -24,9 +24,7 @@ class _ViewClubsState extends State<ViewClubs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: white.shade50,
-          border: Border(bottom: BorderSide(width: 1, color: white.shade300))),
+      decoration: BoxDecoration(color: white.shade50, border: Border(bottom: BorderSide(width: 1, color: white.shade300))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -48,33 +46,32 @@ class _ViewClubsState extends State<ViewClubs> {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: ExpansionTile(
-                      backgroundColor: white.shade50,
-                      childrenPadding: const EdgeInsets.only(left: 40, right: 20),
-                      iconColor: white.shade900,
-                      expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
-                      tilePadding: const EdgeInsets.symmetric(horizontal: 20),
-                      title: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(e.club.name, style: Theme.of(context).textTheme.labelLarge),
-                              Text(e.club.years, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: purple.shade400))
-                            ],
-                          ),
-                      children:  [
-                          if(e.club.roles.isNotEmpty) ...[
-                            Text("Roles", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                            RoleDetails(roles: e.club.roles)
-                          ],
-                          const SizedBox(height: 12),
-                          if(e.club.accomplishments.isNotEmpty) ...[
-                            Text("Accomplishments", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                            const SizedBox(height: 6),
-                            Accomplishments(accomplishments: e.club.accomplishments)
-                          ]
-                                  
-                        ],
-                      ),
+                    backgroundColor: white.shade50,
+                    childrenPadding: const EdgeInsets.only(left: 40, right: 20),
+                    iconColor: white.shade900,
+                    expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                    tilePadding: const EdgeInsets.symmetric(horizontal: 20),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(e.club.name, style: Theme.of(context).textTheme.labelLarge),
+                        Text(e.club.years, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: purple.shade400))
+                      ],
+                    ),
+                    children: [
+                      if (e.club.roles.isNotEmpty) ...[
+                        Text("Roles", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                        RoleDetails(roles: e.club.roles)
+                      ],
+                      const SizedBox(height: 12),
+                      if (e.club.accomplishments.isNotEmpty) ...[
+                        Text("Accomplishments", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                        const SizedBox(height: 6),
+                        Accomplishments(accomplishments: e.club.accomplishments)
+                      ]
+                    ],
+                  ),
                 );
               }).toList(),
             ),
@@ -98,26 +95,29 @@ class Accomplishments extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(e.place, style: Theme.of(context).textTheme.titleLarge!.copyWith(color: purple.shade400)),
+                Text(e.place.contains("#") ? e.place : "#${e.place}",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(color: purple.shade400)),
                 const SizedBox(width: 6),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(e.name, style: Theme.of(context).textTheme.labelLarge),
-                    Text("${e.location} • ${e.year}", style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade800))
+                    Text("${e.location} • ${e.year}",
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade800))
                   ],
                 ),
                 const SizedBox(width: 12),
                 const Spacer(),
-                if(e.link.isNotEmpty) InkWell(
-                  onTap: () async {
-                    final Uri url = Uri.parse(e.link);
-                    if(await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    }
-                  },
-                  child: Icon(Ionicons.link, size: 18, color: white.shade700),
-                )
+                if (e.link.isNotEmpty)
+                  InkWell(
+                    onTap: () async {
+                      final Uri url = Uri.parse(e.link);
+                      if (await canLaunchUrl(url)) {
+                        await launchUrl(url);
+                      }
+                    },
+                    child: Icon(Ionicons.link, size: 18, color: white.shade700),
+                  )
               ],
             ),
             const SizedBox(height: 6),
@@ -130,7 +130,6 @@ class Accomplishments extends StatelessWidget {
   }
 }
 
-
 class RoleDetails extends StatelessWidget {
   final List<Role> roles;
   const RoleDetails({super.key, required this.roles});
@@ -139,29 +138,28 @@ class RoleDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: roles.map((e) => Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(e.name, style: Theme.of(context).textTheme.labelLarge),
-            Text(e.years, style:Theme.of(context).textTheme.labelSmall!.copyWith(color: purple.shade400))
-          ],
-        ),
-        Text(e.description, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade800)),
-        const SizedBox(height: 4)
-      ],
-    )).toList(),
+      children: roles
+          .map((e) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(e.name, style: Theme.of(context).textTheme.labelLarge),
+                      Text(e.years, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: purple.shade400))
+                    ],
+                  ),
+                  Text(e.description, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade800)),
+                  const SizedBox(height: 4)
+                ],
+              ))
+          .toList(),
     );
-    
   }
 }
-
 
 class ClubItem {
   Club club;
   bool isExpanded;
   ClubItem({required this.club, this.isExpanded = false});
 }
-
