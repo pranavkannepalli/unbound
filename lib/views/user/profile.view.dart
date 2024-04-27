@@ -9,10 +9,12 @@ import 'package:unbound/views/feed/post.widget.dart';
 import 'package:unbound/views/user/arts.view.dart';
 import 'package:unbound/views/user/clubs.view.dart';
 import 'package:unbound/views/user/courses.view.dart';
+import 'package:unbound/views/user/hours.view.dart';
 import 'package:unbound/views/user/projects.view.dart';
 import 'package:unbound/views/user/sports.view.dart';
 import 'package:unbound/views/user/tests.widget.dart';
 import 'package:unbound/views/user/workEx.view.dart';
+import 'package:unbound/views/user/hours.view.dart';
 
 class UserProfile extends StatefulWidget {
   final String uid;
@@ -163,7 +165,8 @@ class _UserProfileState extends State<UserProfile> with SingleTickerProviderStat
                       children: [
                         if (user.tests.isNotEmpty) ViewTests(tests: user.tests),
                         if (user.courses.isNotEmpty) ViewCourses(courses: user.courses),
-                        if (user.tests.isEmpty && user.courses.isEmpty) const Empty()
+                        if (user.communityService.isNotEmpty) ViewHours(hours: user.communityService),
+                        if (user.tests.isEmpty && user.courses.isEmpty && user.communityService.isEmpty) const Empty()
                       ],
                     ),
                   ),

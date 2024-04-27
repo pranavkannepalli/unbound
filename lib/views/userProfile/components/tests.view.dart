@@ -33,78 +33,81 @@ class Tests extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text("Standardized Tests",
-                      style: Theme.of(context).textTheme.displaySmall),
+                  child: Text("Standardized Tests", style: Theme.of(context).textTheme.displaySmall),
                 ),
-                IconButton(
-                  icon: Icon(
+                InkWell(
+                  child: Icon(
                     Ionicons.add_circle,
                     color: blue.shade600,
                   ),
-                  onPressed: () {
+                  onTap: () {
                     GoRouter.of(context).push('/addTest');
                   },
                 ),
               ],
             ),
           ),
+          const SizedBox(
+            height: 12,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: tests
                 .map(
-                  (e) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 12.0),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Text("${e.name} (${e.score})",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontWeight: FontWeight.bold)),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Ionicons.pencil,
-                              color: blue.shade600,
+                  (e) => Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: white.shade50,
+                        border: Border.all(color: white.shade300, width: 1),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text("${e.name} (${e.score})",
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
                             ),
-                            onPressed: () {
-                              GoRouter.of(context).push('/editTest', extra: e);
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Ionicons.trash,
-                              color: white.shade700,
+                            InkWell(
+                              child: Icon(
+                                Ionicons.pencil,
+                                color: blue.shade600,
+                              ),
+                              onTap: () {
+                                GoRouter.of(context).push('/editTest', extra: e);
+                              },
                             ),
-                            onPressed: () async {
-                              await DatabaseService(uid: user!.uid)
-                                  .deleteObject("tests", e.toJson());
-                            },
-                          ),
-                        ],
-                      ),
-                      Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: e.sectionScores.keys
-                              .map(
-                                (key) => Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 6.0),
-                                    Text(key,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .labelSmall!
-                                            .copyWith(color: white.shade700)),
-                                    Text(e.sectionScores[key].toString()),
-                                  ],
-                                ),
-                              )
-                              .toList())
-                    ],
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            InkWell(
+                              child: Icon(
+                                Ionicons.trash,
+                                color: white.shade700,
+                              ),
+                              onTap: () async {
+                                await DatabaseService(uid: user!.uid).deleteObject("tests", e.toJson());
+                              },
+                            ),
+                          ],
+                        ),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: e.sectionScores.keys
+                                .map(
+                                  (key) => Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(height: 6.0),
+                                      Text(key, style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                                      Text(e.sectionScores[key].toString()),
+                                    ],
+                                  ),
+                                )
+                                .toList())
+                      ],
+                    ),
                   ),
                 )
                 .toList(),

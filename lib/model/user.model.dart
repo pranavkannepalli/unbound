@@ -22,6 +22,8 @@ class UserData {
   List<Work> works;
   List<Project> projects;
   List<String> following;
+  List<CommunityService> communityService;
+  List<String> completedExercises;
 
   UserData(
       {required this.name,
@@ -41,7 +43,9 @@ class UserData {
       required this.sports,
       required this.works,
       required this.projects,
-      required this.following});
+      required this.following,
+      required this.communityService,
+      required this.completedExercises});
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     String name = json['name'] ?? "";
@@ -63,7 +67,9 @@ class UserData {
     List<Project> projects = (json['projects'] as List?)?.map((item) => Project.fromJson(item)).toList() ?? [];
     List<String> following = (json["following"] as List?)?.map((e) => e as String).toList() ?? [];
     String photo = json['photo'] ?? "";
-
+    List<CommunityService> communityService =
+        (json["communityService"] as List?)?.map((item) => CommunityService.fromJSON(item)).toList() ?? [];
+    List<String> completedExercises = (json['completedExercises'] as List?)?.map((item) => item as String).toList() ?? <String>[];
     return UserData(
         name: name,
         email: email,
@@ -82,7 +88,9 @@ class UserData {
         sports: sports,
         works: works,
         projects: projects,
-        following: following);
+        communityService: communityService,
+        following: following,
+        completedExercises: completedExercises);
   }
 
   @override
@@ -109,6 +117,18 @@ class UserData {
       "work": works.map((e) => e.toJson()).toList(),
       "projects": projects.map((e) => e.toJson()).toList(),
     };
+  }
+}
+
+class CommunityService {
+  String name;
+  String description;
+  int hours;
+
+  CommunityService({required this.name, required this.description, required this.hours});
+
+  factory CommunityService.fromJSON(Map<String, dynamic> json) {
+    return CommunityService(name: json["name"] ?? "", description: json["description"] ?? "", hours: json["hours"] ?? 0);
   }
 }
 
@@ -228,7 +248,13 @@ class Art {
   String description;
   List<Accomplishment> accomplishments;
 
-  Art({required this.photos, required this.name, required this.years, required this.accomplishments, required this.description});
+  Art({
+    required this.photos,
+    required this.name,
+    required this.years,
+    required this.accomplishments,
+    required this.description,
+  });
 
   factory Art.fromJson(json) {
     var photos = (json['photos'] as List?)?.map((item) => item as String).toList() ?? [];

@@ -50,85 +50,106 @@ class Clubs extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: clubs
                 .map(
-                  (e) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const SizedBox(height: 12.0),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child:
-                                Text(e.name, style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Ionicons.pencil,
-                              color: blue.shade600,
+                  (e) => Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: white.shade50,
+                        border: Border.all(
+                          color: white.shade300,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Expanded(
+                              child: Text(e.name,
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
                             ),
-                            onPressed: () {},
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Ionicons.trash,
-                              color: white.shade700,
+                            const SizedBox(
+                              width: 12,
                             ),
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6.0),
-                      Text("Time Period", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                      Text(e.years),
-                      const SizedBox(height: 12.0),
-                      Text(
-                        "Roles",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: e.roles
-                              .map((e) => Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 6.0),
-                                      Text(
-                                        e.name,
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                                      ),
-                                      createKVPair("Description", e.description),
-                                      createKVPair("Time Period", e.years),
-                                    ],
-                                  ))
-                              .toList()),
-                      Text(
-                        "Accomplishments",
-                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: e.accomplishments
-                              .map((e) => Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      const SizedBox(height: 6.0),
-                                      Text(
-                                        e.name,
-                                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
-                                      ),
-                                      createKVPair("Location", e.location),
-                                      createKVPair("Year", e.year),
-                                      e.link.isNotEmpty ? createKVPair("Link", e.link) : const SizedBox(height: 0.0),
-                                      createKVPair("Place", e.place),
-                                    ],
-                                  ))
-                              .toList()),
-                    ],
+                            InkWell(
+                              child: Icon(
+                                Ionicons.pencil,
+                                color: blue.shade600,
+                              ),
+                              onTap: () {},
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            InkWell(
+                              child: Icon(
+                                Ionicons.trash,
+                                color: white.shade700,
+                              ),
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6.0),
+                        Text("Time Period", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                        Text(e.years),
+                        const SizedBox(height: 12.0),
+                        Text(
+                          "Roles",
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: e.roles
+                                .map((e) => Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 6.0),
+                                        Text(
+                                          e.name,
+                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        createKVPair("Description", e.description),
+                                        createKVPair("Time Period", e.years),
+                                      ],
+                                    ))
+                                .toList()),
+                        Text(
+                          "Accomplishments",
+                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: e.accomplishments
+                                .map((e) => Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 6.0),
+                                        Text(
+                                          e.name,
+                                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold),
+                                        ),
+                                        const SizedBox(
+                                          height: 6,
+                                        ),
+                                        createKVPair("Location", e.location),
+                                        createKVPair("Year", e.year),
+                                        e.link.isNotEmpty ? createKVPair("Link", e.link) : const SizedBox(height: 0.0),
+                                        createKVPair("Place", e.place),
+                                      ],
+                                    ))
+                                .toList()),
+                      ],
+                    ),
                   ),
                 )
                 .toList(),

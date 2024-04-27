@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:unbound/model/company.model.dart';
 import 'package:unbound/model/feed.model.dart';
+import 'package:unbound/model/improve.model.dart';
 import 'package:unbound/model/user.model.dart';
 import "package:unbound/model/college.model.dart";
 
@@ -17,6 +18,7 @@ class DatabaseService {
   final CollectionReference companyPostCollection = FirebaseFirestore.instance.collection("InternshipPosts");
   final CollectionReference userPostCollection = FirebaseFirestore.instance.collection("UserPosts");
   final CollectionReference tweetsCollection = FirebaseFirestore.instance.collection("Twitter");
+  final CollectionReference improveCollection = FirebaseFirestore.instance.collection("Improve");
   static final defaultUser = {
     "name": "",
     "email": "",
@@ -28,114 +30,31 @@ class DatabaseService {
     "bio": "I love flutter, computer science, and mobile app development. :)",
     "bday": "2007-02-26 00:00:00.000",
     "posts": [],
-    "tests": [
-      TestScore(
-        name: "SAT",
-        score: "1580",
-        sectionScores: {"Math": "800", "English": "780"},
-      ).toJson(),
-    ],
-    "coursework": [
-      Course(
-        name: "AP Computer Science A",
-        description: "A CS Class that taught me a lot about computer science principles and Java.",
-        score: "5",
-        years: "2022 - 2023",
-      ).toJson()
-    ],
-    "clubs": [
-      Club(
-        accomplishments: [
-          Accomplishment(
-            name: "Webmaster",
-            place: "1",
-            location: "TSA Nationals",
-            year: "2023",
-            link: "",
-            description: "First in the nation in the Webmaster event at TSA Nationals.",
-          ),
-        ],
-        roles: [
-          Role(
-            name: "President",
-            description: "President of Tesla STEM TSA for one year",
-            years: "2023 - 2024",
-          ),
-        ],
-        photo: "",
-        name: "Technology Student Association",
-        years: "2023 - 2024",
-      ).toJson()
-    ],
-    "arts": [
-      Art(
-        name: "Tabla",
-        years: "2016 - 2024",
-        description: "Played this Indian Drum for many years, while passing the first and second accredited exams.",
-        photos: [
-          "https://images.unsplash.com/photo-1568219656418-15c329312bf1?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-          "https://images.unsplash.com/photo-1633411988188-6e63354a9019?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGFibGF8ZW58MHx8MHx8fDA%3D",
-        ],
-        accomplishments: [
-          Accomplishment(
-            name: "Raag Sandhana",
-            place: "9",
-            location: "Online",
-            year: "2023",
-            link: "",
-            description: "Ninth among hundreds of competitors in the classical tabla section after a video submission.",
-          ),
-        ],
-      ).toJson(),
-    ],
-    "sports": [
-      Sport(
-        name: "Cricket",
-        years: "2016 - 2024",
-        position: "All-Rounder",
-        photos: [],
-        accomplishments: [
-          Accomplishment(
-            name: "MLC Jr Championships",
-            place: "9",
-            location: "Houston, TX",
-            year: "2023",
-            link: "",
-            description: "We were the best team in the nation at this competition and won a National Trophy.",
-          ),
-        ],
-        stats: {
-          "Matches": "150",
-          "Batting Average": "43",
-          "Runs": (43 * 150).toString(),
-          "Bowling Average": "14",
-          "Wickets": "100",
-        },
-      ).toJson(),
-    ],
-    "work": [
-      Work(
-        name: "ML Workflow Intern",
-        years: "2023",
-        photo:
-            "https://images.unsplash.com/photo-1633419461186-7d40a38105ec?q=80&w=3280&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-        description: "An internship with People Tech Group that involved ML Workflow maintenance.",
-      ).toJson(),
-    ],
-    "projects": [
-      Project(
-        name: "SpaceOasis",
-        photos: [],
-        years: "2023",
-        skills: ["NextJS", "ReactJS", "Firebase"],
-        description: "The website project that won first at TSA Nationals in Kentucky in 2023.",
-      ).toJson(),
-    ],
+    "tests": [],
+    "coursework": [],
+    "clubs": [],
+    "arts": [],
+    "sports": [],
+    "work": [],
+    "projects": [],
     "following": [],
     "colleges": [],
+    "communityService": [],
+    "completedExercises": []
   };
 
   DatabaseService({this.uid});
+
+  Future<List<Exercise>> getImprovements() async {
+    final improvementsData = await improveCollection.get();
+    return improvementsData.docs.map((e) => _exerciseFromSnapshot(e)).toList();
+  }
+
+  Future completeImprovement(String id) async {
+    return await usersCollection.doc(uid).update({
+      "completedExercises": FieldValue.arrayUnion([id])
+    });
+  }
 
   Future updateUserData(Map<String, dynamic> json) async {
     return await usersCollection.doc(uid).set(json, SetOptions(merge: true));
@@ -174,7 +93,7 @@ class DatabaseService {
       return _postFromSnapshot(e);
     }).toList();
     List<Tweet> tweets = results.elementAt(1).docs.map((e) => _tweetFromSnapshot(e)).toList();
-    print(tweets.length);
+    print("tweets ${tweets.length}");
     return News(tweets: tweets, posts: posts);
   }
 
@@ -448,6 +367,12 @@ class DatabaseService {
     } catch (error) {
       return null;
     }
+  }
+
+  Exercise _exerciseFromSnapshot(QueryDocumentSnapshot snapshot) {
+    Map<String, dynamic> d = snapshot.data() as Map<String, dynamic>;
+    d["id"] = snapshot.id;
+    return Exercise.fromJSON(d);
   }
 
   Post _postFromSnapshot(QueryDocumentSnapshot snapshot) {

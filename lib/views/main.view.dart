@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
+import 'package:unbound/settings/settings.view.dart';
 import 'package:unbound/views/feed/feed.view.dart';
+import 'package:unbound/views/improve/improve.view.dart';
 import 'package:unbound/views/userProfile/userProfile.view.dart';
 
 class MainScreen extends StatefulWidget {
@@ -30,23 +32,9 @@ class _MainScreenState extends State<MainScreen> {
     UserData? userData = Provider.of<UserData?>(context);
     List<Widget> widgetOptions = <Widget>[
       FeedPage(initial: userData),
-      const Center(child: Text("Improve")),
+      Improvements(user: userData),
       const ProfileScreen(),
-      Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text("Settings"),
-            TextButton(
-                onPressed: (() {
-                  AuthService auth = AuthService();
-                  auth.signOut();
-                  GoRouter.of(context).go('/landing');
-                }),
-                child: const Text("Sign Out")),
-          ],
-        ),
-      ),
+      const Settings(),
     ];
 
     if (userData != null) {

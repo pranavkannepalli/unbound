@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:unbound/common/buttons.dart';
 import 'package:unbound/common/theme.dart';
 import 'package:unbound/model/company.model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Internships extends StatelessWidget {
   final List<Internship> jobs;
@@ -23,7 +24,12 @@ class Internships extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          for (Internship i in jobs) Job(job: i)
+          for (Internship i in jobs) ...[
+            Job(job: i),
+            const SizedBox(
+              height: 12,
+            )
+          ]
         ],
       ),
     );
@@ -64,7 +70,12 @@ class Job extends StatelessWidget {
           ]),
           const SizedBox(height: 12),
           ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                Uri url = Uri.parse(job.link);
+                if (await canLaunchUrl(url)) {
+                  await launchUrl(url);
+                }
+              },
               style: darkExpand,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

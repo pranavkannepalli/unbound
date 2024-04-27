@@ -30,61 +30,73 @@ class Coursework extends StatelessWidget {
               Expanded(
                 child: Text("Coursework", style: Theme.of(context).textTheme.displaySmall),
               ),
-              IconButton(
-                icon: Icon(
+              InkWell(
+                child: Icon(
                   Ionicons.add_circle,
                   color: blue.shade600,
                 ),
-                onPressed: () {
+                onTap: () {
                   GoRouter.of(context).push('/addCourse');
                 },
               ),
             ],
           ),
+          const SizedBox(
+            height: 12,
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: courses
                 .map(
-                  (e) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 12.0),
-                      Row(
-                        children: [
-                          Expanded(
-                            child:
-                                Text(e.name, style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Ionicons.pencil,
-                              color: blue.shade600,
+                  (e) => Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                        color: white.shade50,
+                        border: Border.all(color: white.shade300, width: 1),
+                        borderRadius: BorderRadius.circular(8)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(e.name,
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold)),
                             ),
-                            onPressed: () {
-                              GoRouter.of(context).push("/editCourse", extra: e);
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Ionicons.trash,
-                              color: white.shade700,
+                            InkWell(
+                              child: Icon(
+                                Ionicons.pencil,
+                                color: blue.shade600,
+                              ),
+                              onTap: () {
+                                GoRouter.of(context).push("/editCourse", extra: e);
+                              },
                             ),
-                            onPressed: () async {
-                              await DatabaseService(uid: user!.uid).deleteObject("coursework", e.toJson());
-                            },
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 6.0),
-                      Text("Time Period", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                      Text(e.years),
-                      const SizedBox(height: 6.0),
-                      Text("Description", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                      Text(e.description),
-                      const SizedBox(height: 6.0),
-                      Text("Score", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
-                      Text(e.score),
-                    ],
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            InkWell(
+                              child: Icon(
+                                Ionicons.trash,
+                                color: white.shade700,
+                              ),
+                              onTap: () async {
+                                await DatabaseService(uid: user!.uid).deleteObject("coursework", e.toJson());
+                              },
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 6.0),
+                        Text("Time Period", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                        Text(e.years),
+                        const SizedBox(height: 6.0),
+                        Text("Description", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                        Text(e.description),
+                        const SizedBox(height: 6.0),
+                        Text("Score", style: Theme.of(context).textTheme.labelSmall!.copyWith(color: white.shade700)),
+                        Text(e.score),
+                      ],
+                    ),
                   ),
                 )
                 .toList(),

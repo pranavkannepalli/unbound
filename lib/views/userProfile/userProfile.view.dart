@@ -10,6 +10,7 @@ import "package:unbound/service/database.dart";
 import "package:unbound/views/userProfile/components/arts.view.dart";
 import "package:unbound/views/userProfile/components/clubs.view.dart";
 import "package:unbound/views/userProfile/components/coursework.view.dart";
+import "package:unbound/views/userProfile/components/hours.view.dart";
 import "package:unbound/views/userProfile/components/projects.view.dart";
 import "package:unbound/views/userProfile/components/sports.view.dart";
 import "package:unbound/views/userProfile/components/tests.view.dart";
@@ -286,6 +287,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             createBasicInfo(0, userData),
             Tests(tests: userData.tests, headerKey: editCategories[1]),
             Coursework(courses: userData.courses),
+            EditHours(hours: userData.communityService),
             Clubs(clubs: userData.clubs, headerKey: editCategories[2]),
             Arts(arts: userData.arts),
             Sports(sports: userData.sports),

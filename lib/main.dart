@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:unbound/firebase_options.dart';
 import 'package:unbound/common/theme.dart';
+import 'package:unbound/model/improve.model.dart';
 import 'package:unbound/model/user.model.dart';
 import 'package:unbound/service/auth.dart';
 import 'package:unbound/views/authentication/signin.view.dart';
@@ -12,6 +13,7 @@ import 'package:unbound/views/authentication/signup.view.dart';
 import 'package:unbound/views/college/profile.view.dart';
 import 'package:unbound/views/company/profile.view.dart';
 import 'package:unbound/views/feed/createPost.view.dart';
+import 'package:unbound/views/improve/viewExercise.view.dart';
 import 'package:unbound/views/main.view.dart';
 import 'package:unbound/views/onboarding/onboarding1.view.dart';
 import 'package:unbound/views/onboarding/onboarding2.view.dart';
@@ -181,6 +183,7 @@ final _router = GoRouter(
       path: "/editBasicInfo",
       builder: (context, state) => EditBasicInfo(old: state.extra! as UserData),
     ),
+    GoRoute(path: "/exercise", builder: (context, state) => ViewExercise(exercise: state.extra! as Exercise))
   ],
 );
 

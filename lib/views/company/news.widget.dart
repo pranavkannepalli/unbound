@@ -13,14 +13,12 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String? uid = Provider.of<AuthUser?>(context)?.uid;
-    if(uid == null) return const Center(child: CircularProgressIndicator());
+    if (uid == null) return const Center(child: CircularProgressIndicator());
     Widget buildTweet(Tweet t) => Container(
           margin: const EdgeInsets.symmetric(horizontal: 6),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-              color: white.shade50,
-              border: Border.all(width: 1, color: white.shade300),
-              borderRadius: BorderRadius.circular(12)),
+              color: white.shade50, border: Border.all(width: 1, color: white.shade300), borderRadius: BorderRadius.circular(12)),
           width: 300,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -33,97 +31,71 @@ class NewsWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Text(t.name,
-                                style: Theme.of(context).textTheme.labelLarge),
-                            const SizedBox(width: 6),
-                            if (t.verified)
-                              const Icon(Ionicons.checkmark_circle, size: 14)
-                          ],
-                        ),
-                        Text(t.handle,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall!
-                                .copyWith(color: white.shade700))
-                      ]),
+                        Text(t.name, style: Theme.of(context).textTheme.labelLarge),
+                        const SizedBox(width: 6),
+                        if (t.verified) const Icon(Ionicons.checkmark_circle, size: 14)
+                      ],
+                    ),
+                    Text(t.handle, style: Theme.of(context).textTheme.bodySmall!.copyWith(color: white.shade700))
+                  ]),
                 ),
                 const SizedBox(width: 12),
                 const Icon(Ionicons.logo_twitter, size: 16)
               ]),
               const SizedBox(height: 12),
-              Text(t.text,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: white.shade800)),
+              Text(t.text, style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: white.shade800)),
               const SizedBox(height: 12),
               const Spacer(),
               Row(children: [
                 Icon(Ionicons.heart_outline, size: 14, color: white.shade700),
                 const SizedBox(width: 6),
-                Text(likeText(t.likes),
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: white.shade700)),
+                Text(likeText(t.likes), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: white.shade700)),
                 const Spacer(),
-                Text(timeText(t.time),
-                    style: Theme.of(context)
-                        .textTheme
-                        .labelMedium!
-                        .copyWith(color: white.shade700))
+                Text(timeText(t.time), style: Theme.of(context).textTheme.labelMedium!.copyWith(color: white.shade700))
               ])
             ],
           ),
         );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Recent News",
-                    style: Theme.of(context).textTheme.displaySmall),
-                Icon(Ionicons.newspaper, size: 24, color: pink.shade400)
-              ],
-            )),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: IntrinsicHeight(
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+              padding: const EdgeInsets.all(20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(width: 14),
-                  ...news.tweets.map((e) => buildTweet(e)),
-                  const SizedBox(width: 14)
+                  Text("Recent News", style: Theme.of(context).textTheme.displaySmall),
+                  Icon(Ionicons.newspaper, size: 24, color: pink.shade400)
                 ],
-              ),
-            )),
-        const SizedBox(height: 20),
-        Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-                border:
-                    Border(top: BorderSide(color: white.shade300, width: 1))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("Posts", style: Theme.of(context).textTheme.displaySmall),
-                Icon(Ionicons.notifications, size: 24, color: purple.shade400)
-              ],
-            )),
-        ...news.posts
-            .map((e) => PostWidget(post: e, uid: e.authorUid, type: "Company", authUserId: uid))
-      ],
+              )),
+          SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [const SizedBox(width: 14), ...news.tweets.map((e) => buildTweet(e)), const SizedBox(width: 14)],
+                ),
+              )),
+          const SizedBox(height: 20),
+          Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(border: Border(top: BorderSide(color: white.shade300, width: 1))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Posts", style: Theme.of(context).textTheme.displaySmall),
+                  Icon(Ionicons.notifications, size: 24, color: purple.shade400)
+                ],
+              )),
+          ...news.posts.map((e) => PostWidget(post: e, uid: e.authorUid, type: "Company", authUserId: uid))
+        ],
+      ),
     );
   }
 }

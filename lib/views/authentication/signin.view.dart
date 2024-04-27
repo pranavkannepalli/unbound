@@ -49,6 +49,7 @@ class _SignInState extends State<SignIn> {
                       decoration: textInputDecoration.copyWith(hintText: "johndoe@example.com"),
                       validator: (val) => val != null && val.isEmpty ? 'Please enter a email' : null,
                       onChanged: (val) => email = val,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                     ),
                     const SizedBox(height: 12.0),
                     Text("Password", style: Theme.of(context).textTheme.labelSmall?.copyWith(color: white.shade700)),
