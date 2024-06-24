@@ -1,10 +1,10 @@
 # Unbound
 
-An app for students to create a share their academic achievements and find college tips. This app allows students to showcase their academic achievements, athletic participation, performing arts experience, clubs memberships, community service hours, and coursework, while also enabling them to find other students with similar intersts
+An app for students to create a share their academic achievements and find college tips. This app allows students to showcase their academic achievements, athletic participation, performing arts experience, clubs memberships, community service hours, and coursework, while also enabling them to find other students with similar interests
 
 ## Code Description
 
-This project is a completed Flutter project that follows the MVVM architecture. What this means is the product is divided into seperate chunks:
+This project is a completed Flutter project that follows the MVVM architecture. What this means is the product is divided into separate chunks:
 
 -   Models - Manages data and rules about how it should be handled
 -   Views - What the user sees and interacts with
